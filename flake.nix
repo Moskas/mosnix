@@ -4,7 +4,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    import-tree.url = "github:vic/import-tree";
     wsl = {
       url = "github:nix-community/NixOS-WSL/main";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -19,15 +18,17 @@
     inputs:
     let
       inherit (inputs.nixpkgs) lib;
-      inherit (lib.fileset) toList fileFilter;
-
-      isNixModule = file: file.hasExt "nix" && file.name != "flake.nix" && !lib.hasPrefix "_" file.name;
-
-      importTree = path: toList (fileFilter isNixModule path);
-
-      mkFlake = inputs.flake-parts.lib.mkFlake { inherit inputs; };
     in
-    mkFlake {
-      imports = importTree ./.;
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [
+        ./modules/parts.nix
+        ./modules/common/default.nix
+        ./modules/features/nix.nix
+        ./modules/features/home-manager.nix
+        ./modules/features/home/zsh.nix
+        ./modules/hosts/shimakaze/configuration.nix
+        ./modules/hosts/shimakaze/hardware.nix
+        ./modules/hosts/shimakaze/home.nix
+      ];
     };
 }

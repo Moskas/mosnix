@@ -4,6 +4,8 @@
   flake.nixosConfigurations.shimakaze = inputs.nixpkgs.lib.nixosSystem {
     modules = [
       self.nixosModules.shimakaze
+      self.nixosModules.common-user
+      self.nixosModules.common-shell
       self.nixosModules.moskasHomeManager
       inputs.wsl.nixosModules.wsl
     ];
