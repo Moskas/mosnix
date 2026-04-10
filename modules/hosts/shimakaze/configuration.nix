@@ -4,15 +4,16 @@
   flake.nixosConfigurations.shimakaze = inputs.nixpkgs.lib.nixosSystem {
     modules = [
       self.nixosModules.shimakaze
-      self.nixosModules.common-user
-      self.nixosModules.common-shell
-      self.nixosModules.moskasHomeManager
-      inputs.wsl.nixosModules.wsl
     ];
   };
   flake.nixosModules.shimakaze =
     { pkgs, lib, ... }:
     {
+      imports = [
+        self.nixosModules.common
+        self.nixosModules.moskasHomeManager
+        inputs.wsl.nixosModules.wsl
+      ];
       wsl = {
         enable = true;
         defaultUser = "moskas";
@@ -31,10 +32,6 @@
       system.stateVersion = "22.05";
       nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
-      users.users.moskas = {
-        isNormalUser = true;
-        shell = pkgs.zsh;
-      };
       home-manager.users.moskas = self.homeModules.moskasModule;
     };
 }

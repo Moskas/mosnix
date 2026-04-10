@@ -1,0 +1,15 @@
+{
+  flake.nixosModules.common =
+    { pkgs, lib, ... }:
+    {
+      config = {
+        users.users.moskas = {
+          isNormalUser = true;
+          description = "Moskas";
+          shell = lib.mkForce pkgs.zsh;
+          extraGroups = [ "wheel" ];
+        };
+        programs.zsh.enable = true;
+      };
+    };
+}

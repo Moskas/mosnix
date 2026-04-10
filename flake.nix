@@ -18,17 +18,13 @@
     inputs:
     let
       inherit (inputs.nixpkgs) lib;
+      inherit (lib.fileset) toList fileFilter;
+
+      isNixModule = file: (file.hasExt "nix" && file.name != "flake.nix");
+
+      importTree = path: toList (fileFilter isNixModule path);
+
+      mkFlake = inputs.flake-parts.lib.mkFlake { inherit inputs; };
     in
-    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [
-        ./modules/parts.nix
-        ./modules/common/default.nix
-        ./modules/features/nix.nix
-        ./modules/features/home-manager.nix
-        ./modules/features/home/zsh.nix
-        ./modules/hosts/shimakaze/configuration.nix
-        ./modules/hosts/shimakaze/hardware.nix
-        ./modules/hosts/shimakaze/home.nix
-      ];
-    };
+    mkFlake { imports = importTree ./.; };
 }
