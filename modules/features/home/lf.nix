@@ -1,12 +1,7 @@
-{ self, inputs, ... }:
 {
-
-  flake.homeModules.lf =
-    { pkgs, ... }:
-    {
-      programs.lf = {
-        enable = true;
-      };
+  flake.homeModules.lf = {
+    programs.lf = {
+      enable = true;
     };
-
+  };
 }

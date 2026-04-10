@@ -1,4 +1,8 @@
-{ self, inputs, ... }:
+{
+  self,
+  inputs,
+  ...
+}:
 
 {
   flake.nixosConfigurations.shimakaze = inputs.nixpkgs.lib.nixosSystem {
@@ -7,11 +11,16 @@
     ];
   };
   flake.nixosModules.shimakaze =
-    { pkgs, lib, ... }:
+    {
+      lib,
+      modulesPath,
+      ...
+    }:
     {
       imports = [
         self.nixosModules.common
         self.nixosModules.moskasHomeManager
+        "${modulesPath}/profiles/minimal.nix"
         inputs.wsl.nixosModules.wsl
       ];
       wsl = {

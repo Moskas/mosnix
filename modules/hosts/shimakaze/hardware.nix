@@ -1,9 +1,7 @@
 {
   flake.nixosModules.shimakaze =
     {
-      config,
       lib,
-      pkgs,
       modulesPath,
       ...
     }:

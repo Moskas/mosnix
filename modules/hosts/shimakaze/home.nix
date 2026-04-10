@@ -13,10 +13,8 @@
     ];
   };
 
-  flake.homeModules.moskasModule =
-    { pkgs, ... }:
-    {
-      home.stateVersion = "24.11";
-    };
+  flake.homeModules.moskasModule = {
+    home.stateVersion = "24.11";
+  };
 
 }

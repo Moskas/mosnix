@@ -1,5 +1,4 @@
 {
-  self,
   inputs,
   lib,
   ...
@@ -72,22 +71,13 @@
 
       environment.sessionVariables = {
         NIX_SSHOPS = "-tt";
-        NH_FLAKE = "/home/moskas/Projects/new-flake";
+        NH_FLAKE = "/home/moskas/Repos/new-flake";
       };
 
-      # Additional config for nixpkgs, mainly unfree due to Discord, Steam etc
       nixpkgs = {
         config = {
           allowUnfree = true;
         };
-        # overlays = with inputs; [
-        #   emacs-overlay.overlay
-        #   nur.overlays.default
-        #   # nixpkgs-f2k.overlays.window-managers
-        #   mospkgs.overlays.default
-        #   # niri.overlays.niri
-        #   llm-agents.overlays.default
-        # ];
       };
     };
 }

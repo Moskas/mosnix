@@ -1,17 +1,15 @@
-{ self, inputs, ... }:
+{ inputs, ... }:
 {
 
-  flake.nixosModules.moskasHomeManager =
-    { pkgs, ... }:
-    {
-      imports = [
-        inputs.home-manager.nixosModules.default
-      ];
+  flake.nixosModules.moskasHomeManager = {
+    imports = [
+      inputs.home-manager.nixosModules.default
+    ];
 
-      home-manager = {
-        useGlobalPkgs = true;
-        useUserPackages = true;
-      };
+    home-manager = {
+      useGlobalPkgs = true;
+      useUserPackages = true;
     };
+  };
 
 }
