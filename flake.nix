@@ -20,6 +20,25 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v1.0.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    emacs-overlay = {
+      url = "github:nix-community/emacs-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    mospkgs = {
+      url = "github:Moskas/mospkgs";
+    };
+    yotei = {
+      url = "github:Moskas/yotei";
+    };
+    llm-agents.url = "github:numtide/llm-agents.nix";
   };
 
   outputs =

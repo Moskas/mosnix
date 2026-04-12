@@ -18,7 +18,6 @@
     }:
     {
       imports = [
-        self.nixosModules.common
         self.nixosModules.moskasHomeManager
         "${modulesPath}/profiles/minimal.nix"
         inputs.wsl.nixosModules.wsl

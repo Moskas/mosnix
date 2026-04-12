@@ -1,16 +1,14 @@
 {
-  flake.nixosModules.common =
-    { lib, ... }:
-    {
-      config = {
-        boot = lib.mkDefault {
-          loader = {
-            systemd-boot = {
-              enable = true;
-            };
-            efi.canTouchEfiVariables = true;
+  flake.nixosModules.common = {
+    config = {
+      boot = {
+        loader = {
+          systemd-boot = {
+            enable = true;
           };
+          efi.canTouchEfiVariables = true;
         };
       };
     };
+  };
 }

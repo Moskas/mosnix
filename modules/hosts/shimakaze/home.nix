@@ -5,11 +5,7 @@
     pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
     modules = [
       self.homeModules.moskasModule
-      {
-        home.username = "moskas";
-        home.homeDirectory = "/home/moskas";
-      }
-      self.homeModules.zsh
+      self.homeModules.fullHome
     ];
   };
 
