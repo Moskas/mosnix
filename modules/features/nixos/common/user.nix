@@ -8,6 +8,7 @@
           description = "Moskas";
           shell = lib.mkForce pkgs.zsh;
           extraGroups = [ "wheel" ];
+          initialPassword = "nix";
         };
         programs.zsh.enable = true;
       };

@@ -1,13 +1,14 @@
 {
   flake.homeModules.yotei =
-    { inputs, system, ... }:
+    { pkgs, inputs, ... }:
     {
+      imports = [
+        inputs.yotei.homeManagerModules.default
+      ];
       config = {
-        imports = [ inputs.yotei.homeManagerModules.default ];
-
         services.yotei = {
           enable = true;
-          package = inputs.yotei.packages.${system}.default;
+          package = pkgs.yotei;
           settings = {
             agenda_files = [
               "~/Documents/Org/Agenda/todo.org"

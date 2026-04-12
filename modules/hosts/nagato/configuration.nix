@@ -11,6 +11,10 @@
     {
       imports = [
         self.nixosModules.common
+        self.nixosModules.niri
+        self.nixosModules.ly
+        self.nixosModules.moskasHomeManager
+        self.nixosModules.fullHome
       ];
 
       networking.hostName = "nagato";

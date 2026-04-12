@@ -6,10 +6,19 @@
       inputs.home-manager.nixosModules.default
     ];
 
+    nixpkgs.overlays = [
+      inputs.emacs-overlay.overlay
+      inputs.llm-agents.overlays.default
+    ];
+
     home-manager = {
-      users."moskas".home = {
-        username = "moskas";
-        homeDirectory = "/home/moskas";
+      users."moskas" = {
+
+        home = {
+          username = "moskas";
+          homeDirectory = "/home/moskas";
+          stateVersion = "24.11";
+        };
       };
       useGlobalPkgs = true;
       useUserPackages = true;
@@ -17,24 +26,31 @@
   };
 
   flake.nixosModules.minimalHome = {
-    modules = with self.homeModules; [
-      btop
-      git
-      starship
-      zsh
-    ];
+    config = {
+      home-manager.users."moskas".imports = with self.homeModules; [
+        btop
+        git
+        starship
+        zoxide
+        zsh
+      ];
+    };
   };
 
   flake.nixosModules.fullHome = {
-    modules = with self.homeModules; [
-      bat
-      btop
-      direnv
-      emacs
-      git
-      opencode
-      starship
-      zsh
-    ];
+    config = {
+      home-manager.users."moskas".imports = with self.homeModules; [
+        bat
+        btop
+        direnv
+        emacs
+        firefox
+        git
+        opencode
+        starship
+        zoxide
+        zsh
+      ];
+    };
   };
 }

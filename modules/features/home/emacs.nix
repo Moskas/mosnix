@@ -1,8 +1,7 @@
 {
   flake.homeModules.emacs =
-    { pkgs, inputs, ... }:
+    { pkgs, ... }:
     {
-      imports = [ inputs.emacs-overlay.overlay ];
       config = {
         programs.emacs = {
           enable = true;
