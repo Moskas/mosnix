@@ -5,12 +5,11 @@
     pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
     modules = [
       self.homeModules.moskasModule
-      self.homeModules.fullHome
+      self.homeModules.minimalHome
     ];
   };
 
   flake.homeModules.moskasModule = {
-    home.stateVersion = "24.11";
   };
 
 }

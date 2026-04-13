@@ -11,6 +11,7 @@
           initialPassword = "nix";
         };
         programs.zsh.enable = true;
+        programs.nano.enable = false;
       };
     };
 }

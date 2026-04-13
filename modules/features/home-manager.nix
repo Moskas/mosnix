@@ -17,7 +17,7 @@
         home = {
           username = "moskas";
           homeDirectory = "/home/moskas";
-          stateVersion = "24.11";
+          stateVersion = "25.11";
         };
       };
       useGlobalPkgs = true;
@@ -42,6 +42,7 @@
       home-manager.users."moskas".imports = with self.homeModules; [
         bat
         btop
+        claude
         direnv
         emacs
         firefox

@@ -10,7 +10,6 @@
   };
 
   flake.homeModules.moskasModule = {
-    home.stateVersion = "24.11";
   };
 
 }
