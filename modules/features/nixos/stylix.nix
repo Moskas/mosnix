@@ -25,8 +25,6 @@
           autoEnable = true;
           image = null;
 
-          targets.firefox.profileNames = [ "moskas" ];
-
           base16Scheme = "${pkgs.base16-schemes}/share/themes/${config.moskas.colorscheme}.yaml";
 
           polarity = "dark";

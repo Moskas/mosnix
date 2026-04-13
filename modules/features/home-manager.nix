@@ -30,6 +30,7 @@
       home-manager.users."moskas".imports = with self.homeModules; [
         btop
         git
+        ranger
         starship
         zoxide
         zsh
@@ -48,6 +49,7 @@
         firefox
         git
         opencode
+        ranger
         starship
         zoxide
         zsh
