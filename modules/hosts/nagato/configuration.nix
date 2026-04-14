@@ -11,10 +11,10 @@
     {
       imports = [
         self.nixosModules.common
-        self.nixosModules.niri
-        self.nixosModules.ly
         self.nixosModules.moskasHomeManager
-        self.nixosModules.fullHome
+        inputs.stylix.nixosModules.stylix
+        self.nixosModules.stylixConfig
+        self.nixosModules.minimalHome
       ];
 
       networking.hostName = "nagato";
@@ -25,8 +25,6 @@
       ];
 
       programs.nano.enable = false;
-
-      system.stateVersion = "25.11"; # Did you read the comment?
 
     };
 }

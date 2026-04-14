@@ -6,6 +6,7 @@
     modules = [
       self.homeModules.moskasModule
       self.homeModules.fullHome
+      self.homeModules.noctalia
     ];
   };
 

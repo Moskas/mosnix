@@ -43,6 +43,10 @@
       url = "github:Moskas/yotei";
     };
     llm-agents.url = "github:numtide/llm-agents.nix";
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

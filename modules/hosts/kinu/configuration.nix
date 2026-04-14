@@ -36,7 +36,5 @@
       ];
       programs.nano.enable = false;
 
-      system.stateVersion = "25.11"; # Did you read the comment?
-
     };
 }
