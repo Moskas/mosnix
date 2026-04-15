@@ -1,0 +1,82 @@
+{
+  flake.nixosModules.laffey =
+    {
+      modulesPath,
+      config,
+      lib,
+      ...
+    }:
+    {
+      config = {
+        imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+
+        boot.initrd.availableKernelModules = [
+          "xhci_pci"
+          "ehci_pci"
+          "ahci"
+          "usb_storage"
+          "sd_mod"
+        ];
+        boot.initrd.kernelModules = [ ];
+        boot.kernelModules = [ "kvm-intel" ];
+        boot.extraModulePackages = [ ];
+
+        fileSystems."/" = {
+          device = "/dev/disk/by-uuid/f35a570f-1792-41fd-993f-941fabd5c16c";
+          fsType = "btrfs";
+          options = [ "subvol=rootfs" ];
+        };
+
+        fileSystems."/.swapvol" = {
+          device = "/dev/disk/by-uuid/f35a570f-1792-41fd-993f-941fabd5c16c";
+          fsType = "btrfs";
+          options = [ "subvol=swap" ];
+        };
+
+        fileSystems."/boot" = {
+          device = "/dev/disk/by-uuid/8CD4-811B";
+          fsType = "vfat";
+        };
+
+        fileSystems."/home" = {
+          device = "/dev/disk/by-uuid/f35a570f-1792-41fd-993f-941fabd5c16c";
+          fsType = "btrfs";
+          options = [ "subvol=home" ];
+        };
+
+        fileSystems."/media" = {
+          device = "/dev/disk/by-uuid/f35a570f-1792-41fd-993f-941fabd5c16c";
+          fsType = "btrfs";
+          options = [ "subvol=media" ];
+        };
+
+        fileSystems."/nix" = {
+          device = "/dev/disk/by-uuid/f35a570f-1792-41fd-993f-941fabd5c16c";
+          fsType = "btrfs";
+          options = [ "subvol=nix" ];
+        };
+
+        fileSystems."/partition-root" = {
+          device = "/dev/disk/by-uuid/f35a570f-1792-41fd-993f-941fabd5c16c";
+          fsType = "btrfs";
+        };
+
+        fileSystems."/mnt/disk2" = {
+          device = "/dev/disk/by-uuid/c9535a3b-48b3-4a5c-8c36-704890c76905";
+          fsType = "btrfs";
+        };
+
+        swapDevices = [ ];
+
+        # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
+        # (the default) this is the recommended approach. When using systemd-networkd it's
+        # still possible to use this option, but it's recommended to use it in conjunction
+        # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
+        networking.useDHCP = lib.mkDefault true;
+        # networking.interfaces.enp3s0.useDHCP = lib.mkDefault true;
+
+        nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+        hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+      };
+    };
+}

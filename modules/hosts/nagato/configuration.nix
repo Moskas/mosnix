@@ -12,9 +12,9 @@
       imports = [
         self.nixosModules.common
         self.nixosModules.moskasHomeManager
-        inputs.stylix.nixosModules.stylix
-        self.nixosModules.stylixConfig
         self.nixosModules.minimalHome
+        self.nixosModules.sharedCaddy
+        self.nixosModules.sharedGlance
       ];
 
       networking.hostName = "nagato";

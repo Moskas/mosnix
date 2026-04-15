@@ -28,6 +28,7 @@
   flake.nixosModules.minimalHome = {
     config = {
       home-manager.users."moskas".imports = with self.homeModules; [
+        atuin
         btop
         git
         ranger
@@ -41,6 +42,7 @@
   flake.nixosModules.fullHome = {
     config = {
       home-manager.users."moskas".imports = with self.homeModules; [
+        atuin
         bat
         btop
         claude
