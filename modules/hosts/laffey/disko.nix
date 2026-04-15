@@ -1,13 +1,13 @@
 { inputs, ... }:
 {
-  flake.nixosModules.noshiro = {
+  flake.nixosModules.laffey = {
     imports = [
       inputs.disko.nixosModules.default
     ];
     config = {
       disko.devices = {
         disk = {
-          vda = {
+          sda = {
             device = "/dev/sda";
             type = "disk";
             content = {
@@ -64,27 +64,27 @@
               };
             };
           };
-          sshd = {
-            device = "/dev/sdc";
-            type = "disk";
-            content = {
-              type = "gpt";
-              root = {
-                size = "100%";
-                content = {
-                  type = "btrfs";
-                  extraArgs = [ "-f" ];
-                  subvolumes = {
-                    "/" = {
-                      mountpoint = "/";
-                      mountOptions = [ "compress=zstd" ];
-                    };
-                    mountpoint = "/mnt/disk2";
-                  };
-                };
-              };
-            };
-          };
+          # sshd = {
+          #   device = "/dev/sdc";
+          #   type = "disk";
+          #   content = {
+          #     type = "gpt";
+          #     root = {
+          #       size = "100%";
+          #       content = {
+          #         type = "btrfs";
+          #         extraArgs = [ "-f" ];
+          #         subvolumes = {
+          #           "/" = {
+          #             mountpoint = "/";
+          #             mountOptions = [ "compress=zstd" ];
+          #           };
+          #           mountpoint = "/mnt/disk2";
+          #         };
+          #       };
+          #     };
+          #   };
+          # };
         };
       };
     };
