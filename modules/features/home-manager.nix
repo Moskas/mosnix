@@ -29,6 +29,7 @@
     config = {
       home-manager.users."moskas".imports = with self.homeModules; [
         atuin
+        bat
         btop
         git
         ranger

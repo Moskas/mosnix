@@ -8,6 +8,15 @@
               root * /var/www
               file_server
           }
+          *.nagato.local {
+              tls internal
+          }
+          glance.nagato.local {
+              reverse_proxy http://localhost:8080
+          }
+          vault.nagato.local {
+              reverse_proxy http://localhost:8222
+          }
         '';
       };
       services.tailscale.permitCertUid = "caddy";

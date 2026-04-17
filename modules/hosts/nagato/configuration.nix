@@ -15,6 +15,8 @@
         self.nixosModules.minimalHome
         self.nixosModules.sharedCaddy
         self.nixosModules.sharedGlance
+        self.nixosModules.dns
+        self.nixosModules.vaultwarden
       ];
 
       networking.hostName = "nagato";
