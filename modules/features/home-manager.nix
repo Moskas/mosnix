@@ -49,11 +49,15 @@
         claude
         direnv
         emacs
+        fuzzel
         firefox
         git
+        kitty
+        noctalia
         opencode
         ranger
         starship
+        wallpapers
         zoxide
         zsh
       ];

@@ -8,16 +8,16 @@
           LoginGraceTime = 0;
           X11Forwarding = true;
         };
-        knownHosts = {
-          cheshire = {
-            hostNames = [ "cheshire" ];
-            publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJcyn8bcHt95Md8h93x630f2gfsTqaiwHXDyvu+iyuKW";
-          };
-          noshiro = {
-            hostNames = [ "noshiro" ];
-            publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqY9eUP1BDb71ejfs/a6AZN02VGtNqapu3ttCcmPo98";
-          };
-        };
+        # knownHosts = {
+        #   cheshire = {
+        #     hostNames = [ "cheshire" ];
+        #     publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJcyn8bcHt95Md8h93x630f2gfsTqaiwHXDyvu+iyuKW";
+        #   };
+        #   noshiro = {
+        #     hostNames = [ "noshiro" ];
+        #     publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqY9eUP1BDb71ejfs/a6AZN02VGtNqapu3ttCcmPo98";
+        #   };
+        # };
       };
 
       users.users.moskas.openssh.authorizedKeys.keys = [

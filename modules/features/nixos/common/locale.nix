@@ -9,10 +9,10 @@
         };
         console.useXkbConfig = true;
         i18n = {
-          defaultLocale = "pl_PL.UTF-8";
+          defaultLocale = "en_US.UTF-8";
           extraLocales = [
             "ja_JP.UTF-8/UTF-8"
-            "en_US.UTF-8/UTF-8"
+            "pl_PL.UTF-8/UTF-8"
           ];
         };
       };
