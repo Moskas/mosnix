@@ -1,0 +1,10 @@
+{
+  flake.nixosModules.jellyfin = {
+    config = {
+      services.jellyfin = {
+        enable = true;
+        openFirewall = true;
+      };
+    };
+  };
+}
