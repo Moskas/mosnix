@@ -1,6 +1,10 @@
 {
   flake.nixosModules.common =
-    { pkgs, lib, ... }:
+    {
+      pkgs,
+      lib,
+      ...
+    }:
     {
       config = {
         users.users.moskas = {

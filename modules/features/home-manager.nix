@@ -1,6 +1,5 @@
 { inputs, self, ... }:
 {
-
   flake.nixosModules.moskasHomeManager = {
     imports = [
       inputs.home-manager.nixosModules.default
@@ -13,7 +12,6 @@
 
     home-manager = {
       users."moskas" = {
-
         home = {
           username = "moskas";
           homeDirectory = "/home/moskas";
@@ -53,6 +51,7 @@
         firefox
         git
         kitty
+        niri
         noctalia
         opencode
         ranger

@@ -13,10 +13,12 @@
       };
     in
     {
-      options.moskas.colorscheme = lib.mkOption {
-        type = lib.types.str;
-        default = "gruvbox-dark-medium";
-        description = "Base16 colorscheme name from base16-schemes.";
+      options.moskas = {
+        colorscheme = lib.mkOption {
+          type = lib.types.str;
+          default = "gruvbox-dark-medium";
+          description = "Base16 colorscheme name from base16-schemes.";
+        };
       };
 
       config = {
