@@ -5,8 +5,8 @@
       config = {
         programs.eza = {
           enable = true;
-          enablezshintegration = lib.mkIf config.programs.zsh.enable true;
-          enablebashintegration = true;
+          enableZshIntegration = lib.mkIf config.programs.zsh.enable true;
+          enableBashIntegration = true;
           icons = "auto";
           git = true;
         };

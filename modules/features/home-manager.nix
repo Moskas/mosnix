@@ -29,6 +29,7 @@
         atuin
         bat
         btop
+        eza
         git
         ranger
         starship
@@ -47,13 +48,16 @@
         claude
         direnv
         emacs
+        eza
         fuzzel
         firefox
         git
         kitty
         niri
+        nixcord
         noctalia
         opencode
+        prism
         ranger
         starship
         wallpapers
