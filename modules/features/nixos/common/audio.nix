@@ -1,5 +1,5 @@
 {
-  flake.nixosModules.common =
+  flake.nixosModules.commonWorkstation =
     { pkgs, ... }:
     {
       config = {

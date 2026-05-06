@@ -11,6 +11,7 @@
     {
       imports = [
         self.nixosModules.common
+        self.nixosModules.commonWorkstation
         self.nixosModules.laptop
         self.nixosModules.niri
         self.nixosModules.ly

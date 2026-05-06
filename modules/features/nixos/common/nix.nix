@@ -9,11 +9,11 @@
     {
       environment.systemPackages = with pkgs; [
         nh
-        nix-tree
-        nixfmt
-        nixd
-        nix-inspect
-        nix-output-monitor
+        #nix-tree
+        #nixfmt
+        #nixd
+        #nix-inspect
+        #nix-output-monitor
       ];
 
       nix.registry = lib.mapAttrs (_: value: {
