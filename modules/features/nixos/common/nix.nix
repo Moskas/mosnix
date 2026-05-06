@@ -69,6 +69,12 @@
         };
       };
 
+      programs.nix-index = {
+        enable = true;
+        enableBashIntegration = true;
+        enableZshIntegration = true;
+      };
+
       environment.sessionVariables = {
         NIX_SSHOPS = "-tt";
         NH_FLAKE = "/home/moskas/Repos/new-flake";
