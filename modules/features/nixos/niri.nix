@@ -21,9 +21,6 @@
       programs.niri = {
         enable = true;
         settings = {
-          spawn-at-startup = [
-            { sh = "noctalia-shell"; }
-          ];
           input = {
             focus-follows-mouse = {
               enable = true;

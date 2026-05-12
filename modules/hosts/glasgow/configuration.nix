@@ -14,7 +14,7 @@
       inputs.stylix.nixosModules.stylix
       self.nixosModules.stylixConfig
       self.nixosModules.moskasHomeManager
-      self.nixosModules.fullHome
+      self.nixosModules.profile-lightweight
     ];
 
     networking = {

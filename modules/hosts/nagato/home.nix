@@ -5,7 +5,7 @@
     pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
     modules = [
       self.homeModules.moskasModule
-      self.homeModules.minimalHome
+      self.homeModules.profile-terminal
     ];
   };
 

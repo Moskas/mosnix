@@ -9,10 +9,13 @@
   flake.nixosModules.laffey =
     { lib, ... }:
     {
-      imports = [
-        self.nixosModules.common
-        self.nixosModules.moskasHomeManager
-        self.nixosModules.minimalHome
+      imports = with self.nixosModules; [
+        common
+        moskasHomeManager
+        profile-terminal
+
+        jellyfin
+        deluge
       ];
 
       networking.hostName = "laffey";

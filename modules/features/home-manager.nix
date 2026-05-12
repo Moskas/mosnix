@@ -23,47 +23,5 @@
     };
   };
 
-  flake.nixosModules.minimalHome = {
-    config = {
-      home-manager.users."moskas".imports = with self.homeModules; [
-        atuin
-        bat
-        btop
-        eza
-        git
-        ranger
-        starship
-        zoxide
-        zsh
-      ];
-    };
-  };
 
-  flake.nixosModules.fullHome = {
-    config = {
-      home-manager.users."moskas".imports = with self.homeModules; [
-        atuin
-        bat
-        btop
-        claude
-        direnv
-        emacs
-        eza
-        fuzzel
-        firefox
-        git
-        kitty
-        niri
-        nixcord
-        noctalia
-        opencode
-        prism
-        ranger
-        starship
-        wallpapers
-        zoxide
-        zsh
-      ];
-    };
-  };
 }
