@@ -2,17 +2,36 @@
 let
   homeModule = {
     imports = with self.homeModules; [
+      atuin
+      bat
+      btop
+      carapace
+      claude
+      direnv
+      emacs
+      eza
+      firefox
+      fuzzel
+      git
+      kitty
+      mpd
+      nixcord
       niri
       noctalia
-      kitty
-      fuzzel
+      opencode
+      prism
+      ranger
+      starship
       wallpapers
+      zoxide
+      zsh
     ];
     programs.niri.settings.spawn-at-startup = [
       { sh = "noctalia-shell"; }
     ];
   };
-in {
+in
+{
   flake.nixosModules.profile-full = {
     imports = [
       self.nixosModules.niri

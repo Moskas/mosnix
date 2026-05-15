@@ -38,7 +38,7 @@
           musicDirectory = "${config.home.homeDirectory}/Music";
 
           network = {
-            listenAddress = "127.0.0.1";
+            listenAddress = "localhost";
             port = 6600;
           };
 
