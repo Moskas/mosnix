@@ -9,8 +9,6 @@
       self.nixosModules.common
       self.nixosModules.commonWorkstation
       self.nixosModules.laptop
-      self.nixosModules.niri
-      self.nixosModules.ly
       inputs.stylix.nixosModules.stylix
       self.nixosModules.stylixConfig
       self.nixosModules.moskasHomeManager
