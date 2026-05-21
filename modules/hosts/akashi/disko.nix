@@ -11,16 +11,24 @@
             type = "disk";
             device = "/dev/sda";
             content = {
+              # GPT works fine with legacy BIOS as long as we have a BIOS
+              # boot partition (EF02) for GRUB to embed its core image into.
               type = "gpt";
               partitions = {
-                ESP = {
+                # GRUB core image lives here — no filesystem, raw partition
+                bios_boot = {
+                  size = "1M";
+                  type = "EF02";
+                  priority = 1; # must be first on disk
+                };
+                # Unencrypted /boot so GRUB can read kernel + initrd before
+                # unlocking LUKS. Keep this outside the LUKS container.
+                boot = {
                   size = "512M";
-                  type = "EF00";
                   content = {
                     type = "filesystem";
-                    format = "vfat";
+                    format = "ext4";
                     mountpoint = "/boot";
-                    mountOptions = [ "umask=0077" ];
                   };
                 };
                 luks = {
@@ -28,13 +36,9 @@
                   content = {
                     type = "luks";
                     name = "crypted";
-                    # disable settings.keyFile if you want to use interactive password entry
-                    # passwordFile = "/var/secret.key"; # Interactive
                     settings = {
                       allowDiscards = true;
-                      #keyFile = "/tmp/secret.key";
                     };
-                    #additionalKeyFiles = [ "/tmp/additionalSecret.key" ];
                     content = {
                       type = "btrfs";
                       extraArgs = [ "-f" ];
@@ -62,7 +66,7 @@
                         };
                         "/swap" = {
                           mountpoint = "/.swapvol";
-                          swap.swapfile.size = "12G";
+                          swap.swapfile.size = "4G";
                         };
                       };
                     };
