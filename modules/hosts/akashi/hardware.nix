@@ -1,6 +1,6 @@
 {
   flake.nixosModules.akashi =
-  # TODO Fill with correct hardware.nix config directly from host
+    # TODO Fill with correct hardware.nix config directly from host
     {
       config,
       lib,
@@ -21,7 +21,7 @@
         "sdhci_pci"
       ];
       boot.initrd.kernelModules = [ ];
-      boot.kernelModules = [ "kvm-intel" ];
+      boot.kernelModules = [ ];
       boot.extraModulePackages = [ ];
 
       nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

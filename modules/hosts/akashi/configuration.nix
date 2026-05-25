@@ -13,12 +13,7 @@
         self.nixosModules.common
         self.nixosModules.commonWorkstation
         self.nixosModules.laptop
-        #self.nixosModules.niri
-        #self.nixosModules.ly
-        #inputs.stylix.nixosModules.stylix
-        #self.nixosModules.stylixConfig
-        #self.nixosModules.moskasHomeManager
-        #self.nixosModules.fullHome
+        self.nixosModules.moskasHomeManager
         self.nixosModules.japanese-input
       ];
 
@@ -31,11 +26,49 @@
         efi.canTouchEfiVariables = lib.mkForce false;
         grub = {
           enable = true;
-          # Install GRUB to the MBR of the disk (not a partition)
           device = "/dev/sda";
-          # Prompt for the LUKS passphrase inside GRUB so it can read /boot
           enableCryptodisk = true;
         };
       };
+
+      # ──────────────────────────────────────────────
+      # Memory — X60 maxes at ~3 GB; compressed RAM is critical
+      # ──────────────────────────────────────────────
+      zramSwap.enable = true;
+
+      # ──────────────────────────────────────────────
+      # CPU / Power — always save power for heat & noise
+      # ──────────────────────────────────────────────
+      services.tlp.settings = {
+        CPU_SCALING_GOVERNOR_ON_AC = "powersave";
+        CPU_SCALING_MAX_FREQ_ON_AC = 1833000; # TODO verify with `cpufreq-info`
+        CPU_SCALING_MAX_FREQ_ON_BAT = 1200000;
+        CPU_SCALING_MIN_FREQ_ON_AC = 800000;
+        CPU_SCALING_MIN_FREQ_ON_BAT = 800000;
+      };
+
+      # ──────────────────────────────────────────────
+      # Fan control
+      # ──────────────────────────────────────────────
+      services.thinkfan.enable = true;
+
+      # ──────────────────────────────────────────────
+      # GPU — Intel 945GM framebuffer + power-saving
+      # Performance — personal device, no mitigations
+      # ──────────────────────────────────────────────
+      boot.kernelParams = [
+        "i915.enable_fbc=1"
+        "i915.lvds_downclock=1"
+        "i915.fastboot=1"
+        "nowatchdog"
+        "mitigations=off"
+      ];
+
+      # ──────────────────────────────────────────────
+      # WiFi — stock Intel 3945ABG
+      # ──────────────────────────────────────────────
+      boot.extraModprobeConfig = ''
+        options iwl3945 power_save=0
+      '';
     };
 }
