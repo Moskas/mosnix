@@ -66,9 +66,22 @@
 
       # ──────────────────────────────────────────────
       # WiFi — stock Intel 3945ABG
+      # ThinkPad hotkeys — enable volume buttons etc.
       # ──────────────────────────────────────────────
       boot.extraModprobeConfig = ''
         options iwl3945 power_save=0
+        options thinkpad_acpi hotkey_mask=0x00fdffff
       '';
+
+      # ──────────────────────────────────────────────
+      # Intel-undervolt — try if your CPU supports it
+      #   https://github.com/alisnic/ubuntu-thinkpad-x60
+      # Enable with: hardware.intel-undervolt.enable = true;
+      # Then set: hardware.intel-undervolt.undervolt.["CPU"] = -100;
+      # ──────────────────────────────────────────────
+      # hardware.intel-undervolt = {
+      #   enable = true;
+      #   undervolt = { "CPU" = -100; };
+      # };
     };
 }
