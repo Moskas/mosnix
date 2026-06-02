@@ -14,7 +14,8 @@ let
       { sh = "mako"; }
     ];
   };
-in {
+in
+{
   flake.nixosModules.profile-lightweight = {
     imports = [
       self.nixosModules.niri

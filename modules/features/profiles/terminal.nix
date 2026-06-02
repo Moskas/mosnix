@@ -13,7 +13,8 @@ let
       zsh
     ];
   };
-in {
+in
+{
   flake.nixosModules.profile-terminal = {
     home-manager.users."moskas".imports = [ homeModule ];
   };
