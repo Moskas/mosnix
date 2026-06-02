@@ -31,31 +31,19 @@
         };
       };
 
-      # ──────────────────────────────────────────────
-      # Memory — X60 maxes at ~3 GB; compressed RAM is critical
-      # ──────────────────────────────────────────────
       zramSwap.enable = true;
 
-      # ──────────────────────────────────────────────
-      # CPU / Power — always save power for heat & noise
-      # ──────────────────────────────────────────────
       services.tlp.settings = {
-        CPU_SCALING_GOVERNOR_ON_AC = "powersave";
+        # CPU_SCALING_GOVERNOR_ON_AC = "powersave";
         CPU_SCALING_MAX_FREQ_ON_AC = 1833000; # TODO verify with `cpufreq-info`
         CPU_SCALING_MAX_FREQ_ON_BAT = 1200000;
         CPU_SCALING_MIN_FREQ_ON_AC = 800000;
         CPU_SCALING_MIN_FREQ_ON_BAT = 800000;
       };
 
-      # ──────────────────────────────────────────────
-      # Fan control
-      # ──────────────────────────────────────────────
       services.thinkfan.enable = true;
 
-      # ──────────────────────────────────────────────
       # GPU — Intel 945GM framebuffer + power-saving
-      # Performance — personal device, no mitigations
-      # ──────────────────────────────────────────────
       boot.kernelParams = [
         "i915.enable_fbc=1"
         "i915.lvds_downclock=1"
@@ -64,21 +52,13 @@
         "mitigations=off"
       ];
 
-      # ──────────────────────────────────────────────
       # WiFi — stock Intel 3945ABG
       # ThinkPad hotkeys — enable volume buttons etc.
-      # ──────────────────────────────────────────────
       boot.extraModprobeConfig = ''
         options iwl3945 power_save=0
         options thinkpad_acpi hotkey_mask=0x00fdffff
       '';
 
-      # ──────────────────────────────────────────────
-      # Intel-undervolt — try if your CPU supports it
-      #   https://github.com/alisnic/ubuntu-thinkpad-x60
-      # Enable with: hardware.intel-undervolt.enable = true;
-      # Then set: hardware.intel-undervolt.undervolt.["CPU"] = -100;
-      # ──────────────────────────────────────────────
       # hardware.intel-undervolt = {
       #   enable = true;
       #   undervolt = { "CPU" = -100; };
