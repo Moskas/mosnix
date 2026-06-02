@@ -1,6 +1,5 @@
 {
   flake.nixosModules.akashi =
-    # TODO Fill with correct hardware.nix config directly from host
     {
       config,
       lib,
@@ -13,9 +12,12 @@
       ];
 
       boot.initrd.availableKernelModules = [
-        "xhci_pci"
+        "uhci_hcd"
         "ehci_pci"
+        "ata_piix"
         "ahci"
+        "firewire_ohci"
+        "uas"
         "usb_storage"
         "sd_mod"
         "sdhci_pci"
@@ -23,6 +25,8 @@
       boot.initrd.kernelModules = [ ];
       boot.kernelModules = [ ];
       boot.extraModulePackages = [ ];
+
+      swapDevices = [ ];
 
       nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
       hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
