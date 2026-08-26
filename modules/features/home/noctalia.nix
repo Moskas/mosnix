@@ -8,7 +8,7 @@
         self.homeModules.moskasDesktop
       ];
       config = {
-        programs.noctalia-shell = {
+        programs.noctalia = {
           enable = true;
           settings = {
             general = {

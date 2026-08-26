@@ -3,15 +3,21 @@
   ...
 }:
 {
-  flake.nixosModules.niri = {
-    imports = [ inputs.niri.nixosModules.niri ];
-    config = {
-      nixpkgs.overlays = [ inputs.niri.overlays.niri ];
-      programs.niri = {
-        enable = true;
+  flake.nixosModules.niri =
+    { pkgs, ... }:
+    {
+      imports = [ inputs.niri.nixosModules.niri ];
+      config = {
+        # Intentionally not applying inputs.niri.overlays.niri: it builds niri
+        # against *our* nixpkgs, which no longer provides `libdisplay-info_0_2`
+        # (removed upstream). Use niri-flake's own package instead, built
+        # against its own pinned nixpkgs where that dependency still exists.
+        programs.niri = {
+          enable = true;
+          package = inputs.niri.packages.${pkgs.system}.niri-stable;
+        };
       };
     };
-  };
 
   flake.homeModules.niri = {
     config = {

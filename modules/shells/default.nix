@@ -39,6 +39,7 @@
               exec nixos-rebuild switch \
                 --flake ".#$host" \
                 --target-host "$host" \
+                --use-remote-sudo \
                 --ask-sudo-password
             '';
           }

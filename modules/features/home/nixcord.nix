@@ -120,7 +120,7 @@
           plugins = {
             anonymiseFileNames.enable = true;
             petpet.enable = true;
-            ClearURLs.enable = true;
+            clearUrls.enable = true;
             betterFolders = {
               enable = false;
               closeAllFolders = true;
