@@ -24,6 +24,14 @@
               owner = "root";
               mode = "0400";
             };
+
+            laffey_runner = {
+              mode = "0400";
+            };
+
+            attic_token = {
+              mode = "0400";
+            };
           };
         };
       };
