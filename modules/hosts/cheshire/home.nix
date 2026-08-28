@@ -15,13 +15,14 @@
   };
 
   flake.homeModules.moskasModule = {
-
-    programs.obs-studio.package = (
-      pkgs.obs-studio.override {
-        cudaSupport = true;
-        pipewireSupport = true;
-      }
-    );
+    config = {
+      programs.obs-studio.package = (
+        pkgs.obs-studio.override {
+          cudaSupport = true;
+          pipewireSupport = true;
+        }
+      );
+    };
   };
 
 }

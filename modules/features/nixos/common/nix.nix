@@ -83,6 +83,7 @@
       };
 
       nixpkgs = {
+        overlays = [ inputs.mospkgs.overlays.default ];
         config = {
           allowUnfree = true;
         };

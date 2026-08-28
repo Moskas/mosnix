@@ -1,12 +1,21 @@
 {
   inputs,
   self,
-  lib,
   ...
 }:
 {
   flake.nixosConfigurations.cheshire = inputs.nixpkgs.lib.nixosSystem {
-    modules = [ self.nixosModules.cheshire ];
+    modules = [
+      self.nixosModules.cheshire
+      self.nixosModules.common
+      self.nixosModules.commonWorkstation
+      self.nixosModules.gaming
+      inputs.stylix.nixosModules.stylix
+      self.nixosModules.stylixConfig
+      self.nixosModules.moskasHomeManager
+      self.nixosModules.profile-full
+      self.nixosModules.vm-test
+    ];
   };
 
   flake.nixosModules.cheshire = {
@@ -28,6 +37,10 @@
 
     networking = {
       hostName = "cheshire";
+    };
+
+    services.sunshine = {
+      enable = true;
     };
   };
 }

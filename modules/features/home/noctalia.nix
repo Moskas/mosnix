@@ -1,4 +1,9 @@
-{ inputs, self, ... }:
+{
+  inputs,
+  lib,
+  self,
+  ...
+}:
 {
   flake.homeModules.noctalia =
     { config, ... }:
@@ -29,9 +34,12 @@
 
             backdrop.enabled = true;
 
-            location.address = "Wrocław, Poland";
+            location = {
+              auto_locate = false;
+              address = "Wrocław, Poland";
+            };
 
-            lockscreen.enabled = false;
+            #lockscreen.enabled = false;
 
             nightlight.enabled = true;
 
@@ -62,10 +70,14 @@
               width = 900;
             };
 
-            calendar.enabled = true;
-            calendar.account.minemoskas = {
-              name = "Main";
-              type = "google";
+            calendar = {
+              enabled = true;
+              account = {
+                minemoskas = {
+                  name = "Main";
+                  type = "google";
+                };
+              };
             };
 
             battery.warning_threshold = 15;
@@ -204,6 +216,17 @@
                 style = "minimal";
               };
             };
+
+            wallpaper = {
+              enabled = true;
+              directory = "/home/moskas/Pictures/Wallpapers/${lib.head (lib.splitString "-" config.lib.stylix.colors.scheme-slug)}/";
+              directory_light = "/home/moskas/Pictures/Wallpapers/${lib.head (lib.splitString "-" config.lib.stylix.colors.scheme-slug)}/dark/";
+              directory_dark = "/home/moskas/Pictures/Wallpapers/${lib.head (lib.splitString "-" config.lib.stylix.colors.scheme-slug)}/light/";
+              automation = {
+                enabled = true;
+              };
+            };
+
           };
         };
       };

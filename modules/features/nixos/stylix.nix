@@ -8,8 +8,8 @@
     }:
     let
       monoFont = {
-        package = pkgs.nerd-fonts.jetbrains-mono;
-        name = "JetBrains Mono Nerd Font";
+        package = pkgs.nerd-fonts.terminess-ttf;
+        name = "Terminess Nerd Font";
       };
     in
     {
