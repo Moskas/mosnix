@@ -7,6 +7,9 @@ let
       mako
       kitty
       fuzzel
+      shinbun
+      terminal-utils
+      tmux
       wallpapers
     ];
     wayland.windowManager.niri.settings._children = [

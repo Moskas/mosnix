@@ -21,7 +21,11 @@ let
       opencode
       prism
       ranger
+      shinbun
       starship
+      terminal-utils
+      tickrs
+      tmux
       wallpapers
       zoxide
       zsh

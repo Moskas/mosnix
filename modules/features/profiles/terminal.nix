@@ -9,6 +9,9 @@ let
       git
       ranger
       starship
+      shinbun
+      terminal-utils
+      tmux
       zoxide
       zsh
     ];

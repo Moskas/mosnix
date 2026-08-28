@@ -163,6 +163,19 @@
               ];
             };
 
+            notification = {
+              enable_daemon = true;
+              history_retention_hours = 12;
+              filter = {
+                feishin = {
+                  enabled = true;
+                  match = "feishin";
+                  show_toast = true;
+                  save_history = false;
+                };
+              };
+            };
+
             widget = {
               audio_visualizer = {
                 centered = false;
