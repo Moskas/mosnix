@@ -1,7 +1,6 @@
 {
   self,
   inputs,
-  pkgs,
   ...
 }:
 {
@@ -11,17 +10,13 @@
     modules = [
       self.homeModules.moskasModule
       self.homeModules.profile-full
+      self.homeModules.obs
     ];
   };
 
   flake.homeModules.moskasModule = {
     config = {
-      programs.obs-studio.package = (
-        pkgs.obs-studio.override {
-          cudaSupport = true;
-          pipewireSupport = true;
-        }
-      );
+      moskas.obs.cuda = true;
     };
   };
 

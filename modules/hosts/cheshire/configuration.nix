@@ -42,5 +42,10 @@
     services.sunshine = {
       enable = true;
     };
+
+    home-manager.users.moskas = {
+      imports = [ self.homeModules.obs ];
+      moskas.obs.cuda = true;
+    };
   };
 }

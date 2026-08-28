@@ -23,7 +23,7 @@
     {
       imports = [
         inputs.noctalia.homeModules.default
-        self.homeModules.moskasDesktop
+        self.homeModules.moskasOptions
       ];
       config = {
         programs.noctalia = {

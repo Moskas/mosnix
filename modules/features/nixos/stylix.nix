@@ -1,25 +1,16 @@
+{ self, ... }:
 {
   flake.nixosModules.stylixConfig =
     {
-      lib,
       pkgs,
       config,
       ...
     }:
     let
-      monoFont = {
-        package = pkgs.nerd-fonts.terminess-ttf;
-        name = "Terminess Nerd Font";
-      };
+      monoFont = config.moskas.fonts.mono;
     in
     {
-      options.moskas = {
-        colorscheme = lib.mkOption {
-          type = lib.types.str;
-          default = "gruvbox-dark-medium";
-          description = "Base16 colorscheme name from base16-schemes.";
-        };
-      };
+      imports = [ self.nixosModules.moskasOptions ];
 
       config = {
         stylix = {

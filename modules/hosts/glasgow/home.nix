@@ -10,7 +10,7 @@
   };
 
   flake.homeModules.moskasModule = {
-    imports = [ self.homeModules.moskasDesktop ];
+    imports = [ self.homeModules.moskasOptions ];
     moskas.desktop.bar.position = "bottom";
   };
 
