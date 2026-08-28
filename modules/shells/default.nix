@@ -53,12 +53,12 @@
 
           {
             name = "FLAKE";
-            value = "$(pwd)";
+            eval = "$PRJ_ROOT";
           }
 
           {
             name = "NH_FLAKE";
-            value = "$(pwd)";
+            eval = "$PRJ_ROOT";
           }
 
           {
