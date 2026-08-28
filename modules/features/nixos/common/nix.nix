@@ -59,11 +59,13 @@
             "https://nix-community.cachix.org"
             "https://moskas.cachix.org"
             "https://cache.nixos.org/"
+            "https://noctalia.cachix.org"
           ];
 
           trusted-public-keys = [
             "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
             "moskas.cachix.org-1:LcyLityXMILC1SenFSMMt7JgvUEOvS38Kza6b96TQEw="
+            "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
           ];
 
         };

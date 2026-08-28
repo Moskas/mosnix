@@ -9,9 +9,9 @@ let
       fuzzel
       wallpapers
     ];
-    programs.niri.settings.spawn-at-startup = [
-      { sh = "waybar"; }
-      { sh = "mako"; }
+    wayland.windowManager.niri.settings._children = [
+      { spawn-at-startup._args = [ "waybar" ]; }
+      { spawn-at-startup._args = [ "mako" ]; }
     ];
   };
 in

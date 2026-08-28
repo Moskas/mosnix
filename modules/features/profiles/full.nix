@@ -26,8 +26,8 @@ let
       zoxide
       zsh
     ];
-    programs.niri.settings.spawn-at-startup = [
-      { sh = "noctalia-shell"; }
+    wayland.windowManager.niri.settings._children = [
+      { spawn-at-startup._args = [ "noctalia" ]; }
     ];
   };
 in

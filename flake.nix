@@ -43,11 +43,8 @@
       url = "github:Moskas/yotei";
     };
     llm-agents.url = "github:numtide/llm-agents.nix";
-    niri = {
-      url = "github:sodiboo/niri-flake";
-    };
     noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
+      url = "github:noctalia-dev/noctalia/cachix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixcord = {

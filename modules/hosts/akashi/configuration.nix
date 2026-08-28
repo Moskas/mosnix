@@ -26,7 +26,7 @@
         efi.canTouchEfiVariables = lib.mkForce false;
         grub = {
           enable = true;
-          # disko config sets this one automaticall
+          # disko config sets this one automatically
           # device = "/dev/sda";
           enableCryptodisk = true;
         };
