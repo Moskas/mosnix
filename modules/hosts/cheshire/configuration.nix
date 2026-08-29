@@ -9,6 +9,7 @@
       self.nixosModules.cheshire
       self.nixosModules.common
       self.nixosModules.commonWorkstation
+      self.nixosModules.nvidia
       self.nixosModules.gaming
       inputs.stylix.nixosModules.stylix
       self.nixosModules.stylixConfig
@@ -46,6 +47,14 @@
     home-manager.users.moskas = {
       imports = [ self.homeModules.obs ];
       moskas.obs.cuda = true;
+      wayland.windowManager.niri.settings._children = [
+        {
+          output = {
+            _args = [ "Acer Technologies XB253Q TH5EE0058521" ];
+            mode = "1920x1080@143.981";
+          };
+        }
+      ];
     };
   };
 }

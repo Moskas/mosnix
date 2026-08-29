@@ -9,7 +9,7 @@
     {
       config = {
         stylix.targets.firefox = {
-          profileNames = [ "default" ];
+          profileNames = [ "moskas" ];
           firefoxGnomeTheme.enable = true;
         };
 
@@ -120,7 +120,7 @@
             };
           };
 
-          profiles.default = {
+          profiles."moskas" = {
             settings = {
               "browser.uiCustomization.state" =
                 ''{"placements":{"widget-overflow-fixed-list":[],"unified-extensions-area":["dearrow_ajay_app-browser-action","_testpilot-containers-browser-action","_d7742d87-e61d-4b78-b8a1-b469842139fa_-browser-action","jid1-mnnxcxisbpnsxq_jetpack-browser-action","sponsorblocker_ajay_app-browser-action","ublock0_raymondhill_net-browser-action","_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action","addon_darkreader_org-browser-action","7esoorv3_alefvanoon_anonaddy_me-browser-action","_762f9885-5a13-4abd-9c77-433dcd38b8fd_-browser-action","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action","_4b7db180-f46c-4955-afaf-a03913751acc_-browser-action","frankerfacez_frankerfacez_com-browser-action"],"nav-bar":["sidebar-button","back-button","forward-button","stop-reload-button","customizableui-special-spring4","urlbar-container","vertical-spacer","customizableui-special-spring6","downloads-button","unified-extensions-button"],"toolbar-menubar":["menubar-items"],"TabsToolbar":[],"vertical-tabs":["tabbrowser-tabs"],"PersonalToolbar":["import-button","personal-bookmarks"]},"seen":["developer-button","screenshot-button","_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action","addon_darkreader_org-browser-action","dearrow_ajay_app-browser-action","_testpilot-containers-browser-action","7esoorv3_alefvanoon_anonaddy_me-browser-action","jid1-mnnxcxisbpnsxq_jetpack-browser-action","_762f9885-5a13-4abd-9c77-433dcd38b8fd_-browser-action","sponsorblocker_ajay_app-browser-action","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action","ublock0_raymondhill_net-browser-action","_d7742d87-e61d-4b78-b8a1-b469842139fa_-browser-action","_4b7db180-f46c-4955-afaf-a03913751acc_-browser-action","frankerfacez_frankerfacez_com-browser-action"],"dirtyAreaCache":["nav-bar","TabsToolbar","vertical-tabs","PersonalToolbar","toolbar-menubar","unified-extensions-area"],"currentVersion":23,"newElementCount":8}'';
@@ -128,6 +128,79 @@
               "sidebar.verticalTabs.dragToPinPromo.dismissed" = "true";
               # Disable window buttons when client side decorations are off
               "browser.tabs.inTitlebar" = 0;
+              "browser.startup.homepage" = "https://nixos.org";
+              "browser.search.region" = "PL";
+              "browser.search.isUS" = false;
+              "distribution.searchplugins.defaultLocale" = "pl-PL";
+              "general.useragent.locale" = "pl-PL";
+              "app.update.auto" = false;
+              "browser.bookmarks.showMobileBookmarks" = true;
+              "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+
+              # Startup
+              #"browser.aboutConfig.showWarning" = false;
+              #"browser.newtabpage.enabled" = false;
+              #"browser.newtab.preload" = false;
+              #"browser.newtabpage.activity-stream.feeds.telemetry" = false;
+              #"browser.newtabpage.activity-stream.telemetry" = false;
+              #"browser.newtabpage.activity-stream.feeds.snippets" = false;
+              #"browser.newtabpage.activity-stream.feeds.section.topstories" = false;
+              #"browser.newtabpage.activity-stream.section.highlights.includePocket" =
+              #  false;
+              #"browser.newtabpage.activity-stream.feeds.discoverystreamfeed" = false;
+              #"browser.newtabpage.activity-stream.showSponsored" = false;
+              #"browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+              #"browser.newtabpage.activity-stream.default.sites" = "";
+
+              # Login prompts
+              "signon.rememberSignons" = false;
+              "signon.autofillForms" = false;
+              "signon.formlessCapture.enabled" = false;
+              "network.auth.subresource-http-auth-allow" = 1;
+              "extensions.enabledScopes" = 5;
+              "extensions.webextensions.restrictedDomains" = "";
+
+              # Telemetry
+              "datareporting.policy.dataSubmissionEnabled" = false;
+              "datareporting.healthreport.uploadEnabled" = false;
+              "toolkit.telemetry.enabled" = false;
+              "toolkit.telemetry.unified" = false;
+              "toolkit.telemetry.server" = "data:,";
+              "toolkit.telemetry.archive.enabled" = false;
+              "toolkit.telemetry.newProfilePing.enabled" = false;
+              "toolkit.telemetry.shutdownPingSender.enabled" = false;
+              "toolkit.telemetry.updatePing.enabled" = false;
+              "toolkit.telemetry.bhrPing.enabled" = false;
+              "toolkit.telemetry.firstShutdownPing.enabled" = false;
+              "toolkit.telemetry.coverage.opt-out" = true;
+              "toolkit.coverage.opt-out" = true;
+              "toolkit.coverage.endpoint.base" = "";
+              "browser.ping-centre.telemetry" = false;
+              "browser.selfsupport.url" = "";
+              "pocket.enabled" = false;
+              "beacon.enabled" = false;
+              "network.captive-portal-service.enabled" = false;
+
+              # Fingerprinting
+              #"privacy.resistFingerprinting" = true;
+              #"privacy.resistFingerprinting.block_mozAddonManager" = true;
+              #"browser.startup.blankWindow" = false;
+              "browser.display.use_system_colors" = true;
+
+              # Cookies
+              "browser.contentblocking.category" = "standard";
+              "privacy.partition.serviceWorkers" = false;
+              "privacy.partition.always_partition_third_party_non_cookie_storage" = true;
+              "privacy.partition.always_partition_third_party_non_cookie_storage.exempt_sessionstorage" = true;
+
+              # Performance
+              "network.http.throttle.version" = 1; # Stops youtube/twitch from downgrading quality and stopping playback while it does it
+
+              # Webgl
+              "webgl.force-enabled" = true;
+
+              # Sidebar
+              "sidebar.revamp" = true;
             };
             search = {
               default = "StartPage";

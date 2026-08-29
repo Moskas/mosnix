@@ -9,6 +9,7 @@ let
       claude
       direnv
       emacs
+      easyeffects
       eza
       firefox
       fuzzel

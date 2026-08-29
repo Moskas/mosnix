@@ -233,8 +233,8 @@
             wallpaper = {
               enabled = true;
               directory = "/home/moskas/Pictures/Wallpapers/${lib.head (lib.splitString "-" config.lib.stylix.colors.scheme-slug)}/";
-              directory_light = "/home/moskas/Pictures/Wallpapers/${lib.head (lib.splitString "-" config.lib.stylix.colors.scheme-slug)}/dark/";
-              directory_dark = "/home/moskas/Pictures/Wallpapers/${lib.head (lib.splitString "-" config.lib.stylix.colors.scheme-slug)}/light/";
+              directory_dark = "/home/moskas/Pictures/Wallpapers/${lib.head (lib.splitString "-" config.lib.stylix.colors.scheme-slug)}/dark/";
+              directory_light = "/home/moskas/Pictures/Wallpapers/${lib.head (lib.splitString "-" config.lib.stylix.colors.scheme-slug)}/light/";
               automation = {
                 enabled = true;
               };
