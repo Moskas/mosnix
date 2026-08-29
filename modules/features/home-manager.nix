@@ -1,13 +1,8 @@
-{ inputs, self, ... }:
+{ inputs, ... }:
 {
   flake.nixosModules.moskasHomeManager = {
     imports = [
       inputs.home-manager.nixosModules.default
-    ];
-
-    nixpkgs.overlays = [
-      inputs.emacs-overlay.overlay
-      inputs.llm-agents.overlays.shared-nixpkgs
     ];
 
     home-manager = {
@@ -15,7 +10,7 @@
         home = {
           username = "moskas";
           homeDirectory = "/home/moskas";
-          stateVersion = "25.11";
+          stateVersion = "26.05";
         };
       };
       useGlobalPkgs = true;

@@ -83,7 +83,11 @@
       };
 
       nixpkgs = {
-        overlays = [ inputs.mospkgs.overlays.default ];
+        overlays = [
+          inputs.mospkgs.overlays.default
+          inputs.emacs-overlay.overlay
+          inputs.llm-agents.overlays.shared-nixpkgs
+        ];
         config = {
           allowUnfree = true;
         };
