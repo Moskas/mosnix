@@ -46,6 +46,9 @@
         })
 
         {
+          # Feature selection (`moskas.home.<x>.enable`) is resolved here, on the
+          # NixOS side. Setting it under `home-manager.users.moskas` has no
+          # effect - toggle features from the host's NixOS module.
           home-manager.users."moskas".imports = [
             self.homeModules.moskasOptions
           ]
