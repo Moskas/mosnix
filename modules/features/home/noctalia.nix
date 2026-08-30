@@ -6,7 +6,7 @@
 }:
 {
   flake.homeModules.noctalia =
-    { config, ... }:
+    { config, pkgs, ... }:
     let
       # Shared capsule-group styling for the bar.
       capsuleGroup =
@@ -19,6 +19,7 @@
           padding = 6.0;
         }
         // args;
+      theme-slug = lib.head (lib.splitString "-" config.lib.stylix.colors.scheme-slug);
     in
     {
       imports = [
@@ -108,13 +109,14 @@
             bar.main = {
               position = config.moskas.desktop.bar.position;
               margin_ends = 0;
-              padding = 8;
+              padding = 12;
               radius = 0;
               shadow = false;
               thickness = 32;
-              widget_spacing = 18;
+              widget_spacing = 12;
 
               start = [
+                "control-center"
                 "workspaces"
                 "group:g2"
                 "audio_visualizer"
@@ -200,8 +202,11 @@
               };
 
               "control-center" = {
-                custom_image_colorize = true;
-                glyph = "nix";
+                custom_image_colorize = false;
+                glyph = "";
+                # Scalable would have been better but it's not aliased correctly
+                custom_image = "${pkgs.nixos-icons}/share/icons/hicolor/128x128/apps/nix-snowflake.png";
+                scale = 1.15;
               };
 
               media = {
@@ -232,9 +237,9 @@
 
             wallpaper = {
               enabled = true;
-              directory = "/home/moskas/Pictures/Wallpapers/${lib.head (lib.splitString "-" config.lib.stylix.colors.scheme-slug)}/";
-              directory_dark = "/home/moskas/Pictures/Wallpapers/${lib.head (lib.splitString "-" config.lib.stylix.colors.scheme-slug)}/dark/";
-              directory_light = "/home/moskas/Pictures/Wallpapers/${lib.head (lib.splitString "-" config.lib.stylix.colors.scheme-slug)}/light/";
+              directory = "/home/moskas/Pictures/Wallpapers/${theme-slug}}/";
+              directory_dark = "/home/moskas/Pictures/Wallpapers/${theme-slug}/dark/";
+              directory_light = "/home/moskas/Pictures/Wallpapers/${theme-slug}/light/";
               automation = {
                 enabled = true;
               };

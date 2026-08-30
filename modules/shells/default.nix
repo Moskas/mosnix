@@ -43,6 +43,22 @@
                 --ask-sudo-password
             '';
           }
+          {
+            name = "vm";
+            help = "Build a test-vm for a given hostname";
+            command = ''
+              host="''${1:-}"
+
+              if [ -z "$host" ]; then
+                echo "Usage: vm <hostname>"
+                exit 1
+              fi
+
+              rm -f -- *.qcow2 # For clean filesystem
+              nixos-rebuild build-vm --flake .#"$host"
+              ./result/bin/run-"$host"-vm
+            '';
+          }
         ];
 
         env = [

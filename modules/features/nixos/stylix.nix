@@ -29,10 +29,10 @@
             emoji = monoFont;
 
             sizes = {
-              desktop = 14;
-              terminal = 14;
-              popups = 14;
-              applications = 14;
+              desktop = config.moskas.fonts.sizes.desktop;
+              terminal = config.moskas.fonts.sizes.terminal;
+              popups = config.moskas.fonts.sizes.popups;
+              applications = config.moskas.fonts.sizes.applications;
             };
           };
 

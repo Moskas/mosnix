@@ -28,6 +28,7 @@ let
       tickrs
       tmux
       wallpapers
+      zathura
       zoxide
       zsh
     ];
