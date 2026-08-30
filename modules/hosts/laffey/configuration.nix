@@ -9,13 +9,14 @@
   flake.nixosModules.laffey = {
     imports = with self.nixosModules; [
       common
-      moskasHomeManager
-      profile-terminal
+      moskasProfile
       vm-test
 
       jellyfin
       deluge
     ];
+
+    moskas.profile = "terminal";
 
     networking.hostName = "laffey";
   };

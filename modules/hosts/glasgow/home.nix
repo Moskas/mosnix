@@ -1,17 +1,11 @@
 { self, inputs, ... }:
 {
-
-  flake.homeConfigurations.moskas = inputs.home-manager.lib.homeManagerConfiguration {
-    pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
+  flake.homeConfigurations.glasgow = inputs.home-manager.lib.homeManagerConfiguration {
+    pkgs = self.lib.moskas.homePkgs;
     modules = [
-      self.homeModules.moskasModule
-      self.homeModules.profile-full
+      self.homeModules.standalone-base
+      self.homeModules.standalone-lightweight
+      { moskas.desktop.bar.position = "bottom"; }
     ];
   };
-
-  flake.homeModules.moskasModule = {
-    imports = [ self.homeModules.moskasOptions ];
-    moskas.desktop.bar.position = "bottom";
-  };
-
 }

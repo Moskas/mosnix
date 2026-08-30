@@ -13,8 +13,7 @@
       self.nixosModules.gaming
       inputs.stylix.nixosModules.stylix
       self.nixosModules.stylixConfig
-      self.nixosModules.moskasHomeManager
-      self.nixosModules.profile-full
+      self.nixosModules.moskasProfile
       self.nixosModules.vm-test
     ];
   };
@@ -40,12 +39,17 @@
       hostName = "cheshire";
     };
 
+    moskas = {
+      profile = "full";
+      # Resolved on the NixOS side into the home feature set.
+      home.obs.enable = true;
+    };
+
     services.sunshine = {
       enable = true;
     };
 
     home-manager.users.moskas = {
-      imports = [ self.homeModules.obs ];
       moskas.obs.cuda = true;
       wayland.windowManager.niri.settings._children = [
         {

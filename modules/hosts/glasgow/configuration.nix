@@ -11,9 +11,11 @@
       self.nixosModules.laptop
       inputs.stylix.nixosModules.stylix
       self.nixosModules.stylixConfig
-      self.nixosModules.moskasHomeManager
-      self.nixosModules.profile-lightweight
+      self.nixosModules.moskasProfile
     ];
+
+    moskas.profile = "lightweight";
+    home-manager.users.moskas.moskas.desktop.bar.position = "bottom";
 
     networking = {
       hostName = "glasgow";

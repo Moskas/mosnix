@@ -1,12 +1,15 @@
 {
   inputs,
   lib,
+  self,
   ...
 }:
 {
   flake.nixosModules.common =
     { pkgs, ... }:
     {
+      imports = [ self.nixosModules.moskasOverlays ];
+
       environment.systemPackages = with pkgs; [
         nh
         #nix-tree
@@ -82,15 +85,17 @@
         NH_FLAKE = "/home/moskas/Repos/new-flake";
       };
 
-      nixpkgs = {
-        overlays = [
-          inputs.mospkgs.overlays.default
-          inputs.emacs-overlay.overlay
-          inputs.llm-agents.overlays.shared-nixpkgs
-        ];
-        config = {
-          allowUnfree = true;
-        };
-      };
+      nixpkgs.config.allowUnfree = true;
     };
+
+  # Shared so moskasProfile can pull the overlays in for hosts that don't import
+  # `common` (e.g. the WSL host). Stable key dedups when both are imported.
+  flake.nixosModules.moskasOverlays = {
+    key = "moskas/overlays";
+    nixpkgs.overlays = [
+      inputs.mospkgs.overlays.default
+      inputs.emacs-overlay.overlay
+      inputs.llm-agents.overlays.shared-nixpkgs
+    ];
+  };
 }

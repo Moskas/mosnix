@@ -13,11 +13,12 @@
       self.nixosModules.laptop
       inputs.stylix.nixosModules.stylix
       self.nixosModules.stylixConfig
-      self.nixosModules.moskasHomeManager
-      self.nixosModules.profile-full
+      self.nixosModules.moskasProfile
       self.nixosModules.vm-test
       self.nixosModules.japanese-input
     ];
+
+    moskas.profile = "full";
 
     networking = {
       hostName = "kashino";
