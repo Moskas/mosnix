@@ -14,7 +14,7 @@
       self.nixosModules.moskasProfile
     ];
 
-    moskas.profile = "lightweight";
+    moskas.profile = "full";
     home-manager.users.moskas.moskas.desktop.bar.position = "bottom";
 
     networking = {
