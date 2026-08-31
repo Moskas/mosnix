@@ -18,10 +18,12 @@
     }:
     {
       imports = [
-        self.nixosModules.moskasHomeManager
+        self.nixosModules.moskasProfile
         "${modulesPath}/profiles/minimal.nix"
         inputs.wsl.nixosModules.wsl
       ];
+
+      moskas.profile = "terminal";
       wsl = {
         enable = true;
         defaultUser = "moskas";
@@ -39,7 +41,5 @@
 
       system.stateVersion = "22.05";
       nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-
-      home-manager.users.moskas = self.homeModules.moskasModule;
     };
 }

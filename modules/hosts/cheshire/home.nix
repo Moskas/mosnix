@@ -1,23 +1,12 @@
+{ self, inputs, ... }:
 {
-  self,
-  inputs,
-  ...
-}:
-{
-
-  flake.homeConfigurations.moskas = inputs.home-manager.lib.homeManagerConfiguration {
-    pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
+  flake.homeConfigurations.cheshire = inputs.home-manager.lib.homeManagerConfiguration {
+    pkgs = self.lib.moskas.homePkgs;
     modules = [
-      self.homeModules.moskasModule
-      self.homeModules.profile-full
+      self.homeModules.standalone-base
+      self.homeModules.standalone-graphical
       self.homeModules.obs
+      # { moskas.obs.cuda = true; }
     ];
   };
-
-  flake.homeModules.moskasModule = {
-    config = {
-      moskas.obs.cuda = true;
-    };
-  };
-
 }

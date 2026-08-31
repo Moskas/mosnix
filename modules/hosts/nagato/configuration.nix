@@ -11,9 +11,10 @@
     {
       imports = [
         self.nixosModules.common
-        self.nixosModules.moskasHomeManager
-        self.nixosModules.profile-terminal
+        self.nixosModules.moskasProfile
       ];
+
+      moskas.profile = "terminal";
 
       networking.hostName = "nagato";
 

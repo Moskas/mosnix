@@ -13,11 +13,11 @@
       self.nixosModules.laptop
       inputs.stylix.nixosModules.stylix
       self.nixosModules.stylixConfig
-      self.nixosModules.moskasHomeManager
-      self.nixosModules.profile-full
+      self.nixosModules.moskasProfile
       self.nixosModules.vm-test
     ];
 
+    moskas.profile = "graphical";
     moskas.colorscheme = "solarized-dark";
 
     networking.hostName = "noshiro";
