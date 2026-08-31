@@ -47,9 +47,9 @@
           "zsh"
         ];
 
-        # Copied verbatim from the pre-refactor profiles/{terminal,lightweight,full}.nix
-        # import lists so behaviour is byte-identical at cutover.
-        terminalList = [
+        # The `terminal` preset is the base; `graphical` layers GUI features on
+        # top. `graphicalFeatures` equals the pre-refactor `full` import list.
+        terminalFeatures = [
           "atuin"
           "bat"
           "btop"
@@ -64,32 +64,14 @@
           "zsh"
         ];
 
-        lightweightList = [
-          "niri"
-          "waybar"
-          "mako"
-          "kitty"
-          "fuzzel"
-          "shinbun"
-          "terminal-utils"
-          "tmux"
-          "wallpapers"
-          "zathura"
-        ];
-
-        fullList = [
-          "atuin"
-          "bat"
-          "btop"
+        graphicalExtras = [
           "carapace"
           "claude"
           "direnv"
           "emacs"
           "easyeffects"
-          "eza"
           "firefox"
           "fuzzel"
-          "git"
           "kitty"
           "mpd"
           "nixcord"
@@ -97,17 +79,12 @@
           "noctalia"
           "opencode"
           "prism"
-          "ranger"
-          "shinbun"
-          "starship"
-          "terminal-utils"
           "tickrs"
-          "tmux"
           "wallpapers"
           "zathura"
-          "zoxide"
-          "zsh"
         ];
+
+        graphicalFeatures = terminalFeatures ++ graphicalExtras;
 
         mkHome = names: lib.genAttrs names (_: true);
       in
@@ -115,16 +92,10 @@
         inherit featureList;
         presets = {
           terminal = {
-            desktop = false;
-            home = mkHome terminalList;
+            home = mkHome terminalFeatures;
           };
-          lightweight = {
-            desktop = true;
-            home = mkHome lightweightList;
-          };
-          full = {
-            desktop = true;
-            home = mkHome fullList;
+          graphical = {
+            home = mkHome graphicalFeatures;
           };
         };
       };

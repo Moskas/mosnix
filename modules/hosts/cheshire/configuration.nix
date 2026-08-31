@@ -40,7 +40,8 @@
     };
 
     moskas = {
-      profile = "full";
+      profile = "graphical";
+      obs.cuda = true;
       # Resolved on the NixOS side into the home feature set.
       home.obs.enable = true;
     };
@@ -50,7 +51,6 @@
     };
 
     home-manager.users.moskas = {
-      moskas.obs.cuda = true;
       wayland.windowManager.niri.settings._children = [
         {
           output = {

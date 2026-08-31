@@ -1,10 +1,12 @@
-{ lib, config, ... }:
+{ lib, ... }:
 let
-  inherit (config.flake.lib.moskas.profiles) featureList;
-
-  # Single declaration site for every `moskas.*` option. Exported for both
-  # module systems; an option unread by one system (e.g. `colorscheme` in
-  # home-manager) is simply inert there.
+  # Declaration site for the `moskas.*` settings knobs (theme, fonts, bar
+  # position, ...). Exported for both module systems; an option unread by one
+  # system (e.g. `colorscheme` in home-manager) is simply inert there.
+  #
+  # Variant selection (`moskas.profile`, `moskas.home.<feature>.enable`) lives
+  # separately in modules/features/profiles/variant-options.nix - it is only
+  # meaningful on the NixOS side.
   moskasOptions =
     { pkgs, ... }:
     {
@@ -13,30 +15,6 @@ let
       key = "moskas/options";
 
       options.moskas = {
-        profile = lib.mkOption {
-          type = lib.types.enum [
-            "full"
-            "lightweight"
-            "terminal"
-          ];
-          default = "terminal";
-          description = "Preset seeding default enable-state for the desktop and graphical feature groups.";
-        };
-
-        desktop.enable = lib.mkOption {
-          type = lib.types.bool;
-          default = false;
-          description = "Whether this host runs a Wayland desktop (compositor + display manager). Raised by graphical profiles.";
-        };
-
-        home = lib.genAttrs featureList (name: {
-          enable = lib.mkOption {
-            type = lib.types.bool;
-            default = false;
-            description = "Enable the ${name} home feature module.";
-          };
-        });
-
         colorscheme = lib.mkOption {
           type = lib.types.str;
           default = "gruvbox-dark-medium";

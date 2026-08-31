@@ -17,7 +17,7 @@
       self.nixosModules.vm-test
     ];
 
-    moskas.profile = "full";
+    moskas.profile = "graphical";
     moskas.colorscheme = "solarized-dark";
 
     networking.hostName = "noshiro";
