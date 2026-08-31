@@ -10,7 +10,7 @@
       config = {
         stylix.targets.firefox = {
           profileNames = [ "moskas" ];
-          firefoxGnomeTheme.enable = true;
+          colorTheme.enable = true;
         };
 
         programs.firefox = {
@@ -61,26 +61,62 @@
                 "uBlock0@raymondhill.net" = {
                   install_url = moz "ublock-origin";
                   installation_mode = "force_installed";
-                  updates_disabled = true;
                 };
 
                 "{d7742d87-e61d-4b78-b8a1-b469842139fa}" = {
                   install_url = moz "vimium-ff";
                   installation_mode = "force_installed";
-                  updates_disabled = true;
                 };
 
                 "addon@darkreader.org" = {
                   install_url = moz "darkreader";
                   installation_mode = "force_installed";
-                  updates_disabled = true;
                 };
 
-                # "" = {
-                #   install_url = moz "";
-                #   installation_mode = "force_installed";
-                #   updates_disabled = true;
-                # };
+                "{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d}" = {
+                  install_url = moz "styl-us";
+                  installation_mode = "force_installed";
+                };
+
+                "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
+                  install_url = moz "bitwarden-password-manager";
+                  installation_mode = "force_installed";
+                };
+
+                "firefox@betterttv.net" = {
+                  install_url = moz "betterttv";
+                  installation_mode = "force_installed";
+                };
+
+                "sponsorBlocker@ajay.app" = {
+                  install_url = moz "sponsorblock";
+                  installation_mode = "force_installed";
+                };
+
+                "{762f9885-5a13-4abd-9c77-433dcd38b8fd}" = {
+                  install_url = moz "return-youtube-dislikes";
+                  installation_mode = "force_installed";
+                };
+
+                "jid1-MnnxcxisBpnsXQ@jetpack" = {
+                  install_url = moz "privacy-badger17";
+                  installation_mode = "force_installed";
+                };
+
+                "7esoorv3@alefvanoon.anonaddy.me" = {
+                  install_url = moz "libredirect";
+                  installation_mode = "force_installed";
+                };
+
+                "deArrow@ajay.app" = {
+                  install_url = moz "dearrow";
+                  installation_mode = "force_installed";
+                };
+
+                "@testpilot-containers" = {
+                  install_url = moz "multi-account-containers";
+                  installation_mode = "force_installed";
+                };
               };
 
             # Extension configuration
@@ -121,11 +157,15 @@
           };
 
           profiles."moskas" = {
+            # stylix's colorTheme target seeds the Firefox Color extension's
+            # settings; acknowledge that it may overwrite existing ext state.
+            extensions.force = true;
+
             settings = {
               "browser.uiCustomization.state" =
                 ''{"placements":{"widget-overflow-fixed-list":[],"unified-extensions-area":["dearrow_ajay_app-browser-action","_testpilot-containers-browser-action","_d7742d87-e61d-4b78-b8a1-b469842139fa_-browser-action","jid1-mnnxcxisbpnsxq_jetpack-browser-action","sponsorblocker_ajay_app-browser-action","ublock0_raymondhill_net-browser-action","_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action","addon_darkreader_org-browser-action","7esoorv3_alefvanoon_anonaddy_me-browser-action","_762f9885-5a13-4abd-9c77-433dcd38b8fd_-browser-action","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action","_4b7db180-f46c-4955-afaf-a03913751acc_-browser-action","frankerfacez_frankerfacez_com-browser-action"],"nav-bar":["sidebar-button","back-button","forward-button","stop-reload-button","customizableui-special-spring4","urlbar-container","vertical-spacer","customizableui-special-spring6","downloads-button","unified-extensions-button"],"toolbar-menubar":["menubar-items"],"TabsToolbar":[],"vertical-tabs":["tabbrowser-tabs"],"PersonalToolbar":["import-button","personal-bookmarks"]},"seen":["developer-button","screenshot-button","_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action","addon_darkreader_org-browser-action","dearrow_ajay_app-browser-action","_testpilot-containers-browser-action","7esoorv3_alefvanoon_anonaddy_me-browser-action","jid1-mnnxcxisbpnsxq_jetpack-browser-action","_762f9885-5a13-4abd-9c77-433dcd38b8fd_-browser-action","sponsorblocker_ajay_app-browser-action","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action","ublock0_raymondhill_net-browser-action","_d7742d87-e61d-4b78-b8a1-b469842139fa_-browser-action","_4b7db180-f46c-4955-afaf-a03913751acc_-browser-action","frankerfacez_frankerfacez_com-browser-action"],"dirtyAreaCache":["nav-bar","TabsToolbar","vertical-tabs","PersonalToolbar","toolbar-menubar","unified-extensions-area"],"currentVersion":23,"newElementCount":8}'';
-              "sidebar.verticalTabs" = "true";
-              "sidebar.verticalTabs.dragToPinPromo.dismissed" = "true";
+              "sidebar.verticalTabs" = true;
+              "sidebar.verticalTabs.dragToPinPromo.dismissed" = true;
               # Disable window buttons when client side decorations are off
               "browser.tabs.inTitlebar" = 0;
               "browser.startup.homepage" = "https://nixos.org";
