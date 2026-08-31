@@ -14,6 +14,7 @@
       inputs.stylix.nixosModules.stylix
       self.nixosModules.stylixConfig
       self.nixosModules.moskasProfile
+      self.nixosModules.secureboot
       self.nixosModules.vm-test
     ];
 

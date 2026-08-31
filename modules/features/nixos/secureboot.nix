@@ -1,6 +1,7 @@
+{ inputs, ... }:
 {
   flake.nixosModules.secureboot =
-    { inputs, lib, ... }:
+    { lib, ... }:
     {
       imports = [ inputs.lanzaboote.nixosModules.lanzaboote ];
       config = {

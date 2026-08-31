@@ -11,6 +11,8 @@
       self.nixosModules.commonWorkstation
       self.nixosModules.nvidia
       self.nixosModules.gaming
+      self.nixosModules.sunshine
+      self.nixosModules.rgb
       inputs.stylix.nixosModules.stylix
       self.nixosModules.stylixConfig
       self.nixosModules.moskasProfile
@@ -42,12 +44,7 @@
     moskas = {
       profile = "graphical";
       obs.cuda = true;
-      # Resolved on the NixOS side into the home feature set.
       home.obs.enable = true;
-    };
-
-    services.sunshine = {
-      enable = true;
     };
 
     home-manager.users.moskas = {
