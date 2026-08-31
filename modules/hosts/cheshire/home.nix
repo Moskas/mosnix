@@ -4,9 +4,9 @@
     pkgs = self.lib.moskas.homePkgs;
     modules = [
       self.homeModules.standalone-base
-      self.homeModules.standalone-full
+      self.homeModules.standalone-graphical
       self.homeModules.obs
-      { moskas.obs.cuda = true; }
+      # { moskas.obs.cuda = true; }
     ];
   };
 }

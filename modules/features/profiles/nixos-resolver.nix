@@ -24,6 +24,7 @@
     {
       imports = [
         self.nixosModules.moskasOptions
+        self.nixosModules.moskasVariant
         self.nixosModules.moskasHomeManager
         self.nixosModules.moskasOverlays
       ];
@@ -33,14 +34,14 @@
           # Preset seeds the per-feature defaults; explicit host settings win
           # because these are mkDefault.
           moskas.home = lib.mapAttrs (_: v: { enable = lib.mkDefault v; }) preset.home;
-          moskas.desktop.enable = lib.mkDefault preset.desktop;
+          moskas.desktop.enable = lib.mkDefault (config.moskas.profile == "graphical");
 
           # Hosts that skip `common` (e.g. the WSL host) still get a usable
           # nixpkgs for the moskas home.
           nixpkgs.config.allowUnfree = lib.mkDefault true;
         }
 
-        (lib.mkIf preset.desktop {
+        (lib.mkIf config.moskas.desktop.enable {
           programs.niri.enable = true;
           services.displayManager.ly.enable = true;
         })
@@ -51,6 +52,22 @@
           # effect - toggle features from the host's NixOS module.
           home-manager.users."moskas".imports = [
             self.homeModules.moskasOptions
+            # Mirror the settings knobs (not the variant options) so hosts set
+            # every `moskas.*` value once, at the top level of their NixOS module.
+            {
+              moskas = {
+                colorscheme = lib.mkDefault config.moskas.colorscheme;
+                desktop.bar.position = lib.mkDefault config.moskas.desktop.bar.position;
+                obs.cuda = lib.mkDefault config.moskas.obs.cuda;
+                fonts = {
+                  mono = {
+                    package = lib.mkDefault config.moskas.fonts.mono.package;
+                    name = lib.mkDefault config.moskas.fonts.mono.name;
+                  };
+                  sizes = lib.mkDefault config.moskas.fonts.sizes;
+                };
+              };
+            }
           ]
           ++ map (n: self.homeModules.${n}) enabled
           ++ lib.optional (lib.elem "niri" enabled) {

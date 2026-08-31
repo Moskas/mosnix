@@ -4,7 +4,7 @@
     pkgs = self.lib.moskas.homePkgs;
     modules = [
       self.homeModules.standalone-base
-      self.homeModules.standalone-full
+      self.homeModules.standalone-graphical
     ];
   };
 }

@@ -14,8 +14,8 @@
       self.nixosModules.moskasProfile
     ];
 
-    moskas.profile = "full";
-    home-manager.users.moskas.moskas.desktop.bar.position = "bottom";
+    moskas.profile = "graphical";
+    moskas.desktop.bar.position = "bottom";
 
     networking = {
       hostName = "glasgow";

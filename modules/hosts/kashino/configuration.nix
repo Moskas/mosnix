@@ -18,7 +18,7 @@
       self.nixosModules.japanese-input
     ];
 
-    moskas.profile = "full";
+    moskas.profile = "graphical";
 
     networking = {
       hostName = "kashino";
