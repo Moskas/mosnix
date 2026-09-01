@@ -1,39 +1,34 @@
+{ inputs, ... }:
 {
-  flake.nixosModules.sops =
-    { inputs, ... }:
-    {
-      imports = [ inputs.sops-nix.nixosModules.sops ];
-      config = {
-        sops = {
-          defaultSopsFile = ./secrets.yaml;
-          defaultSopsFormat = "yaml";
+  flake.nixosModules.sops = {
+    imports = [ inputs.sops-nix.nixosModules.sops ];
+    config = {
+      sops = {
+        defaultSopsFile = ./secrets.yaml;
+        defaultSopsFormat = "yaml";
 
-          age = {
-            generateKey = true;
-            keyFile = "/var/lib/sops-nix/key.txt";
+        age = {
+          generateKey = true;
+          keyFile = "/var/lib/sops-nix/key.txt";
+        };
+
+        secrets = {
+          laffey_runner = {
+            mode = "0400";
           };
 
-          secrets = {
-            ssh_host_ed25519_key = {
-              owner = "root";
-              mode = "0400";
-              path = "/etc/ssh/ssh_host_ed25519_key";
-            };
+          # Reusable, non-ephemeral, pre-approved, tagged tailscale auth key
+          # used by tsnsrv to register each per-service node. Read as root via
+          # systemd LoadCredential, so default owner/mode is fine.
+          tsnsrv_authkey = {
+            mode = "0400";
+          };
 
-            authorized_keys = {
-              owner = "root";
-              mode = "0400";
-            };
-
-            laffey_runner = {
-              mode = "0400";
-            };
-
-            attic_token = {
-              mode = "0400";
-            };
+          attic_token = {
+            mode = "0400";
           };
         };
       };
     };
+  };
 }

@@ -18,7 +18,9 @@
         web = {
           enable = true;
           port = 8112;
-          openFirewall = true;
+          # Web UI reached via the tsnsrv `deluge` node; peer traffic
+          # (daemon_port / listen_ports) is unaffected.
+          openFirewall = false;
         };
       };
     };

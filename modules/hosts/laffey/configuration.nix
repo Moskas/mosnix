@@ -11,9 +11,14 @@
       common
       moskasProfile
       vm-test
-
+      nvidia
+      sops
+      tsnsrvProxy
+      n8n
+      vaultwarden
       jellyfin
       deluge
+      forgejo
     ];
 
     moskas.profile = "terminal";
