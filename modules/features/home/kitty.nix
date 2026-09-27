@@ -13,6 +13,11 @@
           "ctrl+alt+c" = "copy_ansi_to_clipboard";
         };
       };
+
+      stylix.targets.kitty = {
+        enable = true;
+        variant256Colors = true;
+      };
     };
   };
 }

@@ -55,6 +55,10 @@
       url = "github:FlameFlag/nixcord";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Thinkpad T480 fingerprint module for Noshiro
+    t480 = {
+      url = "github:Moskas/nixos-06cb-009a-fingerprint-sensor";
+    };
   };
 
   outputs =
