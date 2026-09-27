@@ -19,7 +19,7 @@
           services = {
             deluge.toURL = "http://127.0.0.1:8112";
             git.toURL = "http://127.0.0.1:3000";
-            immich.toUrl = "http://127.0.0.1:2283";
+            immich.toURL = "http://127.0.0.1:2283";
             jellyfin.toURL = "http://127.0.0.1:8096";
             n8n.toURL = "http://127.0.0.1:5678";
             vault.toURL = "http://127.0.0.1:8222";
