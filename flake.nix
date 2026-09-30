@@ -43,6 +43,9 @@
     mospkgs = {
       url = "github:Moskas/mospkgs";
     };
+    shinbun = {
+      url = "github:Moskas/shinbun/cachix";
+    };
     yotei = {
       url = "github:Moskas/yotei";
     };
