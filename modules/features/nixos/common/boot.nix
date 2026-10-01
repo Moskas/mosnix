@@ -1,8 +1,8 @@
 {
-  flake.nixosModules.common = { pkgs, ... }: {
+  flake.nixosModules.common = { pkgs, lib, ... }: {
     config = {
       boot = {
-        kernelPackages = pkgs.linuxPackages_xanmod_latest;
+        kernelPackages = lib.mkDefault pkgs.linuxPackages_xanmod_latest;
         loader = {
           systemd-boot = {
             enable = true;
