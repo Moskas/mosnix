@@ -1,7 +1,7 @@
 {
   flake.homeModules.shinbun = { inputs, ... }: {
+    imports = [ inputs.shinbun.homeManagerModules.default ];
     config = {
-      imports = [ inputs.shinbun.homeManagerModules.default ];
       programs.shinbun = {
         enable = true;
         settings = {

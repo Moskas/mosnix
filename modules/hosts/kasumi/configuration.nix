@@ -1,4 +1,9 @@
-{ self, inputs, lib, ... }:
+{
+  self,
+  inputs,
+  lib,
+  ...
+}:
 
 {
   flake.nixosConfigurations.kasumi = inputs.nixpkgs.lib.nixosSystem {
