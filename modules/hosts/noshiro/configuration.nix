@@ -8,16 +8,16 @@
   };
   flake.nixosModules.noshiro = { pkgs, lib, ... }: {
     imports = [
+      inputs.stylix.nixosModules.stylix
+      inputs.t480.nixosModules.default
       self.nixosModules.common
       self.nixosModules.commonWorkstation
       self.nixosModules.gaming
       self.nixosModules.laptop
-      inputs.stylix.nixosModules.stylix
-      self.nixosModules.stylixConfig
       self.nixosModules.moskasProfile
       self.nixosModules.secureboot
+      self.nixosModules.stylixConfig
       self.nixosModules.vm-test
-      inputs.t480.nixosModules.default
     ];
 
     moskas = {

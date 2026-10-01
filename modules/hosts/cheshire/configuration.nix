@@ -6,16 +6,16 @@
 {
   flake.nixosConfigurations.cheshire = inputs.nixpkgs.lib.nixosSystem {
     modules = [
+      inputs.stylix.nixosModules.stylix
       self.nixosModules.cheshire
       self.nixosModules.common
       self.nixosModules.commonWorkstation
-      self.nixosModules.nvidia
       self.nixosModules.gaming
-      self.nixosModules.sunshine
-      self.nixosModules.rgb
-      inputs.stylix.nixosModules.stylix
-      self.nixosModules.stylixConfig
       self.nixosModules.moskasProfile
+      self.nixosModules.nvidia
+      self.nixosModules.rgb
+      self.nixosModules.stylixConfig
+      self.nixosModules.sunshine
       self.nixosModules.vm-test
     ];
   };

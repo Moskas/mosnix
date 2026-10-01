@@ -8,6 +8,7 @@
   flake.nixosConfigurations.kinu = inputs.nixpkgs.lib.nixosSystem {
     modules = [
       self.nixosModules.kinu
+      self.nixosModules.common
     ];
   };
   flake.nixosModules.kinu =
@@ -18,7 +19,6 @@
     }:
     {
       imports = [
-        self.nixosModules.common
         "${modulesPath}/profiles/minimal.nix"
       ];
 
