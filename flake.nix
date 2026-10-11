@@ -10,10 +10,6 @@
     };
     kojin = {
       url = "github:Moskas/kojin";
-      flake = false;
-    };
-    bun2nix = {
-      url = "github:nix-community/bun2nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     wsl = {
