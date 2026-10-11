@@ -10,6 +10,8 @@
     imports = [
       inputs.stylix.nixosModules.stylix
       inputs.t480.nixosModules.default
+      inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480
+      inputs.nixos-hardware.nixosModules.common-gpu-intel
       self.nixosModules.common
       self.nixosModules.commonWorkstation
       self.nixosModules.gaming

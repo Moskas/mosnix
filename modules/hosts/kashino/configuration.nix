@@ -16,6 +16,8 @@
       self.nixosModules.moskasProfile
       self.nixosModules.vm-test
       self.nixosModules.japanese-input
+      inputs.nixos-hardware.nixosModules.common-gpu-intel
+      inputs.nixos-hardware.nixosModules.common-cpu-intel
     ];
 
     moskas.profile = "graphical";

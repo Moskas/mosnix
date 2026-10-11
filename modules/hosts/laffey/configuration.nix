@@ -12,23 +12,28 @@
     ];
   };
   flake.nixosModules.laffey = {
-    imports = with self.nixosModules; [
-      common
-      deluge
-      forgejo
-      glance
-      grocy
-      immich
-      jellyfin
-      moskasProfile
-      n8n
-      nvidia
-      samba
-      sops
-      tsnsrvProxy
-      vaultwarden
-      vm-test
-    ];
+    imports =
+      (with self.nixosModules; [
+        common
+        deluge
+        forgejo
+        glance
+        grocy
+        immich
+        jellyfin
+        moskasProfile
+        n8n
+        nvidia
+        samba
+        sops
+        tsnsrvProxy
+        vaultwarden
+        vm-test
+      ])
+      ++ [
+        inputs.nixos-hardware.nixosModules.common-cpu-intel
+        inputs.nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
+      ];
 
     moskas.profile = "terminal";
 

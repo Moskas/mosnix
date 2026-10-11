@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    nixos-hardware.url = "github:nixos/nixos-hardware";
     devshell = {
       url = "github:numtide/devshell";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -65,6 +66,11 @@
     # Thinkpad T480 fingerprint module for Noshiro
     t480 = {
       url = "github:Moskas/nixos-06cb-009a-fingerprint-sensor";
+    };
+    nyaa = {
+      # Fork of https://github.com/Beastwick18/nyaa
+      url = "github:Moskas/nyaa";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
