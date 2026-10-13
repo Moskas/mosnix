@@ -1,7 +1,6 @@
 {
   self,
   inputs,
-  lib,
   ...
 }:
 
@@ -11,8 +10,13 @@
       self.nixosModules.kasumi
     ];
   };
+
   flake.nixosModules.kasumi =
-    { pkgs, ... }:
+    {
+      pkgs,
+      lib,
+      ...
+    }:
     {
       imports = with self.nixosModules; [
         common
@@ -26,9 +30,6 @@
 
       networking.hostName = "kasumi";
 
-      # The box booted BIOS (no /sys/firmware/efi, sda14 is a BIOS boot
-      # partition) despite an unused ESP at sda15 — a Hetzner legacy-boot
-      # image, not UEFI. Reconcile against nixos-infect's actual output.
       boot.loader = {
         systemd-boot.enable = lib.mkForce false;
         grub = {
@@ -38,9 +39,20 @@
         };
       };
 
-      # Xanmod buys nothing on a headless web server and adds boot risk on a
-      # remote box; common.nix's boot.nix sets it via mkDefault for this.
       boot.kernelPackages = pkgs.linuxPackages;
+
+      # Only applies to `nixos-rebuild build-vm` (devshell `vm` command)
+      virtualisation.vmVariant = {
+        virtualisation.forwardPorts = [
+          {
+            from = "host";
+            host.address = "127.0.0.1";
+            host.port = 3000;
+            guest.port = 3000;
+          }
+        ];
+        networking.firewall.allowedTCPPorts = [ 3000 ];
+      };
 
       environment.systemPackages = with pkgs; [
         neovim
