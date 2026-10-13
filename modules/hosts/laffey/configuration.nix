@@ -21,7 +21,7 @@
         grocy
         immich
         jellyfin
-        moskasProfile
+        terminal
         n8n
         nvidia
         samba
@@ -34,8 +34,6 @@
         inputs.nixos-hardware.nixosModules.common-cpu-intel
         inputs.nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
       ];
-
-    moskas.profile = "terminal";
 
     boot.loader = {
       grub = {

@@ -88,7 +88,7 @@
       nixpkgs.config.allowUnfree = true;
     };
 
-  # Shared so moskasProfile can pull the overlays in for hosts that don't import
+  # Shared so moskasHomeManager can pull the overlays in for hosts that don't import
   # `common` (e.g. the WSL host). Stable key dedups when both are imported.
   flake.nixosModules.moskasOverlays = {
     key = "moskas/overlays";

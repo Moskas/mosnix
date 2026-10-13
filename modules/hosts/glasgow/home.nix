@@ -4,7 +4,7 @@
     pkgs = self.lib.moskas.homePkgs;
     modules = [
       self.homeModules.standalone-base
-      self.homeModules.standalone-graphical
+      self.homeModules.graphical
       { moskas.desktop.bar.position = "bottom"; }
     ];
   };

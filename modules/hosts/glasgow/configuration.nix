@@ -11,12 +11,11 @@
       self.nixosModules.laptop
       inputs.stylix.nixosModules.stylix
       self.nixosModules.stylixConfig
-      self.nixosModules.moskasProfile
+      self.nixosModules.graphical
       inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x220
       inputs.nixos-hardware.nixosModules.common-gpu-intel
     ];
 
-    moskas.profile = "graphical";
     moskas.desktop.bar.position = "bottom";
 
     networking = {

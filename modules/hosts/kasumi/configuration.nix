@@ -21,12 +21,10 @@
       imports = with self.nixosModules; [
         common
         commonServer
-        moskasProfile
+        terminal
         sops
         kojin
       ];
-
-      moskas.profile = "terminal";
 
       networking.hostName = "kasumi";
 

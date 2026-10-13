@@ -1,5 +1,5 @@
 {
-  flake.homeModules.tmux = { pkgs, ... }: {
+  flake.homeModules.tmux = { lib, pkgs, ... }: {
     config = {
       home.packages = [
         (pkgs.writeShellScriptBin "bat-stat" ''
@@ -45,7 +45,8 @@
         terminal = "screen-256color";
         historyLimit = 20000;
         shell = "${pkgs.zsh}/bin/zsh";
-        extraConfig = ''
+        # After stylix's base16 `source-file` so these styles override the theme.
+        extraConfig = lib.mkAfter ''
           set -g pane-border-style fg=default
           set -g pane-active-border-style fg=default
 

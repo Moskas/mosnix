@@ -13,11 +13,9 @@
         self.nixosModules.common
         self.nixosModules.commonWorkstation
         self.nixosModules.laptop
-        self.nixosModules.moskasProfile
+        self.nixosModules.terminal
         self.nixosModules.japanese-input
       ];
-
-      moskas.profile = "terminal";
 
       networking.hostName = "akashi";
 

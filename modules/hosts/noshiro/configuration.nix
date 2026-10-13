@@ -16,14 +16,13 @@
       self.nixosModules.commonWorkstation
       self.nixosModules.gaming
       self.nixosModules.laptop
-      self.nixosModules.moskasProfile
+      self.nixosModules.graphical
       self.nixosModules.secureboot
       self.nixosModules.stylixConfig
       self.nixosModules.vm-test
     ];
 
     moskas = {
-      profile = "graphical";
       colorscheme = "solarized-dark";
     };
 

@@ -13,14 +13,12 @@
       self.nixosModules.laptop
       inputs.stylix.nixosModules.stylix
       self.nixosModules.stylixConfig
-      self.nixosModules.moskasProfile
+      self.nixosModules.graphical
       self.nixosModules.vm-test
       self.nixosModules.japanese-input
       inputs.nixos-hardware.nixosModules.common-gpu-intel
       inputs.nixos-hardware.nixosModules.common-cpu-intel
     ];
-
-    moskas.profile = "graphical";
 
     networking = {
       hostName = "kashino";

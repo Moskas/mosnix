@@ -18,12 +18,11 @@
     }:
     {
       imports = [
-        self.nixosModules.moskasProfile
+        self.nixosModules.terminal
         "${modulesPath}/profiles/minimal.nix"
         inputs.wsl.nixosModules.wsl
       ];
 
-      moskas.profile = "terminal";
       wsl = {
         enable = true;
         defaultUser = "moskas";

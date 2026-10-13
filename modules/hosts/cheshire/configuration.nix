@@ -11,7 +11,7 @@
       self.nixosModules.common
       self.nixosModules.commonWorkstation
       self.nixosModules.gaming
-      self.nixosModules.moskasProfile
+      self.nixosModules.graphical
       self.nixosModules.nvidia
       self.nixosModules.rgb
       self.nixosModules.stylixConfig
@@ -41,13 +41,11 @@
       hostName = "cheshire";
     };
 
-    moskas = {
-      profile = "graphical";
-      obs.cuda = true;
-      home.obs.enable = true;
-    };
+    moskas.obs.cuda = true;
 
     home-manager.users.moskas = {
+      imports = [ self.homeModules.obs ];
+
       wayland.windowManager.niri.settings._children = [
         {
           output = {

@@ -60,10 +60,9 @@ modules/
     mosnix.nix            # moskasOptions: the moskas.* settings knobs (theme, fonts, bar position)
     hm.nix                # moskasHomeManager nixosModule (wires home-manager for moskas)
     profiles/
-      presets.nix         # flake.lib.moskas: featureList + terminal/graphical preset feature sets
-      variant-options.nix # moskasVariant nixosModule: moskas.profile + moskas.home.<feature>.enable
-      nixos-resolver.nix  # moskasProfile nixosModule: resolves the profile into a home imports list
-      standalone.nix      # standalone-{base,terminal,graphical} homeModules for homeConfigurations
+      terminal.nix        # `terminal` aggregate (nixosModule + homeModule): base CLI feature set
+      graphical.nix       # `graphical` aggregate: terminal + niri/ly + GUI feature set
+      standalone.nix      # standalone-base homeModule + homePkgs for homeConfigurations
     home/                 # individual home-manager program modules (each exported as homeModule)
     nixos/
       common/             # common nixosModule (nix settings, packages, overlays)
@@ -84,26 +83,25 @@ modules/
 
 | Host | Role | Notes |
 |------|------|-------|
-| nagato | server | `terminal` profile, stylix |
-| kashino | desktop | `graphical` profile, Japanese keyboard layout |
-| kinu | — | does not use the profile system |
-| shimakaze | WSL | `terminal` profile |
-| noshiro | desktop | `graphical` profile, solarized-dark |
-| glasgow | laptop | ThinkPad X220, `graphical` profile, niri, fingerprint reader disabled |
+| nagato | server | `terminal`, stylix |
+| kashino | desktop | `graphical`, Japanese keyboard layout |
+| kinu | — | imports neither `terminal` nor `graphical` |
+| shimakaze | WSL | `terminal` |
+| noshiro | desktop | `graphical`, solarized-dark |
+| glasgow | laptop | ThinkPad X220, `graphical`, niri, fingerprint reader disabled |
 
 ### Key nixosModules (defined via flake-parts)
 
 - `common` — baseline NixOS config: Lix, nix settings, dev tools (nh, nix-tree, nixd, etc.), binary caches (nix-community, moskas.cachix.org)
-- `moskasHomeManager` — wires home-manager for user `moskas`, applies emacs-overlay and llm-agents overlays
+- `moskasHomeManager` — wires home-manager for user `moskas`: overlays, `moskasOptions` on both sides, and mirrors the NixOS `moskas.*` settings into home-manager
 - `moskasOptions` — the `moskas.*` settings knobs (colorscheme, fonts, `desktop.bar.position`, `obs.cuda`); shared by NixOS and home-manager
-- `moskasVariant` — NixOS-only variant options: `moskas.profile` (enum `graphical`/`terminal`, default `terminal`), `moskas.desktop.enable`, and `moskas.home.<feature>.enable` toggles
-- `moskasProfile` — the profile resolver: seeds feature defaults from the preset, then pushes the enabled home modules into `home-manager.users.moskas.imports` and mirrors the settings knobs there. Feature toggles only take effect when set NixOS-side.
+- `terminal` / `graphical` — feature aggregates, exported as both a nixosModule and a homeModule of the same name. The nixosModule wires home-manager and imports the matching homeModule; `graphical` also enables niri + ly. Hosts import exactly one, then add extra features with plain imports (e.g. `home-manager.users.moskas.imports = [ self.homeModules.obs ];`). To add a feature to every host, add it to the aggregate's import list.
 - `stylixConfig` — theming via stylix/base16; reads `moskas.colorscheme` (default: `gruvbox-dark-medium`)
 
 ### Adding a New Host
 
 1. Create `modules/hosts/<hostname>/` with `default.nix`, `configuration.nix`, `hardware.nix`, `disko.nix`, and optionally `home.nix`/`style.nix`.
-2. In `configuration.nix`, define `flake.nixosConfigurations.<hostname>` and `flake.nixosModules.<hostname>`, composing from existing modules (`common`, `moskasProfile`, `stylixConfig`, etc.), then set `moskas.profile` and any `moskas.*` overrides.
+2. In `configuration.nix`, define `flake.nixosConfigurations.<hostname>` and `flake.nixosModules.<hostname>`, composing from existing modules (`common`, `terminal` or `graphical`, `stylixConfig`, etc.), then set any `moskas.*` overrides.
 3. Files are auto-imported — no changes needed to `flake.nix`.
 
 ### Secrets

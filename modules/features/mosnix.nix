@@ -3,10 +3,6 @@ let
   # Declaration site for the `moskas.*` settings knobs (theme, fonts, bar
   # position, ...). Exported for both module systems; an option unread by one
   # system (e.g. `colorscheme` in home-manager) is simply inert there.
-  #
-  # Variant selection (`moskas.profile`, `moskas.home.<feature>.enable`) lives
-  # separately in modules/features/profiles/variant-options.nix - it is only
-  # meaningful on the NixOS side.
   moskasOptions =
     { pkgs, ... }:
     {
