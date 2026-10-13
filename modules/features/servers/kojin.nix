@@ -5,28 +5,19 @@
     {
       imports = [ inputs.kojin.nixosModules.default ];
 
-      sops.secrets.kojin_lastfm_api_key = {
-        mode = "0400";
-        owner = "kojin";
-      };
-
       services.kojin = {
         enable = true;
         siteUrl = "https://moskas.space";
         siteAuthor = "Moskas";
-        environmentFile = config.sops.secrets.kojin_lastfm_api_key.path;
+        environmentFile = config.sops.secrets.kojin_env_file.path;
       };
 
       systemd.services.kojin = {
-        environment = {
-          LASTFM_USERNAME = "MoskasPlay";
-          ANILIST_USER_ID = "241803";
-        };
         # The secret doesn't exist until the sops bootstrap pass (host age
         # key added, secrets.yaml re-encrypted) runs; upstream's
         # environmentFile has no `-` prefix, so a first boot before that
         # would hard-fail the unit instead of starting degraded.
-        serviceConfig.EnvironmentFile = lib.mkForce "-${config.sops.secrets.kojin_lastfm_api_key.path}";
+        serviceConfig.EnvironmentFile = lib.mkForce "-${config.sops.secrets.kojin_env_file.path}";
       };
 
       networking.firewall.allowedTCPPorts = [
