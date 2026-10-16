@@ -405,9 +405,17 @@
             ];
           }
           {
-            link = "https://journal.miso.town/atom?url=https://wiki.xxiivv.com/site/now.html";
+            link = "https://wiki.xxiivv.com/links/log.xml";
             name = "xxiivv";
             tags = [ "Blog" ];
+          }
+          {
+            link = "https://wiki.xxiivv.com/links/img.xml";
+            name = "xxiivv - img";
+            tags = [
+              "Blog"
+              "Img"
+            ];
           }
           {
             link = "https://100r.co/links/rss.xml";
@@ -518,7 +526,7 @@
             ];
           }
           {
-            link = "https://programmershideaway.xyz/atom.xml";
+            link = "https://programmershideaway.dev/atom.xml";
             tags = [
               "Blog"
               "Programming"

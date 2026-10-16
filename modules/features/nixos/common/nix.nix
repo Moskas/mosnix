@@ -8,10 +8,12 @@
   flake.nixosModules.common =
     { pkgs, ... }:
     {
-      imports = [ self.nixosModules.moskasOverlays ];
+      imports = [
+        self.nixosModules.moskasOverlays
+        inputs.nix-index-database.nixosModules.default
+      ];
 
       environment.systemPackages = with pkgs; [
-        nh
         #nix-tree
         #nixfmt
         #nixd
@@ -74,15 +76,21 @@
         };
       };
 
-      programs.nix-index = {
+      programs.nh = {
         enable = true;
-        enableBashIntegration = true;
-        enableZshIntegration = true;
+        flake = "/home/moskas/Repos/dendritic-nix/";
       };
+
+      # programs.nix-index = {
+      #  enable = true;
+      #  enableBashIntegration = true;
+      #  enableZshIntegration = true;
+      #};
+
+      programs.nix-index-database.comma.enable = true;
 
       environment.sessionVariables = {
         NIX_SSHOPS = "-tt";
-        NH_FLAKE = "/home/moskas/Repos/new-flake";
       };
 
       nixpkgs.config.allowUnfree = true;

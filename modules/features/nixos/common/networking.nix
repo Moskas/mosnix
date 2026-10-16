@@ -1,9 +1,9 @@
 {
-  flake.nixosModules.common = {
+  flake.nixosModules.common = { lib, ... }: {
     config = {
       networking = {
         networkmanager = {
-          enable = true;
+          enable = lib.mkDefault true;
           wifi = {
             macAddress = "random";
           };

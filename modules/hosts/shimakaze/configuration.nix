@@ -30,15 +30,18 @@
         useWindowsDriver = true;
         wslConf.network.generateResolvConf = false;
       };
+
+      boot.loader.systemd-boot.enable = lib.mkForce false;
+
       networking = {
         hostName = "shimakaze";
+        networkmanager.enable = lib.mkForce false;
         nameservers = [ "1.1.1.1" ];
       };
 
       time.timeZone = "Europe/Warsaw";
       programs.nix-ld.enable = true;
 
-      system.stateVersion = "22.05";
       nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
     };
 }

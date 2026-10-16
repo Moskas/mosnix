@@ -36,6 +36,8 @@
               ".direnv/"
               "result"
               "*.qcow2"
+              ".claude"
+              "CLAUDE.md"
             ];
           };
 
@@ -56,7 +58,7 @@
           lazygit = {
             enable = true;
             settings = {
-              gui.authorColors."*" = "cyan";
+              gui.theme.authorColors."*" = "cyan";
             };
           };
         };

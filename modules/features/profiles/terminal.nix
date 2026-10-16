@@ -12,6 +12,9 @@
       atuin
       bat
       btop
+      claude
+      direnv
+      emacs
       eza
       git
       jj
@@ -27,7 +30,10 @@
   };
 
   flake.nixosModules.terminal = {
-    imports = [ self.nixosModules.moskasHomeManager ];
+    imports = [
+      self.nixosModules.moskasHomeManager
+      self.nixosModules.common
+    ];
 
     home-manager.users.moskas.imports = [ self.homeModules.terminal ];
   };

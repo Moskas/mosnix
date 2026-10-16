@@ -5,7 +5,7 @@
         kernelPackages = lib.mkDefault pkgs.linuxPackages_xanmod_latest;
         loader = {
           systemd-boot = {
-            enable = true;
+            enable = lib.mkDefault true;
           };
           efi.canTouchEfiVariables = true;
         };
