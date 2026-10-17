@@ -8,6 +8,7 @@
     imports = [
       self.nixosModules.commonWorkstation
       self.nixosModules.laptop
+      self.nixosModules.vm-test
       inputs.stylix.nixosModules.stylix
       self.nixosModules.stylixConfig
       self.nixosModules.graphical
@@ -15,7 +16,15 @@
       inputs.nixos-hardware.nixosModules.common-gpu-intel
     ];
 
-    moskas.desktop.bar.position = "bottom";
+    moskas = {
+      desktop.bar.position = "bottom";
+      fonts.sizes = {
+        desktop = 12;
+        terminal = 12;
+        popups = 12;
+        applications = 12;
+      };
+    };
 
     networking = {
       hostName = "glasgow";

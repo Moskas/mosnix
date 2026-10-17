@@ -24,6 +24,8 @@ in
             "application/pdf" = [ docOpener ];
             "application/zip" = [ docOpener ];
             "application/epub+zip" = [ docOpener ];
+            "application/vnd.comicbook+zip" = [ docOpener ];
+            "application/x-cbz" = [ docOpener ];
 
             "text/html" = [ webBrowser ];
             "x-scheme-handler/http" = webBrowser;

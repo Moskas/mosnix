@@ -5,7 +5,6 @@
     modules = [
       self.homeModules.standalone-base
       self.homeModules.graphical
-      { moskas.desktop.bar.position = "bottom"; }
     ];
   };
 }

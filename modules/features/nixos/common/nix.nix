@@ -26,7 +26,7 @@
       }) inputs;
 
       nix = {
-        package = pkgs.lixPackageSets.stable.lix;
+        package = pkgs.lixPackageSets.git.lix;
         gc = {
           automatic = true;
           dates = "weekly";

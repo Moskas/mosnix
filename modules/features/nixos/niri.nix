@@ -286,14 +286,16 @@
             "Mod+Page_Up"."focus-workspace-up" = { };
             "Mod+Shift+J"."focus-workspace-down" = { };
             "Mod+Shift+K"."focus-workspace-up" = { };
+            "Mod+Shift+Page_Up"."focus-workspace-up" = { };
+            "Mod+XF86Forward"."focus-workspace-down" = { };
+            "Mod+XF86Back"."focus-workspace-up" = { };
+            "Mod+Shift+Page_Down"."focus-workspace-down" = { };
             "Mod+U"."focus-workspace-down" = { };
             "Mod+I"."focus-workspace-up" = { };
             "Mod+Ctrl+Page_Down"."move-column-to-workspace-down" = { };
             "Mod+Ctrl+Page_Up"."move-column-to-workspace-up" = { };
             "Mod+Ctrl+U"."move-column-to-workspace-down" = { };
             "Mod+Ctrl+I"."move-column-to-workspace-up" = { };
-            "Mod+Shift+Page_Down"."move-workspace-down" = { };
-            "Mod+Shift+Page_Up"."move-workspace-up" = { };
             "Mod+Shift+U"."move-workspace-down" = { };
             "Mod+Shift+I"."move-workspace-up" = { };
 

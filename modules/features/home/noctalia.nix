@@ -186,7 +186,10 @@
                 width = 150;
               };
 
-              battery.display_mode = "graphic";
+              battery = {
+                display_mode = "graphic";
+                show_label = false;
+              };
 
               cat = {
                 type = "noctalia/bongocat:cat";
