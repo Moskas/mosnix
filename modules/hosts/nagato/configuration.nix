@@ -10,7 +10,6 @@
     { pkgs, ... }:
     {
       imports = [
-        self.nixosModules.common
         self.nixosModules.terminal
       ];
 

@@ -8,7 +8,6 @@
     modules = [
       inputs.stylix.nixosModules.stylix
       self.nixosModules.cheshire
-      self.nixosModules.common
       self.nixosModules.commonWorkstation
       self.nixosModules.gaming
       self.nixosModules.graphical

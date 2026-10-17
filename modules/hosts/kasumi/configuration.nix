@@ -19,7 +19,6 @@
     }:
     {
       imports = with self.nixosModules; [
-        common
         commonServer
         terminal
         sops

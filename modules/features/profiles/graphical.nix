@@ -7,9 +7,6 @@
     imports = with self.homeModules; [
       terminal
       carapace
-      claude
-      direnv
-      emacs
       easyeffects
       firefox
       fuzzel

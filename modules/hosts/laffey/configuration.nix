@@ -14,7 +14,6 @@
   flake.nixosModules.laffey = {
     imports =
       (with self.nixosModules; [
-        common
         deluge
         forgejo
         glance

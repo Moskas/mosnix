@@ -8,7 +8,6 @@
   };
   flake.nixosModules.kashino = {
     imports = [
-      self.nixosModules.common
       self.nixosModules.commonWorkstation
       self.nixosModules.laptop
       inputs.stylix.nixosModules.stylix
