@@ -88,7 +88,7 @@ modules/
 | kinu | — | imports neither `terminal` nor `graphical` |
 | shimakaze | WSL | `terminal` |
 | noshiro | desktop | `graphical`, solarized-dark |
-| glasgow | laptop | ThinkPad X220, `graphical`, niri, fingerprint reader disabled |
+| glasgow | laptop | ThinkPad X220, `graphical`, niri, UPEK fingerprint reader via fprintd |
 
 ### Key nixosModules (defined via flake-parts)
 

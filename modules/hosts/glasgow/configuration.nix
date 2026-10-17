@@ -35,9 +35,14 @@
         LIBINPUT_MODEL_LENOVO_X220_TOUCHPAD_FW81=1
     '';
 
-    systemd.services.fprintd = {
-      wantedBy = [ "multi-user.target" ];
-      serviceConfig.Type = "simple";
+    # fingerprint reader: upek 147e:2016 (libfprint upekts driver)
+    services.fprintd.enable = true;
+
+    security.pam = {
+      services = {
+        sudo.fprintAuth = true;
+        ly.fprintAuth = true;
+      };
     };
 
     # wifi chip: intel 6205
