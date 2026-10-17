@@ -6,6 +6,80 @@
       config,
       ...
     }:
+    let
+      # Extension ID -> addons.mozilla.org slug; installed via policy and
+      # placed in the extensions panel by the toolbar layout below.
+      extensions = {
+        "uBlock0@raymondhill.net" = "ublock-origin";
+        "{d7742d87-e61d-4b78-b8a1-b469842139fa}" = "vimium-ff";
+        "addon@darkreader.org" = "darkreader";
+        "{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d}" = "styl-us";
+        "{446900e4-71c2-419f-a6a7-df9c091e268b}" = "bitwarden-password-manager";
+        "firefox@betterttv.net" = "betterttv";
+        "sponsorBlocker@ajay.app" = "sponsorblock";
+        "{762f9885-5a13-4abd-9c77-433dcd38b8fd}" = "return-youtube-dislikes";
+        "jid1-MnnxcxisBpnsXQ@jetpack" = "privacy-badger17";
+        "7esoorv3@alefvanoon.anonaddy.me" = "libredirect";
+        "deArrow@ajay.app" = "dearrow";
+        "@testpilot-containers" = "multi-account-containers";
+      };
+
+      # Mirrors Firefox's makeWidgetId: lowercase, anything outside [a-z0-9_-] -> "_".
+      widgetId =
+        id:
+        let
+          sanitize = c: if builtins.match "[a-z0-9_-]" c != null then c else "_";
+        in
+        lib.concatMapStrings sanitize (lib.stringToCharacters (lib.toLower id)) + "-browser-action";
+
+      # Firefox Color is installed into the profile by stylix, not by policy.
+      extensionWidgets = map widgetId (lib.attrNames extensions ++ [ "FirefoxColor@mozilla.com" ]);
+
+      toolbarState = {
+        placements = {
+          widget-overflow-fixed-list = [ ];
+          unified-extensions-area = extensionWidgets;
+          nav-bar = [
+            "sidebar-button"
+            "back-button"
+            "forward-button"
+            "stop-reload-button"
+            "customizableui-special-spring4"
+            "urlbar-container"
+            "vertical-spacer"
+            "customizableui-special-spring6"
+            "downloads-button"
+            "unified-extensions-button"
+          ];
+          toolbar-menubar = [ "menubar-items" ];
+          TabsToolbar = [ ];
+          vertical-tabs = [ "tabbrowser-tabs" ];
+          PersonalToolbar = [ "personal-bookmarks" ];
+        };
+        # Widgets listed here but not placed stay off the toolbar instead of
+        # being auto-added to their default area.
+        seen = [
+          "developer-button"
+          "screenshot-button"
+          "reset-pbm-toolbar-button"
+          "smartwindow-group-tabs-button"
+          "ai-window-toggle"
+        ]
+        ++ extensionWidgets;
+        dirtyAreaCache = [
+          "nav-bar"
+          "TabsToolbar"
+          "vertical-tabs"
+          "PersonalToolbar"
+          "toolbar-menubar"
+          "unified-extensions-area"
+        ];
+        # Must match the running Firefox, or its layout migrations rerun on
+        # every start (user.js resets this pref each launch).
+        currentVersion = 26;
+        newElementCount = 8;
+      };
+    in
     {
       config = {
         stylix.targets.firefox = {
@@ -15,6 +89,12 @@
 
         programs.firefox = {
           enable = true;
+
+          # Firefox only uses the XDG path (~/.config/mozilla/firefox) when
+          # ~/.mozilla is absent, but home-manager always creates
+          # ~/.mozilla/native-messaging-hosts, so Firefox falls back to the
+          # legacy path and never sees the managed profile.
+          configPath = ".mozilla/firefox";
 
           languagePacks = [ "en-US" ];
 
@@ -50,74 +130,23 @@
             OfferToSaveLogins = false;
             DefaultDownloadDirectory = "${config.home.homeDirectory}/Downloads";
 
+            # New tab page: search + shortcuts, nothing sponsored or suggested
+            FirefoxHome = {
+              Search = true;
+              TopSites = true;
+              SponsoredTopSites = false;
+              Highlights = false;
+              Stories = false;
+              SponsoredStories = false;
+              Weather = false;
+              Locked = true;
+            };
+
             # Extensions
-            ExtensionSettings =
-              let
-                moz = short: "https://addons.mozilla.org/firefox/downloads/latest/${short}/latest.xpi";
-              in
-              {
-                # "*".installation_mode = "blocked";
-
-                "uBlock0@raymondhill.net" = {
-                  install_url = moz "ublock-origin";
-                  installation_mode = "force_installed";
-                };
-
-                "{d7742d87-e61d-4b78-b8a1-b469842139fa}" = {
-                  install_url = moz "vimium-ff";
-                  installation_mode = "force_installed";
-                };
-
-                "addon@darkreader.org" = {
-                  install_url = moz "darkreader";
-                  installation_mode = "force_installed";
-                };
-
-                "{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d}" = {
-                  install_url = moz "styl-us";
-                  installation_mode = "force_installed";
-                };
-
-                "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
-                  install_url = moz "bitwarden-password-manager";
-                  installation_mode = "force_installed";
-                };
-
-                "firefox@betterttv.net" = {
-                  install_url = moz "betterttv";
-                  installation_mode = "force_installed";
-                };
-
-                "sponsorBlocker@ajay.app" = {
-                  install_url = moz "sponsorblock";
-                  installation_mode = "force_installed";
-                };
-
-                "{762f9885-5a13-4abd-9c77-433dcd38b8fd}" = {
-                  install_url = moz "return-youtube-dislikes";
-                  installation_mode = "force_installed";
-                };
-
-                "jid1-MnnxcxisBpnsXQ@jetpack" = {
-                  install_url = moz "privacy-badger17";
-                  installation_mode = "force_installed";
-                };
-
-                "7esoorv3@alefvanoon.anonaddy.me" = {
-                  install_url = moz "libredirect";
-                  installation_mode = "force_installed";
-                };
-
-                "deArrow@ajay.app" = {
-                  install_url = moz "dearrow";
-                  installation_mode = "force_installed";
-                };
-
-                "@testpilot-containers" = {
-                  install_url = moz "multi-account-containers";
-                  installation_mode = "force_installed";
-                };
-              };
+            ExtensionSettings = lib.mapAttrs (_: slug: {
+              install_url = "https://addons.mozilla.org/firefox/downloads/latest/${slug}/latest.xpi";
+              installation_mode = "force_installed";
+            }) extensions;
 
             # Extension configuration
             "3rdparty".Extensions = {
@@ -127,8 +156,8 @@
                   cloudStorageEnabled = lib.mkForce false;
 
                   importedLists = [
-                    "https:#filters.adtidy.org/extension/ublock/filters/3.txt"
-                    "https:#github.com/DandelionSprout/adfilt/raw/master/LegitimateURLShortener.txt"
+                    "https://filters.adtidy.org/extension/ublock/filters/3.txt"
+                    "https://github.com/DandelionSprout/adfilt/raw/master/LegitimateURLShortener.txt"
                   ];
 
                   externalLists = lib.concatStringsSep "\n" importedLists;
@@ -142,7 +171,7 @@
                   "adguard-spyware-url"
                   "easylist"
                   "easyprivacy"
-                  "https:#github.com/DandelionSprout/adfilt/raw/master/LegitimateURLShortener.txt"
+                  "https://github.com/DandelionSprout/adfilt/raw/master/LegitimateURLShortener.txt"
                   "plowe-0"
                   "ublock-abuse"
                   "ublock-badware"
@@ -161,50 +190,115 @@
             # settings; acknowledge that it may overwrite existing ext state.
             extensions.force = true;
 
+            # Square UI corners. Zeroing the design-system radius tokens on :root
+            # reaches shadow-DOM widgets (buttons, panels, toggles) through
+            # inheritance; the universal rule catches hardcoded radii elsewhere.
+            userChrome =
+              let
+                c = config.lib.stylix.colors.withHashtag;
+              in
+              ''
+                :root {
+                  --border-radius-circle: 0 !important;
+                  --border-radius-xsmall: 0 !important;
+                  --border-radius-small: 0 !important;
+                  --border-radius-medium: 0 !important;
+                  --border-radius-large: 0 !important;
+                  --border-radius-xlarge: 0 !important;
+                  --button-border-radius: 0 !important;
+                  --panel-border-radius: 0 !important;
+                  --arrowpanel-border-radius: 0 !important;
+                  --toolbarbutton-border-radius: 0 !important;
+                  --tab-border-radius: 0 !important;
+                  --urlbar-border-radius: 0 !important;
+                  --urlbar-inner-border-radius: 0 !important;
+                  --window-border-radius: 0 !important;
+                }
+
+                * {
+                  border-radius: 0 !important;
+                }
+
+                /* Firefox derives hover/selected states as translucent
+                   currentColor mixes, which turn muddy on base16 themes.
+                   Declared on every element so per-widget defaults can't win. */
+                * {
+                  --toolbarbutton-background-color-hover: ${c.base02} !important;
+                  --toolbarbutton-background-color-active: ${c.base03} !important;
+                  --button-background-color-hover: ${c.base02} !important;
+                  --button-background-color-active: ${c.base03} !important;
+                  --button-background-color-ghost-hover: ${c.base02} !important;
+                  --button-background-color-ghost-active: ${c.base03} !important;
+
+                  --tab-background-color-hover: ${c.base01} !important;
+                  --tab-background-color-selected: ${c.base02} !important;
+
+                  --urlbar-box-background-color: ${c.base01} !important;
+                  --urlbar-box-background-color-focus: ${c.base01} !important;
+                  --urlbar-box-background-color-hover: ${c.base03} !important;
+                  --urlbar-box-background-color-active: ${c.base03} !important;
+
+                  --urlbarview-background-color-hover: ${c.base01} !important;
+                  --urlbarview-background-color-selected: ${c.base02} !important;
+                  --urlbarview-text-color-selected: ${c.base05} !important;
+                }
+
+                /* The vertical tab strip has no background of its own and shows
+                   the frame colour; match the toolbar instead. The horizontal
+                   #TabsToolbar keeps the frame colour. */
+                #sidebar-container {
+                  --sidebar-launcher-surface-color: var(--toolbar-background-color) !important;
+                  background-color: var(--toolbar-background-color) !important;
+                }
+              '';
+
             settings = {
-              "browser.uiCustomization.state" =
-                ''{"placements":{"widget-overflow-fixed-list":[],"unified-extensions-area":["dearrow_ajay_app-browser-action","_testpilot-containers-browser-action","_d7742d87-e61d-4b78-b8a1-b469842139fa_-browser-action","jid1-mnnxcxisbpnsxq_jetpack-browser-action","sponsorblocker_ajay_app-browser-action","ublock0_raymondhill_net-browser-action","_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action","addon_darkreader_org-browser-action","7esoorv3_alefvanoon_anonaddy_me-browser-action","_762f9885-5a13-4abd-9c77-433dcd38b8fd_-browser-action","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action","_4b7db180-f46c-4955-afaf-a03913751acc_-browser-action","frankerfacez_frankerfacez_com-browser-action"],"nav-bar":["sidebar-button","back-button","forward-button","stop-reload-button","customizableui-special-spring4","urlbar-container","vertical-spacer","customizableui-special-spring6","downloads-button","unified-extensions-button"],"toolbar-menubar":["menubar-items"],"TabsToolbar":[],"vertical-tabs":["tabbrowser-tabs"],"PersonalToolbar":["import-button","personal-bookmarks"]},"seen":["developer-button","screenshot-button","_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action","addon_darkreader_org-browser-action","dearrow_ajay_app-browser-action","_testpilot-containers-browser-action","7esoorv3_alefvanoon_anonaddy_me-browser-action","jid1-mnnxcxisbpnsxq_jetpack-browser-action","_762f9885-5a13-4abd-9c77-433dcd38b8fd_-browser-action","sponsorblocker_ajay_app-browser-action","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action","ublock0_raymondhill_net-browser-action","_d7742d87-e61d-4b78-b8a1-b469842139fa_-browser-action","_4b7db180-f46c-4955-afaf-a03913751acc_-browser-action","frankerfacez_frankerfacez_com-browser-action"],"dirtyAreaCache":["nav-bar","TabsToolbar","vertical-tabs","PersonalToolbar","toolbar-menubar","unified-extensions-area"],"currentVersion":23,"newElementCount":8}'';
+              "browser.uiCustomization.state" = builtins.toJSON toolbarState;
+
+              # Sidebar / vertical tabs
+              "sidebar.revamp" = true;
               "sidebar.verticalTabs" = true;
               "sidebar.verticalTabs.dragToPinPromo.dismissed" = true;
+              "sidebar.new-sidebar.has-used" = true;
+              # Launcher tools: open tabs + Bitwarden
+              "sidebar.main.tools" = "opentabs,{446900e4-71c2-419f-a6a7-df9c091e268b}";
+              # Extension sidebars Firefox has already offered; without this it
+              # re-adds Stylus/Bitwarden to the launcher on a fresh profile.
+              "sidebar.installed.extensions" =
+                "{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d},{446900e4-71c2-419f-a6a7-df9c091e268b}";
+              # Startup state: collapsed launcher, no panel open.
+              "sidebar.backupState" = builtins.toJSON {
+                command = "";
+                panelOpen = false;
+                bookmarksExpandedFolders = [ ];
+                launcherWidth = 50;
+                launcherExpanded = false;
+                launcherVisible = true;
+                toolsHeight = 75;
+                collapsedToolsHeight = 75;
+              };
+
               # Disable window buttons when client side decorations are off
               "browser.tabs.inTitlebar" = 0;
               "browser.startup.homepage" = "https://nixos.org";
               "browser.search.region" = "PL";
-              "browser.search.isUS" = false;
-              "distribution.searchplugins.defaultLocale" = "pl-PL";
-              "general.useragent.locale" = "pl-PL";
-              "app.update.auto" = false;
               "browser.bookmarks.showMobileBookmarks" = true;
               "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
 
-              # Startup
-              #"browser.aboutConfig.showWarning" = false;
-              #"browser.newtabpage.enabled" = false;
-              #"browser.newtab.preload" = false;
-              #"browser.newtabpage.activity-stream.feeds.telemetry" = false;
-              #"browser.newtabpage.activity-stream.telemetry" = false;
-              #"browser.newtabpage.activity-stream.feeds.snippets" = false;
-              #"browser.newtabpage.activity-stream.feeds.section.topstories" = false;
-              #"browser.newtabpage.activity-stream.section.highlights.includePocket" =
-              #  false;
-              #"browser.newtabpage.activity-stream.feeds.discoverystreamfeed" = false;
-              #"browser.newtabpage.activity-stream.showSponsored" = false;
-              #"browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
-              #"browser.newtabpage.activity-stream.default.sites" = "";
+              # Startup (new tab page is configured via the FirefoxHome policy)
+              "browser.aboutConfig.showWarning" = false;
 
               # Login prompts
-              "signon.rememberSignons" = false;
               "signon.autofillForms" = false;
               "signon.formlessCapture.enabled" = false;
               "network.auth.subresource-http-auth-allow" = 1;
               "extensions.enabledScopes" = 5;
-              "extensions.webextensions.restrictedDomains" = "";
+              # Auto-enable profile-installed extensions (stylix's Firefox Color)
+              "extensions.autoDisableScopes" = 0;
 
               # Telemetry
               "datareporting.policy.dataSubmissionEnabled" = false;
               "datareporting.healthreport.uploadEnabled" = false;
-              "toolkit.telemetry.enabled" = false;
-              "toolkit.telemetry.unified" = false;
               "toolkit.telemetry.server" = "data:,";
               "toolkit.telemetry.archive.enabled" = false;
               "toolkit.telemetry.newProfilePing.enabled" = false;
@@ -215,17 +309,10 @@
               "toolkit.telemetry.coverage.opt-out" = true;
               "toolkit.coverage.opt-out" = true;
               "toolkit.coverage.endpoint.base" = "";
-              "browser.ping-centre.telemetry" = false;
-              "browser.selfsupport.url" = "";
-              "pocket.enabled" = false;
               "beacon.enabled" = false;
               "network.captive-portal-service.enabled" = false;
 
-              # Fingerprinting
-              #"privacy.resistFingerprinting" = true;
-              #"privacy.resistFingerprinting.block_mozAddonManager" = true;
-              #"browser.startup.blankWindow" = false;
-              "browser.display.use_system_colors" = true;
+              #"browser.display.use_system_colors" = true;
 
               # Cookies
               "browser.contentblocking.category" = "standard";
@@ -238,9 +325,6 @@
 
               # Webgl
               "webgl.force-enabled" = true;
-
-              # Sidebar
-              "sidebar.revamp" = true;
             };
             search = {
               default = "StartPage";
@@ -286,8 +370,8 @@
                   definedAliases = [ "@no" ];
                 };
                 "NixOS Wiki" = {
-                  urls = [ { template = "https://nixos.wiki/index.php?search={searchTerms}"; } ];
-                  icon = "https://nixos.wiki/favicon.png";
+                  urls = [ { template = "https://wiki.nixos.org/w/index.php?search={searchTerms}"; } ];
+                  icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
                   updateInterval = 24 * 60 * 60 * 1000; # every day
                   definedAliases = [ "@nw" ];
                 };
