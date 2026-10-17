@@ -9,7 +9,10 @@
 
   flake.homeModules.niri = { pkgs, ... }: {
     config = {
-      home.packages = with pkgs; [ wdisplays ];
+      home.packages = with pkgs; [
+        wdisplays
+        wl-clipboard
+      ];
       wayland.windowManager.niri = {
         enable = true;
 
