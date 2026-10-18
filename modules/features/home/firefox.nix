@@ -79,6 +79,105 @@
         currentVersion = 26;
         newElementCount = 8;
       };
+
+      c = config.lib.stylix.colors.withHashtag;
+
+      # The new tab page's CSP only allows https:, data:, blob: and chrome:
+      # images, so the logo has to be inlined rather than linked from the store.
+      # stylix already recolours nixos-icons to the base16 palette. @logo@ is
+      # filled in at build time.
+      userContent =
+        pkgs.runCommand "userContent.css"
+          {
+            # New tab page. Content pages don't inherit userChrome.css, so the
+            # square corners and base16 states are repeated here.
+            css = ''
+              @-moz-document url("about:home"), url("about:newtab") {
+                :root {
+                  --border-radius-circle: 0 !important;
+                  --border-radius-xsmall: 0 !important;
+                  --border-radius-small: 0 !important;
+                  --border-radius-medium: 0 !important;
+                  --border-radius-large: 0 !important;
+                  --border-radius-xlarge: 0 !important;
+
+                  --newtab-background-color: ${c.base00} !important;
+                  --newtab-background-color-secondary: ${c.base01} !important;
+                  --newtab-background-card: ${c.base01} !important;
+                  --newtab-text-primary-color: ${c.base05} !important;
+                  --newtab-element-hover-color: ${c.base02} !important;
+                  --newtab-element-active-color: ${c.base03} !important;
+                  --newtab-element-secondary-color: ${c.base01} !important;
+                  --newtab-element-secondary-hover-color: ${c.base02} !important;
+                  --newtab-element-secondary-active-color: ${c.base03} !important;
+                  --newtab-button-background: ${c.base01} !important;
+                  --newtab-button-hover-background: ${c.base02} !important;
+                  --newtab-button-active-background: ${c.base03} !important;
+                  --newtab-button-text: ${c.base05} !important;
+                  --newtab-primary-action-background: ${c.base0D} !important;
+                  --newtab-primary-element-text-color: ${c.base00} !important;
+                  --focus-outline-color: ${c.base0D} !important;
+                }
+
+                * {
+                  border-radius: 0 !important;
+                }
+
+                .logo-and-wordmark .logo {
+                  background: url("@logo@") no-repeat center / contain !important;
+                }
+
+                .logo-and-wordmark .wordmark {
+                  display: none !important;
+                }
+
+                /* Flat tiles: drop the drop shadow, outline on hover instead. */
+                .top-site-outer .tile {
+                  box-shadow: none !important;
+                  border: 1px solid ${c.base02} !important;
+                }
+
+                .top-site-outer:is(:hover, :focus-within) .tile {
+                  background: ${c.base02} !important;
+                  border-color: ${c.base0D} !important;
+                }
+              }
+            '';
+            passAsFile = [ "css" ];
+          }
+          ''
+            substitute "$cssPath" $out \
+              --replace-fail @logo@ "data:image/svg+xml;base64,$(base64 -w0 ${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg)"
+          '';
+
+      # New tab shortcuts, in tile order. Rewritten from user.js on every
+      # start, so pins added or removed in the UI only last until restart.
+      pinnedSites = [
+        {
+          label = "NixOS Search";
+          url = "https://search.nixos.org/packages";
+        }
+        {
+          label = "NixOS Wiki";
+          url = "https://wiki.nixos.org";
+        }
+        {
+          label = "HM Options";
+          url = "https://home-manager-options.extranix.com";
+        }
+        {
+          label = "GitHub";
+          url = "https://github.com";
+        }
+        {
+          label = "YouTube";
+          url = "https://www.youtube.com";
+        }
+        {
+          label = "osu!";
+          url = "https://osu.ppy.sh";
+        }
+      ];
     in
     {
       config = {
@@ -193,64 +292,62 @@
             # Square UI corners. Zeroing the design-system radius tokens on :root
             # reaches shadow-DOM widgets (buttons, panels, toggles) through
             # inheritance; the universal rule catches hardcoded radii elsewhere.
-            userChrome =
-              let
-                c = config.lib.stylix.colors.withHashtag;
-              in
-              ''
-                :root {
-                  --border-radius-circle: 0 !important;
-                  --border-radius-xsmall: 0 !important;
-                  --border-radius-small: 0 !important;
-                  --border-radius-medium: 0 !important;
-                  --border-radius-large: 0 !important;
-                  --border-radius-xlarge: 0 !important;
-                  --button-border-radius: 0 !important;
-                  --panel-border-radius: 0 !important;
-                  --arrowpanel-border-radius: 0 !important;
-                  --toolbarbutton-border-radius: 0 !important;
-                  --tab-border-radius: 0 !important;
-                  --urlbar-border-radius: 0 !important;
-                  --urlbar-inner-border-radius: 0 !important;
-                  --window-border-radius: 0 !important;
-                }
+            inherit userContent;
 
-                * {
-                  border-radius: 0 !important;
-                }
+            userChrome = ''
+              :root {
+                --border-radius-circle: 0 !important;
+                --border-radius-xsmall: 0 !important;
+                --border-radius-small: 0 !important;
+                --border-radius-medium: 0 !important;
+                --border-radius-large: 0 !important;
+                --border-radius-xlarge: 0 !important;
+                --button-border-radius: 0 !important;
+                --panel-border-radius: 0 !important;
+                --arrowpanel-border-radius: 0 !important;
+                --toolbarbutton-border-radius: 0 !important;
+                --tab-border-radius: 0 !important;
+                --urlbar-border-radius: 0 !important;
+                --urlbar-inner-border-radius: 0 !important;
+                --window-border-radius: 0 !important;
+              }
 
-                /* Firefox derives hover/selected states as translucent
-                   currentColor mixes, which turn muddy on base16 themes.
-                   Declared on every element so per-widget defaults can't win. */
-                * {
-                  --toolbarbutton-background-color-hover: ${c.base02} !important;
-                  --toolbarbutton-background-color-active: ${c.base03} !important;
-                  --button-background-color-hover: ${c.base02} !important;
-                  --button-background-color-active: ${c.base03} !important;
-                  --button-background-color-ghost-hover: ${c.base02} !important;
-                  --button-background-color-ghost-active: ${c.base03} !important;
+              * {
+                border-radius: 0 !important;
+              }
 
-                  --tab-background-color-hover: ${c.base01} !important;
-                  --tab-background-color-selected: ${c.base02} !important;
+              /* Firefox derives hover/selected states as translucent
+                 currentColor mixes, which turn muddy on base16 themes.
+                 Declared on every element so per-widget defaults can't win. */
+              * {
+                --toolbarbutton-background-color-hover: ${c.base02} !important;
+                --toolbarbutton-background-color-active: ${c.base03} !important;
+                --button-background-color-hover: ${c.base02} !important;
+                --button-background-color-active: ${c.base03} !important;
+                --button-background-color-ghost-hover: ${c.base02} !important;
+                --button-background-color-ghost-active: ${c.base03} !important;
 
-                  --urlbar-box-background-color: ${c.base01} !important;
-                  --urlbar-box-background-color-focus: ${c.base01} !important;
-                  --urlbar-box-background-color-hover: ${c.base03} !important;
-                  --urlbar-box-background-color-active: ${c.base03} !important;
+                --tab-background-color-hover: ${c.base01} !important;
+                --tab-background-color-selected: ${c.base02} !important;
 
-                  --urlbarview-background-color-hover: ${c.base01} !important;
-                  --urlbarview-background-color-selected: ${c.base02} !important;
-                  --urlbarview-text-color-selected: ${c.base05} !important;
-                }
+                --urlbar-box-background-color: ${c.base01} !important;
+                --urlbar-box-background-color-focus: ${c.base01} !important;
+                --urlbar-box-background-color-hover: ${c.base03} !important;
+                --urlbar-box-background-color-active: ${c.base03} !important;
 
-                /* The vertical tab strip has no background of its own and shows
-                   the frame colour; match the toolbar instead. The horizontal
-                   #TabsToolbar keeps the frame colour. */
-                #sidebar-container {
-                  --sidebar-launcher-surface-color: var(--toolbar-background-color) !important;
-                  background-color: var(--toolbar-background-color) !important;
-                }
-              '';
+                --urlbarview-background-color-hover: ${c.base01} !important;
+                --urlbarview-background-color-selected: ${c.base02} !important;
+                --urlbarview-text-color-selected: ${c.base05} !important;
+              }
+
+              /* The vertical tab strip has no background of its own and shows
+                 the frame colour; match the toolbar instead. The horizontal
+                 #TabsToolbar keeps the frame colour. */
+              #sidebar-container {
+                --sidebar-launcher-surface-color: var(--toolbar-background-color) !important;
+                background-color: var(--toolbar-background-color) !important;
+              }
+            '';
 
             settings = {
               "browser.uiCustomization.state" = builtins.toJSON toolbarState;
@@ -287,6 +384,7 @@
 
               # Startup (new tab page is configured via the FirefoxHome policy)
               "browser.aboutConfig.showWarning" = false;
+              "browser.newtabpage.pinned" = builtins.toJSON pinnedSites;
 
               # Login prompts
               "signon.autofillForms" = false;
@@ -327,9 +425,14 @@
               "webgl.force-enabled" = true;
             };
             search = {
-              default = "StartPage";
+              default = "SearX";
               force = true;
               engines = {
+                "SearX" = {
+                  urls = [ { template = "http://searx.laffey/searx/search?q={searchTerms}"; } ];
+                  icon = "http://searx.laffey/searx/static/themes/simple/img/favicon.png";
+                  definedAliases = [ "@sx" ];
+                };
                 "Nix Packages" = {
                   urls = [
                     {
