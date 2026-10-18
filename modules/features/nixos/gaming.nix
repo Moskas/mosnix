@@ -7,7 +7,10 @@
         # Pull the matching home-manager config in automatically so hosts only
         # need `self.nixosModules.gaming` and don't have to wire the homeModule
         # into their home profile separately.
-        home-manager.sharedModules = [ self.homeModules.gaming ];
+        home-manager.sharedModules = [
+          self.homeModules.gaming
+          self.homeModules.prism
+        ];
 
         programs.steam = {
           enable = true;
@@ -35,7 +38,6 @@
     { pkgs, lib, ... }:
     {
       config = {
-        sharedModules = [ self.homeModules.prism ];
         programs = {
           mangohud = {
             enable = true;

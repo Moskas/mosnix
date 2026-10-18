@@ -17,10 +17,95 @@ let
           description = "Base16 colorscheme name from base16-schemes.";
         };
 
-        desktop.bar.position = lib.mkOption {
-          type = lib.types.str;
-          default = "top";
-          description = "Default desktop bar position";
+        desktop.bar = {
+          position = lib.mkOption {
+            type = lib.types.str;
+            default = "top";
+            description = "Default desktop bar position";
+          };
+
+          # Widget ids per bar section; capsule groups are referenced as "group:<name>".
+          layout = {
+            start = lib.mkOption {
+              type = lib.types.listOf lib.types.str;
+              default = [
+                "control-center"
+                "workspaces"
+                "group:sysmon"
+                "audio_visualizer"
+              ];
+              description = "Widgets in the start section of the bar.";
+            };
+
+            center = lib.mkOption {
+              type = lib.types.listOf lib.types.str;
+              default = [ "group:media" ];
+              description = "Widgets in the center section of the bar.";
+            };
+
+            end = lib.mkOption {
+              type = lib.types.listOf lib.types.str;
+              default = [
+                "tray"
+                "network"
+                "bluetooth"
+                "volume"
+                "brightness"
+                "battery"
+                "clock"
+                "group:notify"
+              ];
+              description = "Widgets in the end section of the bar.";
+            };
+          };
+
+          # Defining any group replaces the whole default set.
+          groups = lib.mkOption {
+            type = lib.types.attrsOf (
+              lib.types.submodule {
+                options = {
+                  members = lib.mkOption {
+                    type = lib.types.listOf lib.types.str;
+                    description = "Widgets inside the capsule group.";
+                  };
+
+                  fill = lib.mkOption {
+                    type = lib.types.str;
+                    default = "surface";
+                    description = "Capsule fill color role.";
+                  };
+
+                  accordion = lib.mkOption {
+                    type = lib.types.bool;
+                    default = true;
+                    description = "Collapse the group into an accordion.";
+                  };
+                };
+              }
+            );
+            default = {
+              notify = {
+                fill = "surface_variant";
+                members = [
+                  "notifications"
+                  "clipboard"
+                ];
+              };
+              sysmon.members = [
+                "cpu"
+                "temp"
+                "ram"
+              ];
+              media = {
+                accordion = false;
+                members = [
+                  "media"
+                  "cat"
+                ];
+              };
+            };
+            description = "Bar capsule groups, keyed by group id.";
+          };
         };
 
         fonts = {

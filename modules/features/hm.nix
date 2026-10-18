@@ -22,7 +22,15 @@
             {
               moskas = {
                 colorscheme = lib.mkDefault config.moskas.colorscheme;
-                desktop.bar.position = lib.mkDefault config.moskas.desktop.bar.position;
+                desktop.bar = {
+                  position = lib.mkDefault config.moskas.desktop.bar.position;
+                  layout = {
+                    start = lib.mkDefault config.moskas.desktop.bar.layout.start;
+                    center = lib.mkDefault config.moskas.desktop.bar.layout.center;
+                    end = lib.mkDefault config.moskas.desktop.bar.layout.end;
+                  };
+                  groups = lib.mkDefault config.moskas.desktop.bar.groups;
+                };
                 obs.cuda = lib.mkDefault config.moskas.obs.cuda;
                 fonts = {
                   mono = {

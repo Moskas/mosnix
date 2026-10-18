@@ -8,17 +8,17 @@
   flake.homeModules.noctalia =
     { config, pkgs, ... }:
     let
+      bar = config.moskas.desktop.bar;
       # Shared capsule-group styling for the bar.
-      capsuleGroup =
-        args:
-        {
-          accordion = true;
-          accordion_direction = "end";
-          enabled = true;
-          opacity = 1.0;
-          padding = 6.0;
-        }
-        // args;
+      capsuleGroup = id: group: {
+        inherit id;
+        inherit (group) accordion fill members;
+        accordion_direction = "end";
+        enabled = true;
+        opacity = 1.0;
+        padding = 6.0;
+        radius = 0.0;
+      };
       theme-slug = lib.head (lib.splitString "-" config.lib.stylix.colors.scheme-slug);
     in
     {
@@ -107,62 +107,20 @@
             };
 
             bar.main = {
-              position = config.moskas.desktop.bar.position;
+              inherit (bar) position;
               margin_ends = 0;
               padding = 12;
+              capsule_radius = 0.0;
               radius = 0;
               shadow = false;
               thickness = 32;
               widget_spacing = 12;
 
-              start = [
-                "control-center"
-                "workspaces"
-                "group:g2"
-                "audio_visualizer"
-              ];
-              center = [ "group:g3" ];
-              end = [
-                "tray"
-                "network"
-                "bluetooth"
-                "volume"
-                "brightness"
-                "battery"
-                "clock"
-                "group:g1"
-              ];
+              inherit (bar.layout) start center end;
 
               dead_zone.actions.left = "panel-toggle launcher";
 
-              capsule_group = [
-                (capsuleGroup {
-                  id = "g1";
-                  fill = "surface_variant";
-                  members = [
-                    "notifications"
-                    "clipboard"
-                  ];
-                })
-                (capsuleGroup {
-                  id = "g2";
-                  fill = "surface";
-                  members = [
-                    "cpu"
-                    "temp"
-                    "ram"
-                  ];
-                })
-                (capsuleGroup {
-                  id = "g3";
-                  accordion = false;
-                  fill = "surface_variant";
-                  members = [
-                    "media"
-                    "cat"
-                  ];
-                })
-              ];
+              capsule_group = lib.mapAttrsToList capsuleGroup bar.groups;
             };
 
             notification = {
@@ -232,7 +190,7 @@
               };
 
               workspaces = {
-                empty_color = "shadow";
+                empty_color = "on_surface_variant";
                 occupied_color = "on_surface";
                 style = "minimal";
               };

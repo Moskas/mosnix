@@ -17,7 +17,25 @@
     ];
 
     moskas = {
-      desktop.bar.position = "bottom";
+      desktop.bar = {
+        position = "bottom";
+        layout = {
+          start = [
+            "control-center"
+            "workspaces"
+          ];
+          center = [ ];
+          end = [
+            "tray"
+            "network"
+            "volume"
+            "brightness"
+            "battery"
+            "clock"
+            "group:notify"
+          ];
+        };
+      };
       fonts.sizes = {
         desktop = 12;
         terminal = 12;
