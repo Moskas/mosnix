@@ -5,6 +5,7 @@
     modules = [
       self.homeModules.standalone-base
       self.homeModules.graphical
+      self.homeModules.prism
     ];
   };
 }

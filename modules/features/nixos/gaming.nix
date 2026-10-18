@@ -35,6 +35,7 @@
     { pkgs, lib, ... }:
     {
       config = {
+        sharedModules = [ self.homeModules.prism ];
         programs = {
           mangohud = {
             enable = true;
@@ -47,9 +48,6 @@
                 no_display = true;
               };
             };
-          };
-          prismlauncher = {
-            enable = true;
           };
         };
         home.packages = with pkgs; [

@@ -86,7 +86,7 @@
             now_playing_suffix = "$/b$9";
             playlist_shorten_total_times = "yes";
             volume_change_step = 5;
-            execute_on_song_change = "${notify}/bin/mpd-song-change";
+            execute_on_song_change = "${notify}/bin/song-change";
           };
 
           bindings = [

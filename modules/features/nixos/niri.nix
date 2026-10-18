@@ -44,7 +44,7 @@
           overview.zoom = 0.6;
 
           layout = {
-            gaps = 8;
+            gaps = 4;
             center-focused-column = "never";
             always-center-single-column = { };
             preset-column-widths._children = [
