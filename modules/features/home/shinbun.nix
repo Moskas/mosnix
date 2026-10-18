@@ -558,13 +558,6 @@
             ];
           }
           {
-            link = "http://dorotac.eu/atom.xml";
-            tags = [
-              "Blog"
-              "Tech"
-            ];
-          }
-          {
             link = "https://morss.it/https://signal.org/blog/rss.xml";
             tags = [
               "Blog"

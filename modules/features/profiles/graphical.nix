@@ -13,6 +13,7 @@
       fuzzel
       kitty
       mpd
+      mpv
       nixcord
       niri
       noctalia

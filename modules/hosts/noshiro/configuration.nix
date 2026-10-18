@@ -14,6 +14,7 @@
       inputs.nixos-hardware.nixosModules.common-gpu-intel
       self.nixosModules.commonWorkstation
       self.nixosModules.gaming
+      self.nixosModules.moonlight
       self.nixosModules.laptop
       self.nixosModules.graphical
       self.nixosModules.secureboot

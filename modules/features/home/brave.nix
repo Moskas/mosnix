@@ -26,7 +26,7 @@
         home.packages = with pkgs; [
           (makeDesktopItem {
             name = "brave-private";
-            desktopName = "Brave Web Browser";
+            desktopName = "Brave Web Browser - incognito";
             genericName = "Open a private Brave window";
             icon = "brave-browser";
             exec = "${brave}/bin/brave --incognito";

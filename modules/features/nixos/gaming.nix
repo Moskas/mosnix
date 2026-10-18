@@ -56,7 +56,9 @@
           vintagestory
           heroic-unwrapped
           bottles-unwrapped
-          moonlight-qt
+          osu-lazer-bin
+          # TODO Add once https://github.com/NixOS/nixpkgs/pull/572936 gets merged
+          # etterna
         ];
       };
     };

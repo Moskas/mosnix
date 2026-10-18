@@ -99,7 +99,7 @@
             }
             {
               window-rule._children = [
-                { match._props.app-id = "mpv"; }
+                { match._props.app-id = "^mpv$"; }
                 { match._props.app-id = "emacs"; }
                 { match._props.app-id = "org.prismlauncher.PrismLauncher"; }
                 { open-maximized = true; }

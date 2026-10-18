@@ -12,6 +12,7 @@
       inputs.stylix.nixosModules.stylix
       self.nixosModules.stylixConfig
       self.nixosModules.graphical
+      self.nixosModules.moonlight
       inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x220
       inputs.nixos-hardware.nixosModules.common-gpu-intel
     ];
@@ -43,6 +44,8 @@
         applications = 12;
       };
     };
+
+    home-manager.users.moskas.programs.mpv.config.profile = "fast";
 
     networking = {
       hostName = "glasgow";

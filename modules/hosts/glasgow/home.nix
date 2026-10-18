@@ -6,6 +6,7 @@
       self.homeModules.standalone-base
       self.homeModules.graphical
       self.homeModules.prism
+      { programs.mpv.config.profile = "fast"; }
     ];
   };
 }
