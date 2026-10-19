@@ -19,6 +19,7 @@
       noctalia
       opencode
       prism
+      rmpc
       tickrs
       wallpapers
       zathura

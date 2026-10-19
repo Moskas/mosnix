@@ -15,7 +15,7 @@
         inherit (group) accordion fill members;
         accordion_direction = "end";
         enabled = true;
-        opacity = 1.0;
+        opacity = 0.0;
         padding = 6.0;
         radius = 0.0;
       };
@@ -110,6 +110,7 @@
               inherit (bar) position;
               margin_ends = 0;
               padding = 12;
+              capsule_opacity = 0.0;
               capsule_radius = 0.0;
               radius = 0;
               shadow = false;
@@ -130,6 +131,13 @@
                 feishin = {
                   enabled = true;
                   match = "feishin";
+                  show_toast = true;
+                  save_history = false;
+                };
+                # song-change from mpd.nix (ncmpcpp/rmpc)
+                mpd = {
+                  enabled = true;
+                  match = "mpd";
                   show_toast = true;
                   save_history = false;
                 };

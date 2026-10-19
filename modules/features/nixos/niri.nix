@@ -172,8 +172,8 @@
               spawn-sh = "fuzzel";
             };
             "Super+Alt+L" = {
-              _props.hotkey-overlay-title = "Lock the Screen: swaylock";
-              spawn = [ "swaylock" ];
+              _props.hotkey-overlay-title = "Lock the Screen: noctalia lock";
+              spawn-sh = [ "noctalia msg session lock" ];
             };
             "Super+Alt+S" = {
               _props = {

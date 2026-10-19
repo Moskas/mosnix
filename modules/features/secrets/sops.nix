@@ -1,5 +1,18 @@
 { inputs, ... }:
 {
+  # Per-user secrets, decrypted with moskas' own age key (a recipient of
+  # secrets.yaml), so it works on hosts without a sops host key.
+  flake.homeModules.sops =
+    { config, ... }:
+    {
+      imports = [ inputs.sops-nix.homeManagerModules.sops ];
+      sops = {
+        defaultSopsFile = ./secrets.yaml;
+        defaultSopsFormat = "yaml";
+        age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
+      };
+    };
+
   flake.nixosModules.sops = {
     imports = [ inputs.sops-nix.nixosModules.sops ];
     config = {

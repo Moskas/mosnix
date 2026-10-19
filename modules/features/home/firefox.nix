@@ -385,6 +385,10 @@
               # Startup (new tab page is configured via the FirefoxHome policy)
               "browser.aboutConfig.showWarning" = false;
               "browser.newtabpage.pinned" = builtins.toJSON pinnedSites;
+              # Always reopen the previous session, and do it silently after
+              # unclean exits (e.g. niri quitting) instead of about:sessionrestore
+              "browser.startup.page" = 3;
+              "browser.sessionstore.max_resumed_crashes" = 999;
 
               # Login prompts
               "signon.autofillForms" = false;
@@ -429,8 +433,8 @@
               force = true;
               engines = {
                 "SearX" = {
-                  urls = [ { template = "http://searx.laffey/searx/search?q={searchTerms}"; } ];
-                  icon = "http://searx.laffey/searx/static/themes/simple/img/favicon.png";
+                  urls = [ { template = "https://searx.taila32e5.ts.net/search?q={searchTerms}"; } ];
+                  icon = "https://searx.taila32e5.ts.net/static/themes/simple/img/favicon.svg";
                   definedAliases = [ "@sx" ];
                 };
                 "Nix Packages" = {
@@ -511,14 +515,17 @@
                 };
                 youtube = {
                   urls = [ { template = "https://www.youtube.com/results?search_query={searchTerms}"; } ];
+                  icon = "https://www.youtube.com/s/desktop/5d669aa8/img/favicon.ico";
                   definedAliases = [ "yt" ];
                 };
                 "Github Users" = {
                   urls = [ { template = "https://github.com/search?q={searchTerms}&type=users"; } ];
+                  icon = "https://github.githubassets.com/favicons/favicon-dark.svg";
                   definedAliases = [ "gu" ];
                 };
                 "Github Repos" = {
                   urls = [ { template = "https://github.com/search?q={searchTerms}&type=repositories"; } ];
+                  icon = "https://github.githubassets.com/favicons/favicon-dark.svg";
                   definedAliases = [ "gr" ];
                 };
                 bing.metaData.hidden = true;

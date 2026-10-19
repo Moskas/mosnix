@@ -1,3 +1,4 @@
+{ self, ... }:
 {
   flake.homeModules.mpd =
     { pkgs, config, ... }:
@@ -21,16 +22,20 @@
             fi
         done
 
-        ${pkgs.libnotify}/bin/notify-send -i "$COVER" \
+        ${pkgs.libnotify}/bin/notify-send -a mpd -i "$COVER" \
             "Now playing" \
             " $ARTIST\n󰎇 $TITLE\n󰗮 $ALBUM"
       '';
     in
     {
+      imports = [ self.homeModules.sops ];
+
       config = {
         home.packages = with pkgs; [
           mpc
           mpdas
+          # also run by rmpc's on_song_change
+          notify
         ];
 
         services.mpd = {
@@ -126,11 +131,22 @@
           };
         };
 
+        # Decrypted to $XDG_RUNTIME_DIR; linked to a fixed path because the
+        # mpdscribble module quotes passwordFile, so `%r` would not expand.
+        sops.secrets.librefm_password.path = "${config.xdg.configHome}/mpdscribble/librefm-password";
+
         services.mpdscribble = {
           enable = true;
+          endpoints."libre.fm" = {
+            username = "moskas";
+            passwordFile = config.sops.secrets.librefm_password.path;
+          };
         };
 
-        programs.rmpc.enable = true;
+        systemd.user.services.mpdscribble.Unit = {
+          Wants = [ "sops-nix.service" ];
+          After = [ "sops-nix.service" ];
+        };
 
         home.sessionVariables.MPD_HOST = "localhost";
 

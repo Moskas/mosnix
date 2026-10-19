@@ -27,6 +27,7 @@
           ];
           center = [ ];
           end = [
+            "media"
             "tray"
             "network"
             "volume"
