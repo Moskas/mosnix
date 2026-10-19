@@ -1,5 +1,5 @@
 let
-  fileManager = "thunar.desktop";
+  fileManager = "ranger.desktop";
   imageViewer = "nsxiv.desktop";
   mediaPlayer = "mpv.desktop";
   webBrowser = "firefox.desktop";
