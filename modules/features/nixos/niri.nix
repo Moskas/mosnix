@@ -1,3 +1,4 @@
+{ inputs, ... }:
 {
   flake.nixosModules.niri = {
     config = {
@@ -12,6 +13,7 @@
       home.packages = with pkgs; [
         wdisplays
         wl-clipboard
+        inputs.niri-scratchpad.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
       wayland.windowManager.niri = {
         enable = true;
@@ -81,6 +83,8 @@
             { workspace._args = [ "4" ]; }
             { workspace._args = [ "5" ]; }
             { workspace._args = [ "6" ]; }
+            # niri-scratchpad moves hidden windows here.
+            { workspace._args = [ "stash" ]; }
 
             {
               spawn-at-startup._args = [
@@ -148,6 +152,16 @@
               ];
             }
 
+            # Scratchpads: the first spawn doesn't honour --as-float.
+            {
+              window-rule._children = [
+                { match._props.app-id = "^scratch-"; }
+                { open-floating = true; }
+                { default-column-width.proportion = 0.6; }
+                { default-window-height.proportion = 0.6; }
+              ];
+            }
+
             {
               layer-rule._children = [
                 { match._props.namespace = "^noctalia-backdrop*"; }
@@ -157,6 +171,31 @@
           ];
 
           binds = {
+            "Mod+Grave" = {
+              _props.hotkey-overlay-title = "Toggle scratchpad terminal";
+              spawn = [
+                "niri-scratchpad"
+                "target"
+                "--spawn"
+                "kitty --class scratch-term"
+                "--as-float"
+                "appid"
+                "scratch-term"
+              ];
+            };
+            "Mod+Shift+M" = {
+              _props.hotkey-overlay-title = "Toggle scratchpad music (rmpc)";
+              spawn = [
+                "niri-scratchpad"
+                "target"
+                "--spawn"
+                "kitty --class scratch-music -e rmpc"
+                "--as-float"
+                "appid"
+                "scratch-music"
+              ];
+            };
+
             "Mod+Shift+Slash"."show-hotkey-overlay" = { };
 
             "Mod+Return" = {
