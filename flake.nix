@@ -49,6 +49,14 @@
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-doom-emacs-unstraightened = {
+      url = "github:marienz/nix-doom-emacs-unstraightened";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    doom-config = {
+      url = "github:Moskas/emacs-config";
+      flake = false;
+    };
     mospkgs = {
       url = "github:Moskas/mospkgs";
     };
