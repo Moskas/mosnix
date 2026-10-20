@@ -1047,16 +1047,16 @@
     },
     "nixpkgs_11": {
       "locked": {
-        "lastModified": 1751274312,
-        "narHash": "sha256-/bVBlRpECLVzjV19t5KMdMFWSwKLtb5RyXdjz3LJT+g=",
+        "lastModified": 1792503283,
+        "narHash": "sha256-vhe2jyvRCgufWPqDuDq1S3t3ypE+ka46IFutV02xKso=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "50ab793786d9de88ee30ec4e4c24fb4236fc2674",
+        "rev": "cd4ea8d57de16f4810bc5f14207bac45fbf19f67",
         "type": "github"
       },
       "original": {
         "id": "nixpkgs",
-        "ref": "nixos-24.11",
+        "ref": "nixos-26.05",
         "type": "indirect"
       }
     },
@@ -1647,11 +1647,11 @@
         "nixpkgs": "nixpkgs_11"
       },
       "locked": {
-        "lastModified": 1790371691,
-        "narHash": "sha256-3R0GnX3LpuygegIEFk3XB+o1TJbDsuIud/rnlzCOh18=",
+        "lastModified": 1792527055,
+        "narHash": "sha256-f7jVsRsF0E0mp3/Pbd5EDu83AVSxCajOo7AcfFH+6qU=",
         "owner": "Moskas",
         "repo": "nixos-06cb-009a-fingerprint-sensor",
-        "rev": "f8f92b1eca41ab703d12030e1e69bf159ccd114b",
+        "rev": "25f1205a870b8844b044dd8caed3db30ebdfbcdd",
         "type": "github"
       },
       "original": {

@@ -24,6 +24,12 @@
 
     moskas = {
       colorscheme = "solarized-dark";
+      fonts.sizes = {
+        desktop = 12;
+        terminal = 12;
+        popups = 12;
+        applications = 12;
+      };
     };
 
     services.fingerprint06cb009a = {
