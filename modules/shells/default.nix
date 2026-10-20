@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 {
   imports = [
     inputs.devshell.flakeModule
@@ -57,6 +57,33 @@
               rm -f -- *.qcow2 # For clean filesystem
               nixos-rebuild build-vm --flake .#"$host"
               ./result/bin/run-"$host"-vm
+            '';
+          }
+          {
+            name = "update-wallpapers";
+            help = "Bump wallpapers rev and per-theme hashes";
+            command = ''
+              pin="$PRJ_ROOT/modules/features/home/wallpapers.json"
+              url="https://github.com/Moskas/wallpapers"
+
+              rev=$(${lib.getExe pkgs.git} ls-remote "$url" main | cut -f1)
+              if [ "$rev" = "$(${lib.getExe pkgs.jq} -r .rev "$pin")" ]; then
+                echo "wallpapers already at $rev"
+                exit 0
+              fi
+
+              new=$(${lib.getExe pkgs.jq} --arg rev "$rev" '.rev = $rev' "$pin")
+              for theme in $(${lib.getExe pkgs.jq} -r '.hashes | keys[]' "$pin"); do
+                echo "prefetching $theme @ $rev"
+                hash=$(${lib.getExe pkgs.nix-prefetch-git} --quiet \
+                  --url "$url" --rev "$rev" --sparse-checkout "$theme" \
+                  | ${lib.getExe pkgs.jq} -r .hash)
+                new=$(echo "$new" | ${lib.getExe pkgs.jq} --arg t "$theme" --arg h "$hash" \
+                  '.hashes[$t] = $h')
+              done
+
+              echo "$new" > "$pin"
+              echo "wallpapers bumped to $rev"
             '';
           }
         ];

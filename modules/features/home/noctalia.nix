@@ -206,7 +206,7 @@
 
             wallpaper = {
               enabled = true;
-              directory = "/home/moskas/Pictures/Wallpapers/${theme-slug}}/";
+              directory = "/home/moskas/Pictures/Wallpapers/${theme-slug}/";
               directory_dark = "/home/moskas/Pictures/Wallpapers/${theme-slug}/dark/";
               directory_light = "/home/moskas/Pictures/Wallpapers/${theme-slug}/light/";
               automation = {

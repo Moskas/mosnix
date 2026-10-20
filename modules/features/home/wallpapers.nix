@@ -1,14 +1,23 @@
+{ lib, ... }:
 {
   flake.homeModules.wallpapers =
-    { pkgs, ... }:
+    { config, pkgs, ... }:
+    let
+      # Pinned rev + per-theme hashes, bumped with the `update-wallpapers` devshell command
+      pin = lib.importJSON ./wallpapers.json;
+      theme = lib.head (lib.splitString "-" config.lib.stylix.colors.scheme-slug);
+    in
     {
-      config = {
-        home.file."./Pictures/Wallpapers".source = pkgs.fetchFromGitHub {
-          owner = "Moskas";
-          repo = "wallpapers";
-          rev = "bf9d104e6b4dfd3de489a888009119a65a35087d";
-          hash = "sha256-gIgORCdxtpvkCOghaMAFZsC6w1gdd2nw5s/1lxOZyJk=";
-        };
+      config = lib.mkIf (pin.hashes ? ${theme}) {
+        home.file."Pictures/Wallpapers/${theme}".source =
+          (pkgs.fetchFromGitHub {
+            owner = "Moskas";
+            repo = "wallpapers";
+            inherit (pin) rev;
+            hash = pin.hashes.${theme};
+            sparseCheckout = [ theme ];
+          })
+          + "/${theme}";
       };
     };
 }
