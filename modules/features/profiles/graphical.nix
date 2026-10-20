@@ -20,6 +20,7 @@
       opencode
       prism
       rmpc
+      swayimg
       tickrs
       wallpapers
       zathura

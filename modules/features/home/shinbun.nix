@@ -565,7 +565,7 @@
             ];
           }
           {
-            link = "https://morss.it/https://joshblais.com/index.xml";
+            link = "https://joshblais.com/index.xml";
             tags = [
               "Blog"
               "Emacs"

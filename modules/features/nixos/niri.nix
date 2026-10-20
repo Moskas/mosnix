@@ -196,6 +196,19 @@
               ];
             };
 
+            "Mod+Alt+R" = {
+              _props.hotkey-overlay-title = "Toggle scratchpad file manager";
+              spawn = [
+                "niri-scratchpad"
+                "target"
+                "--spawn"
+                "kitty --class scratch-ranger -e ranger"
+                "--as-float"
+                "appid"
+                "scratch-ranger"
+              ];
+            };
+
             "Mod+Shift+Slash"."show-hotkey-overlay" = { };
 
             "Mod+Return" = {
