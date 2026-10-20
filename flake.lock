@@ -160,11 +160,11 @@
     "doom-config": {
       "flake": false,
       "locked": {
-        "lastModified": 1792520611,
-        "narHash": "sha256-FyQSHnzXZAQEL1jmCr13cp6drmSQTq3PwNz9YWqgkoA=",
+        "lastModified": 1792531314,
+        "narHash": "sha256-ZVKEm2nC51ZZhzvuc5MmiYIA6UJxG6SX+5YJ3LQq+tU=",
         "owner": "Moskas",
         "repo": "emacs-config",
-        "rev": "e52f670adf3fd32050905da9d25cd8b35cd9aaef",
+        "rev": "3222e43af687c2391ba58bb3231b7c9f53397747",
         "type": "github"
       },
       "original": {
