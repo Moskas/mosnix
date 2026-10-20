@@ -26,7 +26,10 @@
             monospace = monoFont;
             serif = monoFont;
             sansSerif = monoFont;
-            emoji = monoFont;
+            emoji = {
+              package = pkgs.noto-fonts-monochrome-emoji;
+              name = "Noto Fonts Monochrome Emoji";
+            };
 
             sizes = {
               desktop = config.moskas.fonts.sizes.desktop;

@@ -13,6 +13,7 @@
       bat
       btop
       claude
+      concord
       direnv
       emacs
       eza
