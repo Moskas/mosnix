@@ -1,14 +1,13 @@
 {
   # Concord's built-in theme mostly uses ANSI colours, but a handful of groups
   # hardcode Discord's RGB palette. Remap those onto the terminal's ANSI
-  # palette; where ANSI has no equivalent (orange, raised surfaces) fall back
+  # palette; where ANSI has no equivalent (orange, raised "black"s) fall back
   # to stylix, or to the nearest ANSI colour on hosts without stylix.
   flake.homeModules.concord =
     { config, ... }:
     let
       stylix = config.lib.stylix.colors.withHashtag or null;
       orange = if stylix != null then stylix.base09 else "yellow";
-      surface = if stylix != null then stylix.base02 else "dark_gray";
     in
     {
       programs.concord = {
@@ -22,15 +21,15 @@
             InlineCode.foreground = orange;
             InlineTimestamp = {
               foreground = "terminal_default";
-              background = surface;
+              background = "black";
             };
             MentionSelf = {
-              foreground = "yellow";
-              background = surface;
+              foreground = "black";
+              background = "yellow";
             };
             MentionOther = {
-              foreground = "blue";
-              background = surface;
+              foreground = "black";
+              background = "blue";
             };
             CommandName.foreground = "blue";
             BotBadge = {
