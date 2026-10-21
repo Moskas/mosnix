@@ -46,7 +46,10 @@
       };
     };
 
-    home-manager.users.moskas.programs.mpv.config.profile = "fast";
+    home-manager.users.moskas = {
+      imports = [ self.homeModules.prism ];
+      programs.mpv.config.profile = "fast";
+    };
 
     networking = {
       hostName = "glasgow";

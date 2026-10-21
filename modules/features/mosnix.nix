@@ -135,22 +135,22 @@ let
           sizes = {
             desktop = lib.mkOption {
               type = lib.types.int;
-              default = 14;
+              default = 12;
             };
 
             terminal = lib.mkOption {
               type = lib.types.int;
-              default = 14;
+              default = 12;
             };
 
             popups = lib.mkOption {
               type = lib.types.int;
-              default = 14;
+              default = 12;
             };
 
             applications = lib.mkOption {
               type = lib.types.int;
-              default = 14;
+              default = 12;
             };
           };
         };

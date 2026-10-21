@@ -62,7 +62,6 @@ modules/
     profiles/
       terminal.nix        # `terminal` aggregate (nixosModule + homeModule): base CLI feature set
       graphical.nix       # `graphical` aggregate: terminal + niri/ly + GUI feature set
-      standalone.nix      # standalone-base homeModule + homePkgs for homeConfigurations
     home/                 # individual home-manager program modules (each exported as homeModule)
     nixos/
       common/             # common nixosModule (nix settings, packages, overlays)
@@ -75,7 +74,6 @@ modules/
       configuration.nix   # host-specific nixosConfiguration + nixosModule definition
       hardware.nix        # hardware-configuration.nix equivalent
       disko.nix           # disk partitioning layout
-      home.nix            # host-specific home-manager overrides
       style.nix           # host-specific stylix/colorscheme settings (where present)
 ```
 
@@ -100,7 +98,7 @@ modules/
 
 ### Adding a New Host
 
-1. Create `modules/hosts/<hostname>/` with `default.nix`, `configuration.nix`, `hardware.nix`, `disko.nix`, and optionally `home.nix`/`style.nix`.
+1. Create `modules/hosts/<hostname>/` with `default.nix`, `configuration.nix`, `hardware.nix`, `disko.nix`, and optionally `style.nix`. Host-specific home-manager settings go in `configuration.nix` under `home-manager.users.moskas`.
 2. In `configuration.nix`, define `flake.nixosConfigurations.<hostname>` and `flake.nixosModules.<hostname>`, composing from existing modules (`common`, `terminal` or `graphical`, `stylixConfig`, etc.), then set any `moskas.*` overrides.
 3. Files are auto-imported — no changes needed to `flake.nix`.
 

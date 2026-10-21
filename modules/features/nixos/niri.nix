@@ -40,6 +40,7 @@
               mouse = {
                 scroll-method = "no-scroll";
                 scroll-factor = 1.0;
+                accel-profile = "flat";
               };
               trackpoint = {
                 accel-speed = 0.2;

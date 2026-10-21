@@ -43,7 +43,10 @@
     moskas.obs.cuda = true;
 
     home-manager.users.moskas = {
-      imports = [ self.homeModules.obs ];
+      imports = [
+        self.homeModules.obs
+        self.homeModules.brave
+      ];
 
       wayland.windowManager.niri.settings._children = [
         {
