@@ -15,7 +15,8 @@
           settings = {
             server = {
               port = "8192";
-              bind_address = "0.0.0.0";
+              # Reached via the tsnsrv `searx` node
+              bind_address = "127.0.0.1";
               secret_key = "$SEARX_SECRET_KEY";
             };
           };

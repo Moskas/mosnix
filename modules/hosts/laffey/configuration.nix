@@ -16,6 +16,7 @@
     {
       imports =
         (with self.nixosModules; [
+          atuin
           deluge
           forgejo
           glance
@@ -26,6 +27,8 @@
           n8n
           nvidia
           samba
+          slideRenderer
+          slskd
           searx
           sops
           tsnsrvProxy
