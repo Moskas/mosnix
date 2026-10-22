@@ -92,6 +92,92 @@
             # New tab page. Content pages don't inherit userChrome.css, so the
             # square corners and base16 states are repeated here.
             css = ''
+              /* stylix palette on every content page, for Stylus styles to
+                 reference. Prefixed so pages defining their own --red etc.
+                 don't collide. */
+              :root {
+                --stylix-base00: ${c.base00};
+                --stylix-base01: ${c.base01};
+                --stylix-base02: ${c.base02};
+                --stylix-base03: ${c.base03};
+                --stylix-base04: ${c.base04};
+                --stylix-base05: ${c.base05};
+                --stylix-base06: ${c.base06};
+                --stylix-base07: ${c.base07};
+                --stylix-base08: ${c.base08};
+                --stylix-base09: ${c.base09};
+                --stylix-base0A: ${c.base0A};
+                --stylix-base0B: ${c.base0B};
+                --stylix-base0C: ${c.base0C};
+                --stylix-base0D: ${c.base0D};
+                --stylix-base0E: ${c.base0E};
+                --stylix-base0F: ${c.base0F};
+
+                --stylix-bg: var(--stylix-base00);
+                --stylix-bg-alt: var(--stylix-base01);
+                --stylix-selection: var(--stylix-base02);
+                --stylix-comment: var(--stylix-base03);
+                --stylix-fg-dark: var(--stylix-base04);
+                --stylix-fg: var(--stylix-base05);
+                --stylix-fg-light: var(--stylix-base06);
+                --stylix-bg-light: var(--stylix-base07);
+                --stylix-red: var(--stylix-base08);
+                --stylix-orange: var(--stylix-base09);
+                --stylix-yellow: var(--stylix-base0A);
+                --stylix-green: var(--stylix-base0B);
+                --stylix-cyan: var(--stylix-base0C);
+                --stylix-blue: var(--stylix-base0D);
+                --stylix-magenta: var(--stylix-base0E);
+                --stylix-brown: var(--stylix-base0F);
+              }
+
+              /* Settings page. Design-system tokens are declared on :root and
+                 inherited into shadow-DOM widgets. */
+              @-moz-document url-prefix("about:preferences"), url-prefix("about:settings") {
+                :root {
+                  --border-radius-circle: 0 !important;
+                  --border-radius-xsmall: 0 !important;
+                  --border-radius-small: 0 !important;
+                  --border-radius-medium: 0 !important;
+                  --border-radius-large: 0 !important;
+                  --border-radius-xlarge: 0 !important;
+
+                  --background-color-canvas: ${c.base00} !important;
+                  --background-color-box: ${c.base01} !important;
+                  --background-color-box-info: ${c.base01} !important;
+                  --background-color-list-item-hover: ${c.base02} !important;
+                  --table-row-background-color-alternate: ${c.base01} !important;
+
+                  --text-color: ${c.base05} !important;
+                  --text-color-deemphasized: ${c.base04} !important;
+                  --text-color-list-item-hover: ${c.base05} !important;
+                  --text-color-accent-primary-selected: ${c.base00} !important;
+
+                  --border-color: ${c.base02} !important;
+                  --border-color-deemphasized: ${c.base02} !important;
+                  --border-color-interactive: ${c.base03} !important;
+
+                  --color-accent-primary: ${c.base0D} !important;
+                  --color-accent-primary-hover: color-mix(in srgb, ${c.base0D} 80%, ${c.base05}) !important;
+                  --color-accent-primary-active: color-mix(in srgb, ${c.base0D} 60%, ${c.base05}) !important;
+                  --link-color: ${c.base0D} !important;
+                  --link-color-hover: ${c.base0C} !important;
+                  --link-color-active: ${c.base0C} !important;
+                  --focus-outline-color: ${c.base0D} !important;
+
+                  --button-background-color: ${c.base01} !important;
+                  --button-background-color-hover: ${c.base02} !important;
+                  --button-background-color-active: ${c.base03} !important;
+                  --button-text-color: ${c.base05} !important;
+                  --button-text-color-primary: ${c.base00} !important;
+                  --button-border-color: ${c.base02} !important;
+                }
+
+                * {
+                  border-radius: 0 !important;
+                }
+              }
+
               @-moz-document url("about:home"), url("about:newtab") {
                 :root {
                   --border-radius-circle: 0 !important;
@@ -338,6 +424,74 @@
                 --urlbarview-background-color-hover: ${c.base01} !important;
                 --urlbarview-background-color-selected: ${c.base02} !important;
                 --urlbarview-text-color-selected: ${c.base05} !important;
+
+                --tab-close-button-background-color-hover: ${c.base02} !important;
+                --tab-close-button-background-color-active: ${c.base03} !important;
+                --tab-close-button-border-color: ${c.base02} !important;
+                --tab-close-button-border-color-hover: ${c.base03} !important;
+                --tab-close-button-border-color-active: ${c.base03} !important;
+              }
+
+              /* Close button and audio indicator overlaid on collapsed
+                 vertical tabs: flat, with a base16 border. */
+              .tab-close-button {
+                box-shadow: none !important;
+              }
+
+              .tab-icon-overlay:is([soundplaying], [muted], [activemedia-blocked]) {
+                border-color: ${c.base02} !important;
+                box-shadow: none !important;
+              }
+
+              .tab-icon-overlay:is([soundplaying], [muted], [activemedia-blocked]):hover {
+                border-color: ${c.base03} !important;
+              }
+
+              /* Audio button inside expanded tabs (moz-button). */
+              .tab-audio-button {
+                --button-border-color: ${c.base02} !important;
+                --button-border-color-hover: ${c.base03} !important;
+                --button-border-color-active: ${c.base03} !important;
+              }
+
+              /* Search engine switcher in the urlbar. Its grey default fill
+                 drowns out the engine favicon. */
+              /* type="muted" reads the -muted tokens, which are resolved on
+                 :root, so the base tokens can't be overridden here. */
+              .searchmode-switcher {
+                --button-background-color-muted: transparent !important;
+                --button-background-color-muted-hover: ${c.base02} !important;
+                --button-background-color-muted-active: ${c.base03} !important;
+                --button-background-color-muted-selected: ${c.base02} !important;
+                --button-text-color-muted: ${c.base05} !important;
+                --button-text-color-muted-hover: ${c.base05} !important;
+                --button-text-color-muted-active: ${c.base05} !important;
+                --button-text-color-muted-selected: ${c.base05} !important;
+              }
+
+              /* Context and dropdown menus default to GTK system colours
+                 (Menu, -moz-menuhover). */
+              menupopup {
+                --panel-background-color: ${c.base00} !important;
+                --panel-text-color: ${c.base05} !important;
+                --panel-border-color: ${c.base02} !important;
+                --panel-separator-color: ${c.base02} !important;
+                --text-color-disabled: ${c.base03} !important;
+              }
+
+              menupopup :is(menu, menuitem)[_moz-menuactive]:not([disabled]) {
+                background-color: ${c.base02} !important;
+                color: ${c.base05} !important;
+              }
+
+              menupopup :is(menu, menuitem)[_moz-menuactive][disabled] {
+                background-color: transparent !important;
+              }
+
+              /* Scroll fade at the top and bottom of the vertical tab list. */
+              :is(#tabbrowser-arrowscrollbox, #pinned-tabs-container)::part(overflow-start-indicator),
+              :is(#tabbrowser-arrowscrollbox, #pinned-tabs-container)::part(overflow-end-indicator) {
+                background-image: none !important;
               }
 
               /* The vertical tab strip has no background of its own and shows
