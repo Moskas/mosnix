@@ -10,6 +10,7 @@
       self.nixosModules.cheshire
       self.nixosModules.commonWorkstation
       self.nixosModules.gaming
+      self.nixosModules.laffeyShares
       self.nixosModules.graphical
       self.nixosModules.nvidia
       self.nixosModules.rgb

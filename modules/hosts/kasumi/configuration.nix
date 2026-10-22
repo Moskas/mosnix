@@ -31,7 +31,6 @@
         systemd-boot.enable = lib.mkForce false;
         grub = {
           enable = true;
-          device = "/dev/sda";
           efiSupport = false;
         };
       };
