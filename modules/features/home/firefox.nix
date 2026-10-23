@@ -415,6 +415,8 @@
 
                 --tab-background-color-hover: ${c.base01} !important;
                 --tab-background-color-selected: ${c.base02} !important;
+                /* Dot on background tabs whose title changed */
+                --tab-attention-dot-color: ${c.base0C} !important;
 
                 --urlbar-box-background-color: ${c.base01} !important;
                 --urlbar-box-background-color-focus: ${c.base01} !important;
@@ -486,6 +488,58 @@
 
               menupopup :is(menu, menuitem)[_moz-menuactive][disabled] {
                 background-color: transparent !important;
+              }
+
+              /* Container indicator as a full-height stripe on the left edge
+                 of vertical tabs instead of a line across the top.
+                 .tab-background is a vbox, so the line is taken out of
+                 flow and pinned to its left edge. */
+              #tabbrowser-tabs[orient="vertical"] .tabbrowser-tab[usercontextid] > .tab-stack > .tab-background {
+                position: relative !important;
+              }
+
+              #tabbrowser-tabs[orient="vertical"] .tabbrowser-tab[usercontextid] > .tab-stack > .tab-background > .tab-context-line {
+                position: absolute !important;
+                inset-block: 0 !important;
+                inset-inline-start: 0 !important;
+                width: 0 !important;
+                height: auto !important;
+                margin: 0 !important;
+                border-block: none !important;
+                /* border-inline guarantees it's snapped to device pixels */
+                border-inline: 1px solid transparent !important;
+                background: var(--identity-stroke-color) border-box !important;
+              }
+
+              /* Split view's active panel outline and the splitter hover
+                 highlights (split view, tab sidebar resize) use the default
+                 cyan focus colour. --focus-outline is composed on :root, so
+                 overriding only --focus-outline-color here wouldn't reach it. */
+              #tabbrowser-tabpanels,
+              .sidebar-splitter {
+                --focus-outline-color: ${c.base0D} !important;
+                --focus-outline: var(--focus-outline-width) solid ${c.base0D} !important;
+              }
+
+              /* URL footer of the inactive split panel and the link hover
+                 popup default to GTK dialog colours (-moz-dialog). */
+              #statuspanel-label,
+              split-view-footer {
+                background-color: ${c.base01} !important;
+                border-color: ${c.base02} !important;
+                color: ${c.base05} !important;
+                fill: ${c.base05} !important;
+              }
+
+              /* Separator between the two tabs of an unfocused split view in
+                 the tab list (vertical when side by side, horizontal when
+                 stacked). Defaults to the full icon colour. */
+              tab-split-view-wrapper:not([hasactivetab]) .tabbrowser-tab:last-child {
+                border-inline-start-color: ${c.base02} !important;
+              }
+
+              tab-split-view-wrapper:not([hasactivetab]) .tabbrowser-tab:first-child {
+                border-block-end-color: ${c.base02} !important;
               }
 
               /* Scroll fade at the top and bottom of the vertical tab list. */
