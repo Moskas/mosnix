@@ -12,6 +12,7 @@
           description = "Moskas";
           shell = lib.mkForce pkgs.zsh;
           extraGroups = [ "wheel" ];
+          initialHashedPassword = "";
         };
         programs.zsh.enable = true;
         programs.nano.enable = false;

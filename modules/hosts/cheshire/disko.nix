@@ -3,57 +3,64 @@
   # cheshire predates disko and dual-boots Windows, so its existing filesystems
   # are mirrored as mount-only `nodev` entries (disko never formats these).
   # A real partition layout for a future reinstall is sketched further down.
-  flake.nixosModules.cheshire = {
-    imports = [
-      inputs.disko.nixosModules.default
-    ];
-    config = {
-      disko.devices.nodev = {
-        "/" = {
-          device = "/dev/disk/by-uuid/d6f3d80f-10c7-411c-a1b1-dc6643d7c1e4";
-          fsType = "btrfs";
-          mountOptions = [ "subvol=root" ];
+  flake.nixosModules.cheshire =
+    { lib, ... }:
+    {
+      imports = [
+        inputs.disko.nixosModules.default
+      ];
+      config = {
+        disko.devices.nodev = {
+          "/" = {
+            device = "/dev/disk/by-uuid/d6f3d80f-10c7-411c-a1b1-dc6643d7c1e4";
+            fsType = "btrfs";
+            mountOptions = [ "subvol=root" ];
+          };
+          "/home" = {
+            device = "/dev/disk/by-uuid/d6f3d80f-10c7-411c-a1b1-dc6643d7c1e4";
+            fsType = "btrfs";
+            mountOptions = [ "subvol=home" ];
+          };
+          "/nix" = {
+            device = "/dev/disk/by-uuid/d6f3d80f-10c7-411c-a1b1-dc6643d7c1e4";
+            fsType = "btrfs";
+            mountOptions = [ "subvol=nix" ];
+          };
+          "/boot" = {
+            device = "/dev/disk/by-uuid/DDA7-8FC1";
+            fsType = "vfat";
+          };
+          "/media/Data" = {
+            device = "/dev/disk/by-uuid/21047625-3f94-48ae-bac3-dc166b7b385f";
+            fsType = "btrfs";
+          };
+          "/media/Games" = {
+            device = "/dev/disk/by-label/Gry";
+            fsType = "ntfs";
+          };
+          "/media/GamesII" = {
+            device = "/dev/disk/by-uuid/26AD824F14FB66CD";
+            fsType = "ntfs";
+          };
+          "/boot-windows" = {
+            device = "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_1TB_S6P7NS0T120398J-part1";
+            fsType = "vfat";
+          };
+          "/media/Win11" = {
+            device = "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_1TB_S6P7NS0T120398J-part3";
+            fsType = "ntfs";
+          };
         };
-        "/home" = {
-          device = "/dev/disk/by-uuid/d6f3d80f-10c7-411c-a1b1-dc6643d7c1e4";
-          fsType = "btrfs";
-          mountOptions = [ "subvol=home" ];
-        };
-        "/nix" = {
-          device = "/dev/disk/by-uuid/d6f3d80f-10c7-411c-a1b1-dc6643d7c1e4";
-          fsType = "btrfs";
-          mountOptions = [ "subvol=nix" ];
-        };
-        "/boot" = {
-          device = "/dev/disk/by-uuid/DDA7-8FC1";
-          fsType = "vfat";
-        };
-        "/media/Data" = {
-          device = "/dev/disk/by-uuid/21047625-3f94-48ae-bac3-dc166b7b385f";
-          fsType = "btrfs";
-        };
-        "/media/Games" = {
-          device = "/dev/disk/by-label/Gry";
-          fsType = "ntfs";
-        };
-        "/media/GamesII" = {
-          device = "/dev/disk/by-uuid/26AD824F14FB66CD";
-          fsType = "ntfs";
-        };
-        "/boot-windows" = {
-          device = "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_1TB_S6P7NS0T120398J-part1";
-          fsType = "vfat";
-        };
-        "/media/Win11" = {
-          device = "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_1TB_S6P7NS0T120398J-part3";
-          fsType = "ntfs";
-        };
+        # ntfsprogs-plus (kernel >= 7.1 ntfs driver) ships fsck.ntfs, which makes systemd-fsck
+        # run a full ntfsck on every boot; Windows only checks when the dirty bit is set.
+        fileSystems = lib.genAttrs [ "/media/Games" "/media/GamesII" "/media/Win11" ] (_: {
+          noCheck = true;
+        });
+        # disko's swap type only exists as partition content; an existing swap
+        # partition referenced by UUID has to stay a plain NixOS declaration.
+        swapDevices = [ { device = "/dev/disk/by-uuid/d16c2fc6-991e-4866-8081-9b61333c94dd"; } ];
       };
-      # disko's swap type only exists as partition content; an existing swap
-      # partition referenced by UUID has to stay a plain NixOS declaration.
-      swapDevices = [ { device = "/dev/disk/by-uuid/d16c2fc6-991e-4866-8081-9b61333c94dd"; } ];
     };
-  };
 
   #flake.nixosModules.cheshire = {
   #  imports = [
