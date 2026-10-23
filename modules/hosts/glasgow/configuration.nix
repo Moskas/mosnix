@@ -3,7 +3,7 @@
   flake.nixosConfigurations.glasgow = inputs.nixpkgs.lib.nixosSystem {
     modules = [ self.nixosModules.glasgow ];
   };
-  flake.nixosModules.glasgow = {
+  flake.nixosModules.glasgow = { pkgs, ... }: {
 
     imports = [
       self.nixosModules.commonWorkstation
@@ -69,6 +69,21 @@
         ly.fprintAuth = true;
       };
     };
+
+    # tp_smapi installs its .ko files manually, so they lack the kmodigest .ko.cer
+    # certificates the kernel module aggregator now expects
+    boot.kernelPackages = pkgs.linuxPackages_xanmod_latest.extend (
+      _: prev: {
+        tp_smapi = prev.tp_smapi.overrideAttrs (old: {
+          nativeBuildInputs = old.nativeBuildInputs ++ [ pkgs.buildPackages.kmodigest ];
+          postInstall = (old.postInstall or "") + ''
+            for module in "$out"/lib/modules/*/kernel/drivers/firmware/*.ko; do
+              kmodigest "$module"
+            done
+          '';
+        });
+      }
+    );
 
     # wifi chip: intel 6205
     boot.extraModprobeConfig = ''
