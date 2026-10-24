@@ -41,6 +41,12 @@
       hostName = "cheshire";
     };
 
+    # Preserve VRAM across suspend in a disk file; the RAM-backed default OOMs and kills the GPU.
+    hardware.nvidia = {
+      powerManagement.enable = true;
+      moduleParams.nvidia.NVreg_TemporaryFilePath = "/var/tmp";
+    };
+
     moskas.obs.cuda = true;
 
     home-manager.users.moskas = {
