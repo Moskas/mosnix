@@ -13,6 +13,14 @@
       # nixpkgs for the moskas home.
       nixpkgs.config.allowUnfree = lib.mkDefault true;
 
+      # Prebuilt CUDA-enabled packages (e.g. the CUDA OBS build).
+      nix.settings = lib.mkIf config.moskas.obs.cuda {
+        substituters = [ "https://cache.nixos-cuda.org" ];
+        trusted-public-keys = [
+          "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
+        ];
+      };
+
       home-manager = {
         users."moskas" = {
           imports = [
