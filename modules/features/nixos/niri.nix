@@ -17,6 +17,7 @@
       config = {
         home.packages = with pkgs; [
           wdisplays
+          ddcutil
           wl-clipboard
           inputs.niri-scratchpad.packages.${pkgs.stdenv.hostPlatform.system}.default
         ];
@@ -107,14 +108,8 @@
 
               {
                 window-rule._children = [
-                  { match._props.app-id = "^org\\.wezfurlong\\.wezterm$"; }
-                  { default-column-width = { }; }
-                ];
-              }
-              {
-                window-rule._children = [
                   { match._props.app-id = "^mpv$"; }
-                  { match._props.app-id = "emacs"; }
+                  { match._props.app-id = "^firefox$"; }
                   { match._props.app-id = "org.prismlauncher.PrismLauncher"; }
                   { open-maximized = true; }
                 ];
@@ -135,7 +130,7 @@
                   }
                   {
                     match._props = {
-                      app-id = "firefox$";
+                      app-id = "^firefox$";
                       title = "Extension: (Bitwarden Password Manager) - Bitwarden — Mozilla Firefox";
                     };
                   }
@@ -242,9 +237,13 @@
                 _props.hotkey-overlay-title = "Open a Terminal: kitty";
                 spawn = [ "kitty" ];
               };
+              # "Mod+D" = {
+              #   _props.hotkey-overlay-title = "Run an Application: fuzzel";
+              #   spawn-sh = "fuzzel";
+              # };
               "Mod+D" = {
-                _props.hotkey-overlay-title = "Run an Application: fuzzel";
-                spawn-sh = "fuzzel";
+                _props.hotkey-overlay-title = "Open app launcher: noctalia";
+                spawn-sh = "noctalia msg panel-toggle launcher";
               };
               "Super+Alt+L" = {
                 _props.hotkey-overlay-title = "Lock the Screen: noctalia lock";

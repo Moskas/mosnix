@@ -140,6 +140,7 @@
                   match = "mpd";
                   show_toast = true;
                   save_history = false;
+                  play_audio = false;
                 };
               };
             };
