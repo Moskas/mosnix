@@ -54,8 +54,8 @@
         };
         home.packages = with pkgs; [
           vintagestory
-          heroic-unwrapped
-          bottles-unwrapped
+          heroic
+          bottles
           osu-lazer-bin
           # TODO Add once https://github.com/NixOS/nixpkgs/pull/572936 gets merged
           # etterna
