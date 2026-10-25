@@ -36,6 +36,7 @@
                   content = {
                     type = "luks";
                     name = "crypted";
+                    passwordFile = "/var/secret.key";
                     settings = {
                       allowDiscards = true;
                     };

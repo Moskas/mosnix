@@ -62,6 +62,7 @@ modules/
     profiles/
       terminal.nix        # `terminal` aggregate (nixosModule + homeModule): base CLI feature set
       graphical.nix       # `graphical` aggregate: terminal + niri/ly + GUI feature set
+      lightweight.nix     # `lightweight` aggregate: terminal + sway/ly + light GUI set (no GL 3 needed)
     home/                 # individual home-manager program modules (each exported as homeModule)
     nixos/
       common/             # common nixosModule (nix settings, packages, overlays)
@@ -87,13 +88,14 @@ modules/
 | shimakaze | WSL | `terminal` |
 | noshiro | desktop | `graphical`, solarized-dark |
 | glasgow | laptop | ThinkPad X220, `graphical`, niri, UPEK fingerprint reader via fprintd |
+| akashi | laptop | ThinkPad X60 (GMA 950), `lightweight`, sway, foot |
 
 ### Key nixosModules (defined via flake-parts)
 
 - `common` — baseline NixOS config: Lix, nix settings, dev tools (nh, nix-tree, nixd, etc.), binary caches (nix-community, moskas.cachix.org)
 - `moskasHomeManager` — wires home-manager for user `moskas`: overlays, `moskasOptions` on both sides, and mirrors the NixOS `moskas.*` settings into home-manager
 - `moskasOptions` — the `moskas.*` settings knobs (colorscheme, fonts, `desktop.bar.position`, `obs.cuda`); shared by NixOS and home-manager
-- `terminal` / `graphical` — feature aggregates, exported as both a nixosModule and a homeModule of the same name. The nixosModule wires home-manager and imports the matching homeModule; `graphical` also enables niri + ly. Hosts import exactly one, then add extra features with plain imports (e.g. `home-manager.users.moskas.imports = [ self.homeModules.obs ];`). To add a feature to every host, add it to the aggregate's import list.
+- `terminal` / `graphical` / `lightweight` — feature aggregates, exported as both a nixosModule and a homeModule of the same name. The nixosModule wires home-manager and imports the matching homeModule; `graphical` also enables niri + ly; `lightweight` enables sway + ly with waybar and foot for hosts whose GPU cannot run niri, noctalia or kitty. Hosts import exactly one, then add extra features with plain imports (e.g. `home-manager.users.moskas.imports = [ self.homeModules.obs ];`). To add a feature to every host, add it to the aggregate's import list.
 - `stylixConfig` — theming via stylix/base16; reads `moskas.colorscheme` (default: `gruvbox-dark-medium`)
 
 ### Adding a New Host
