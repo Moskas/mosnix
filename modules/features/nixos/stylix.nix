@@ -17,6 +17,7 @@
           enable = true;
           autoEnable = true;
           image = null;
+          targets.gtksourceview.enable = false;
 
           base16Scheme = "${pkgs.base16-schemes}/share/themes/${config.moskas.colorscheme}.yaml";
 
