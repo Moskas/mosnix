@@ -418,7 +418,7 @@
                 /* Dot on background tabs whose title changed */
                 --tab-attention-dot-color: ${c.base0C} !important;
 
-                --urlbar-box-background-color: ${c.base01} !important;
+                --urlbar-box-background-color: ${c.base00} !important;
                 --urlbar-box-background-color-focus: ${c.base01} !important;
                 --urlbar-box-background-color-hover: ${c.base03} !important;
                 --urlbar-box-background-color-active: ${c.base03} !important;
@@ -432,6 +432,10 @@
                 --tab-close-button-border-color: ${c.base02} !important;
                 --tab-close-button-border-color-hover: ${c.base03} !important;
                 --tab-close-button-border-color-active: ${c.base03} !important;
+              }
+
+              #urlbar {
+                border: 1px solid ${c.base03} !important;
               }
 
               /* Close button and audio indicator overlaid on collapsed
