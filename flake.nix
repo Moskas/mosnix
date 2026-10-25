@@ -69,7 +69,6 @@
     llm-agents.url = "github:numtide/llm-agents.nix";
     noctalia = {
       url = "github:noctalia-dev/noctalia/cachix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     nixcord = {
       url = "github:FlameFlag/nixcord";
