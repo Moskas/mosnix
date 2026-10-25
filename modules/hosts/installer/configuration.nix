@@ -10,6 +10,7 @@
     modules = [
       "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
       self.nixosModules.installer
+      self.nixosModules.caches
     ];
   };
 
@@ -104,15 +105,6 @@
             "nix-ssh"
           ];
           builders-use-substitutes = true;
-          substituters = [
-            "https://nix-community.cachix.org"
-            "https://moskas.cachix.org"
-            "https://cache.nixos.org/"
-          ];
-          trusted-public-keys = [
-            "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-            "moskas.cachix.org-1:LcyLityXMILC1SenFSMMt7JgvUEOvS38Kza6b96TQEw="
-          ];
         };
       };
 

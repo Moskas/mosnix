@@ -92,7 +92,8 @@ modules/
 
 ### Key nixosModules (defined via flake-parts)
 
-- `common` — baseline NixOS config: Lix, nix settings, dev tools (nh, nix-tree, nixd, etc.), binary caches (nix-community, moskas.cachix.org)
+- `common` — baseline NixOS config: Lix, nix settings, dev tools (nh, nix-tree, nixd, etc.); imports `caches`
+- `caches` — binary caches (nix-community, moskas, noctalia, nixos-cuda); shared by `common` and the installer ISO so installs substitute what hosts would
 - `moskasHomeManager` — wires home-manager for user `moskas`: overlays, `moskasOptions` on both sides, and mirrors the NixOS `moskas.*` settings into home-manager
 - `moskasOptions` — the `moskas.*` settings knobs (colorscheme, fonts, `desktop.bar.position`, `obs.cuda`); shared by NixOS and home-manager
 - `terminal` / `graphical` / `lightweight` — feature aggregates, exported as both a nixosModule and a homeModule of the same name. The nixosModule wires home-manager and imports the matching homeModule; `graphical` also enables niri + ly; `lightweight` enables sway + ly with waybar and foot for hosts whose GPU cannot run niri, noctalia or kitty. Hosts import exactly one, then add extra features with plain imports (e.g. `home-manager.users.moskas.imports = [ self.homeModules.obs ];`). To add a feature to every host, add it to the aggregate's import list.
