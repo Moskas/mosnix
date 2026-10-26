@@ -648,9 +648,10 @@
                 "ubuntu-22.04:docker://ghcr.io/catthehacker/ubuntu:act-22.04"
               ];
               container = {
-                # Evaluation runs in the job's nix client, outside the daemon's limits
+                # Evaluation runs in the job's nix client, outside the daemon's limits;
+                # `nix flake check` across all hosts peaks around 9G
                 options = lib.concatStringsSep " " (
-                  [ "--memory=4g" ] ++ map (mount: "--volume ${mount}") runnerMounts
+                  [ "--memory=10g" ] ++ map (mount: "--volume ${mount}") runnerMounts
                 );
                 # Binds from options are dropped unless their source is listed here
                 valid_volumes = map (mount: lib.head (lib.splitString ":" mount)) runnerMounts;
