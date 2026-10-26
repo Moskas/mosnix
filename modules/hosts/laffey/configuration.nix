@@ -57,6 +57,24 @@
 
       networking.hostName = "laffey";
 
+      # Builds (local, --build-host and CI) share the box with the services, so they get
+      # at most half the cores, low CPU/IO priority and a memory cap: a runaway build is
+      # throttled and then OOM-killed inside the daemon's cgroup instead of taking immich down
+      nix = {
+        settings = {
+          max-jobs = 2;
+          cores = 2;
+        };
+        daemonCPUSchedPolicy = "batch";
+        daemonIOSchedClass = "idle";
+        # Keeps generations, and the cache paths they hold, around longer than the default 7d
+        gc.options = lib.mkForce "--delete-older-than 21d";
+      };
+      systemd.services.nix-daemon.serviceConfig = {
+        MemoryHigh = "6G";
+        MemoryMax = "8G";
+      };
+
       # GTX 960 (Maxwell): unsupported by the open modules and the production
       # driver, so pin the last proprietary branch that still covers it.
       hardware.nvidia = {

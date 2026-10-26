@@ -496,38 +496,42 @@
       # into sops as `forgejo_runner_token`. The runner stays off until this is set
       runnerUuid = "1e272706-6008-47ce-b9ac-060091b73ba8";
 
-      # Default job environment: Nix (Lix, same caches as the hosts) plus what JS actions
-      # like actions/checkout expect to find
+      # Default job environment: a Nix client for the host daemon plus what JS actions like
+      # actions/checkout expect to find. Builds land in laffey's store, so harmonia serves them
       runnerImageRef = "localhost/forgejo-nix:latest";
-      runnerImage = pkgs.dockerTools.buildLayeredImageWithNixDb {
+      runnerContents = [
+        config.nix.package
+        pkgs.bashInteractive
+        pkgs.coreutils
+        pkgs.findutils
+        pkgs.gnugrep
+        pkgs.gnused
+        pkgs.gnutar
+        pkgs.gzip
+        pkgs.xz
+        pkgs.gitMinimal
+        pkgs.nodejs
+        pkgs.curl
+        pkgs.cacert
+        pkgs.dockerTools.usrBinEnv
+        pkgs.dockerTools.binSh
+        pkgs.dockerTools.caCertificates
+        pkgs.dockerTools.fakeNss
+        # Substituters and sandboxing come from the daemon's own config
+        (pkgs.writeTextDir "etc/nix/nix.conf" ''
+          experimental-features = nix-command flakes
+          store = daemon
+        '')
+      ];
+      # Host paths bind-mounted into every job container
+      runnerMounts = [
+        "/nix/store:/nix/store:ro"
+        "/nix/var/nix/daemon-socket:/nix/var/nix/daemon-socket"
+      ];
+      runnerImage = pkgs.dockerTools.buildLayeredImage {
         name = "forgejo-nix";
         tag = "latest";
-        contents = [
-          config.nix.package
-          pkgs.bashInteractive
-          pkgs.coreutils
-          pkgs.findutils
-          pkgs.gnugrep
-          pkgs.gnused
-          pkgs.gnutar
-          pkgs.gzip
-          pkgs.xz
-          pkgs.gitMinimal
-          pkgs.nodejs
-          pkgs.curl
-          pkgs.cacert
-          pkgs.dockerTools.usrBinEnv
-          pkgs.dockerTools.binSh
-          pkgs.dockerTools.caCertificates
-          pkgs.dockerTools.fakeNss
-          (pkgs.writeTextDir "etc/nix/nix.conf" ''
-            experimental-features = nix-command flakes
-            build-users-group =
-            sandbox = false
-            substituters = ${lib.concatStringsSep " " config.nix.settings.substituters}
-            trusted-public-keys = ${lib.concatStringsSep " " config.nix.settings.trusted-public-keys}
-          '')
-        ];
+        contents = runnerContents;
         extraCommands = ''
           mkdir -p tmp root
           chmod 1777 tmp
@@ -604,6 +608,33 @@
             autoPrune.enable = true;
           };
 
+          # Jobs get a private user namespace, so their root reaches the nix-daemon as an
+          # unprivileged uid instead of a trusted user. Set here because the runner's
+          # --userns option only accepts "host"; podman runs nothing but jobs on this host
+          virtualisation.containers.containersConf.settings.containers.userns = "auto";
+          users = {
+            users.containers = {
+              isSystemUser = true;
+              group = "containers";
+              subUidRanges = [
+                {
+                  startUid = 2147483647;
+                  count = 2147483648;
+                }
+              ];
+              subGidRanges = [
+                {
+                  startGid = 2147483647;
+                  count = 2147483648;
+                }
+              ];
+            };
+            groups.containers = { };
+          };
+
+          # The job image's tools run from the host store mount, so keep them from being collected
+          system.extraDependencies = runnerContents;
+
           sops.secrets.forgejo_runner_token = { };
 
           services.forgejo-runner.instances.default = {
@@ -616,6 +647,14 @@
                 "ubuntu-24.04:docker://ghcr.io/catthehacker/ubuntu:act-24.04"
                 "ubuntu-22.04:docker://ghcr.io/catthehacker/ubuntu:act-22.04"
               ];
+              container = {
+                # Evaluation runs in the job's nix client, outside the daemon's limits
+                options = lib.concatStringsSep " " (
+                  [ "--memory=4g" ] ++ map (mount: "--volume ${mount}") runnerMounts
+                );
+                # Binds from options are dropped unless their source is listed here
+                valid_volumes = map (mount: lib.head (lib.splitString ":" mount)) runnerMounts;
+              };
               server.connections.default = {
                 url = "http://127.0.0.1:${toString cfg.settings.server.HTTP_PORT}/";
                 uuid = runnerUuid;
