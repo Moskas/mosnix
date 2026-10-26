@@ -9,6 +9,8 @@
   flake.nixosConfigurations.laffey = inputs.nixpkgs.lib.nixosSystem {
     modules = [
       self.nixosModules.laffey
+      inputs.stylix.nixosModules.stylix
+      self.nixosModules.stylixConfig
     ];
   };
   flake.nixosModules.laffey =
