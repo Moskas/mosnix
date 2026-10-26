@@ -656,7 +656,9 @@
                 valid_volumes = map (mount: lib.head (lib.splitString ":" mount)) runnerMounts;
               };
               server.connections.default = {
-                url = "http://127.0.0.1:${toString cfg.settings.server.HTTP_PORT}/";
+                # Jobs reuse this URL for checkout and the API, so it has to resolve from inside
+                # their containers too; they reach the tsnsrv node through laffey's tailscale
+                url = cfg.settings.server.ROOT_URL;
                 uuid = runnerUuid;
               };
             };
