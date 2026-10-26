@@ -1,0 +1,17 @@
+name: Build installer ISO
+
+on:
+  push:
+    branches: [master]
+    paths: [flake.lock]
+  workflow_dispatch:
+
+jobs:
+  build-iso:
+    runs-on: nixos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Builds through laffey's nix-daemon, so the ISO ends up in the harmonia cache
+      - name: Build ISO
+        run: nix build --print-build-logs --print-out-paths .#installer-iso
