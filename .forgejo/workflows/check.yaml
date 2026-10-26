@@ -1,0 +1,18 @@
+name: Flake check
+
+on:
+  push:
+    # Lockfile-only pushes are checked by the ISO workflow, which calls this one
+    paths-ignore: [flake.lock]
+  pull_request:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: nixos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check flake
+        run: nix flake check --print-build-logs
