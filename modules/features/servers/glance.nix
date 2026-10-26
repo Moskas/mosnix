@@ -48,6 +48,11 @@
           url = "https://slskd.taila32e5.ts.net";
           icon = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/slskd-light.webp";
         }
+        {
+          title = "n8n";
+          url = "https://n8n.taila32e5.ts.net";
+          icon = "si:n8n";
+        }
       ];
 
       # Same URL glance resolves `si:` icons to, so the CSS can match the rendered <img src>
@@ -121,6 +126,8 @@
                         --color-positive: ${base0B};
                         --color-negative: ${base08};
 
+                        --border-radius: 0;
+
                         --font-size-base: ${lib.toString config.moskas.fonts.sizes.desktop}px;
                         --font-size-h1: ${lib.toString (config.moskas.fonts.sizes.desktop + 6)}px;
                         --font-size-h2: ${lib.toString (config.moskas.fonts.sizes.desktop + 6)}px;
@@ -153,6 +160,7 @@
 
                       body {
                         font-family: "${monoFont.name}", monospace;
+                        font-size: ${lib.toString config.moskas.fonts.sizes.desktop}px;
                       }
 
                       .popover-frame {
