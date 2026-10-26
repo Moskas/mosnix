@@ -4,6 +4,7 @@
       services.immich = {
         enable = true;
         port = 2283;
+        host = "127.0.0.1";
         #mediaLocation = "/media/immich"; # Or another preferred path
         #settings = {
         #server.externalDomain = "http://immich.laffey";

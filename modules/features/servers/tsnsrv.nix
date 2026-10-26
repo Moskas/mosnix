@@ -23,7 +23,7 @@
             git.toURL = "http://127.0.0.1:3000";
             grocy.toURL = "http://127.0.0.1:80";
             immich.toURL = "http://127.0.0.1:2283";
-            jellyfin.toURL = "http://127.0.0.1:8096";
+            jelly.toURL = "http://127.0.0.1:8096";
             n8n.toURL = "http://127.0.0.1:5678";
             searx.toURL = "http://127.0.0.1:8192";
             slskd.toURL = "http://127.0.0.1:5030";
