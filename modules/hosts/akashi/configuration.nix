@@ -14,6 +14,7 @@
         self.nixosModules.laptop
         self.nixosModules.vm-test
         self.nixosModules.lightweight
+        self.nixosModules.niri
         self.nixosModules.japanese-input
         inputs.stylix.nixosModules.stylix
         self.nixosModules.stylixConfig
@@ -47,9 +48,6 @@
           xkb_options = "lv3:ralt_switch";
         };
       };
-
-      # Software rendering fallback if the i945 GLES2 renderer misbehaves
-      # environment.sessionVariables.WLR_RENDERER = "pixman";
 
       networking.hostName = "akashi";
 
