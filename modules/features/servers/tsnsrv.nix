@@ -18,6 +18,7 @@
           };
           services = {
             atuin.toURL = "http://127.0.0.1:8888";
+            cache.toURL = "http://127.0.0.1:5000";
             dashboard.toURL = "http://127.0.0.1:8080";
             deluge.toURL = "http://127.0.0.1:8112";
             git.toURL = "http://127.0.0.1:3000";

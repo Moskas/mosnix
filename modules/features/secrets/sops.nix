@@ -37,9 +37,6 @@
             mode = "0400";
           };
 
-          attic_token = {
-            mode = "0400";
-          };
           kojin_env_file = {
             mode = "0400";
           };

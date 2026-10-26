@@ -60,6 +60,12 @@
             "nix-ssh"
           ];
 
+          # laffey's harmonia cache; tailnet-only, so kept out of `caches` and the installer
+          substituters = [ "https://cache.taila32e5.ts.net" ];
+          trusted-public-keys = [
+            "cache.taila32e5.ts.net-1:CQ+v2qxuq9GL4hfKMuytzTnC2CcaU+ggl8KNWKm6h2U="
+          ];
+
           warn-dirty = false;
         };
       };

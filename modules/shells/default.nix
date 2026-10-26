@@ -20,7 +20,6 @@
           nixd
           statix
           cachix
-          attic-client
           disko
         ];
 

@@ -23,6 +23,7 @@
           forgejo
           glance
           grocy
+          harmonia
           immich
           jellyfin
           terminal
