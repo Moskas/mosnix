@@ -1,10 +1,12 @@
 name: Flake check
 
 on:
+  # Lockfile changes are checked by the ISO workflow, which calls this one
   push:
-    # Lockfile-only pushes are checked by the ISO workflow, which calls this one
-    paths-ignore: [flake.lock]
+    paths: ["**.nix"]
+  # The ISO workflow only runs on master pushes, so PRs check lockfile changes here
   pull_request:
+    paths: ["**.nix", flake.lock]
   workflow_call:
   workflow_dispatch:
 
