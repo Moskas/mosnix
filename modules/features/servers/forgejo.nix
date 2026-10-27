@@ -499,6 +499,9 @@
       # Default job environment: a Nix client for the host daemon plus what JS actions like
       # actions/checkout expect to find. Builds land in laffey's store, so harmonia serves them
       runnerImageRef = "localhost/forgejo-nix:latest";
+
+      # Out-links of CI builds, keeping the latest build of each host alive for harmonia
+      ciRootsDir = "/var/lib/ci-roots";
       runnerContents = [
         config.nix.package
         pkgs.bashInteractive
@@ -527,6 +530,8 @@
       runnerMounts = [
         "/nix/store:/nix/store:ro"
         "/nix/var/nix/daemon-socket:/nix/var/nix/daemon-socket"
+        # Mounted at the same path so the daemon's indirect roots resolve on the host
+        "${ciRootsDir}:${ciRootsDir}"
       ];
       runnerImage = pkgs.dockerTools.buildLayeredImage {
         name = "forgejo-nix";
@@ -665,6 +670,10 @@
             };
             secrets.server.connections.default.token_url = config.sops.secrets.forgejo_runner_token.path;
           };
+
+          # Jobs run as varying userns uids, so no sticky bit: any job must be able to replace
+          # the previous build's out-link
+          systemd.tmpfiles.settings."10-ci-roots".${ciRootsDir}.d.mode = "0777";
 
           systemd.services = {
             # Loaded rather than pulled; reloading on change retags `latest` onto the new image

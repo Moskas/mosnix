@@ -1,8 +1,9 @@
 name: Flake check
 
 on:
-  # Lockfile changes are checked by the ISO workflow, which calls this one
+  # Master pushes are checked by the host and ISO workflows, which call this one
   push:
+    branches-ignore: [master]
     paths: ["**.nix"]
   # The ISO workflow only runs on master pushes, so PRs check lockfile changes here
   pull_request:

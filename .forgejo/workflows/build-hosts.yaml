@@ -1,0 +1,40 @@
+name: Build hosts
+
+on:
+  push:
+    branches: [master]
+    paths: ["**.nix", flake.lock]
+  workflow_dispatch:
+
+jobs:
+  check:
+    uses: ./.forgejo/workflows/check.yaml
+
+  build:
+    needs: check
+    runs-on: nixos-latest
+    strategy:
+      # One broken host shouldn't stop the others from reaching the cache
+      fail-fast: false
+      matrix:
+        host:
+          - akashi
+          - cheshire
+          - glasgow
+          - kashino
+          - kasumi
+          - kinu
+          - laffey
+          - nagato
+          - noshiro
+          - shimakaze
+    steps:
+      - uses: actions/checkout@v4
+
+      # Builds through laffey's nix-daemon; the out-link in /var/lib/ci-roots keeps the result
+      # from being garbage collected, so harmonia keeps serving it
+      - name: Build ${{ matrix.host }}
+        run: >-
+          nix build --print-build-logs
+          --out-link /var/lib/ci-roots/${{ matrix.host }}
+          .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
