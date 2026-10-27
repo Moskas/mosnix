@@ -66,20 +66,64 @@
 
       zramSwap.enable = true;
 
-      services.tlp.settings = {
-        # CPU_SCALING_GOVERNOR_ON_AC = "powersave";
-        CPU_SCALING_MAX_FREQ_ON_AC = 1833000; # TODO verify with `cpufreq-info`
-        CPU_SCALING_MAX_FREQ_ON_BAT = 1200000;
-        CPU_SCALING_MIN_FREQ_ON_AC = 800000;
-        CPU_SCALING_MIN_FREQ_ON_BAT = 800000;
-        # SATA link drops under write load with power management enabled
-        SATA_LINKPWR_ON_AC = "max_performance";
-        SATA_LINKPWR_ON_BAT = "max_performance";
-        AHCI_RUNTIME_PM_ON_AC = "on";
-        AHCI_RUNTIME_PM_ON_BAT = "on";
-      };
+      services = {
+        tlp.settings = {
+          # performance pins the T5500 at max clock on AC and keeps the fans spinning
+          CPU_SCALING_GOVERNOR_ON_AC = lib.mkForce "schedutil";
+          CPU_SCALING_MAX_FREQ_ON_AC = 1667000;
+          CPU_SCALING_MAX_FREQ_ON_BAT = 1200000;
+          CPU_SCALING_MIN_FREQ_ON_AC = 800000;
+          CPU_SCALING_MIN_FREQ_ON_BAT = 800000;
+          # SATA link drops under write load with power management enabled
+          SATA_LINKPWR_ON_AC = "max_performance";
+          SATA_LINKPWR_ON_BAT = "max_performance";
+          AHCI_RUNTIME_PM_ON_AC = "on";
+          AHCI_RUNTIME_PM_ON_BAT = "on";
+          # Wifi card runs hot with no power save; turn it off while on ethernet
+          DEVICES_TO_DISABLE_ON_LAN_CONNECT = "wifi";
+          DEVICES_TO_ENABLE_ON_LAN_DISCONNECT = "wifi";
+        };
 
-      services.thinkfan.enable = true;
+        thinkfan = {
+          enable = true;
+          # T5500 is rated to 100C; the default curve hits level 7 at 60C
+          levels = [
+            [
+              1
+              0
+              58
+            ]
+            [
+              2
+              55
+              64
+            ]
+            [
+              3
+              61
+              70
+            ]
+            [
+              5
+              67
+              76
+            ]
+            [
+              7
+              73
+              85
+            ]
+            [
+              "level auto"
+              82
+              32767
+            ]
+          ];
+        };
+
+        # Unsupported CPU, thermald exits on start
+        thermald.enable = lib.mkForce false;
+      };
 
       # GPU — Intel 945GM framebuffer + power-saving
       boot.kernelParams = [
@@ -92,10 +136,8 @@
         "libata.force=noncq,1.5Gbps"
       ];
 
-      # WiFi — stock Intel 3945ABG
       # ThinkPad hotkeys — enable volume buttons etc.
       boot.extraModprobeConfig = ''
-        options iwl3945 power_save=0
         options thinkpad_acpi hotkey_mask=0x00fdffff
       '';
 
