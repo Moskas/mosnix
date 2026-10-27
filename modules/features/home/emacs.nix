@@ -80,6 +80,7 @@
       config = {
         programs.doom-emacs = {
           enable = true;
+          experimentalFetchTree = true;
           emacs = pkgs.emacs-unstable-pgtk;
           doomDir = pkgs.symlinkJoin {
             name = "doom-dir";
