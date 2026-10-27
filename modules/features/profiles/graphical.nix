@@ -21,6 +21,7 @@
       prism
       rmpc
       swayimg
+      thunderbird
       tickrs
       wallpapers
       zathura

@@ -16,6 +16,7 @@
       concord
       direnv
       emacs
+      email
       eza
       git
       jj

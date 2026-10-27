@@ -87,6 +87,8 @@
       url = "github:argosnothing/niri-scratchpad-rs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Pins its own nixpkgs + fenix toolchain, so no follows
+    himalaya-tui.url = "github:pimalaya/himalaya-tui";
   };
 
   outputs =
