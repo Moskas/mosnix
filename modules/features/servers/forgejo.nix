@@ -502,6 +502,10 @@
 
       # Out-links of CI builds, keeping the latest build of each host alive for harmonia
       ciRootsDir = "/var/lib/ci-roots";
+
+      # Nix client cache of job containers. Evaluation runs in the job, so without this every
+      # job re-clones each Doom package fetched by builtins.fetchGit
+      ciNixCacheDir = "/var/cache/ci-nix";
       runnerContents = [
         config.nix.package
         pkgs.bashInteractive
@@ -532,6 +536,7 @@
         "/nix/var/nix/daemon-socket:/nix/var/nix/daemon-socket"
         # Mounted at the same path so the daemon's indirect roots resolve on the host
         "${ciRootsDir}:${ciRootsDir}"
+        "${ciNixCacheDir}:/root/.cache/nix"
       ];
       runnerImage = pkgs.dockerTools.buildLayeredImage {
         name = "forgejo-nix";
@@ -673,7 +678,20 @@
 
           # Jobs run as varying userns uids, so no sticky bit: any job must be able to replace
           # the previous build's out-link
-          systemd.tmpfiles.settings."10-ci-roots".${ciRootsDir}.d.mode = "0777";
+          systemd.tmpfiles.settings."10-ci-roots" = {
+            ${ciRootsDir}.d.mode = "0777";
+            # Owned by the uid job root maps to. With one job at a time podman always hands out
+            # the first containers subuid range, so every job sees this as its own
+            ${ciNixCacheDir}.d =
+              let
+                jobRoot = toString (lib.head config.users.users.containers.subUidRanges).startUid;
+              in
+              {
+                user = jobRoot;
+                group = jobRoot;
+                mode = "0700";
+              };
+          };
 
           systemd.services = {
             # Loaded rather than pulled; reloading on change retags `latest` onto the new image
