@@ -66,7 +66,15 @@
 
       zramSwap.enable = true;
 
+      # fingerprint reader: upek touchstrip 0483:2016 (libfprint upeksonly driver)
+      security.pam.services = {
+        sudo.fprintAuth = true;
+        ly.fprintAuth = true;
+      };
+
       services = {
+        fprintd.enable = true;
+
         tlp.settings = {
           # performance pins the T5500 at max clock on AC and keeps the fans spinning
           CPU_SCALING_GOVERNOR_ON_AC = lib.mkForce "schedutil";

@@ -29,6 +29,7 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIChr50iFARqmJBKcPe+LdNvDnO0bza9ImKmYPlcT8CBi u0_a442@localhost"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGICKZja7UpBN4XgLALba57OQKJY1n1YodatdXjiEIGD moskas@glasgow"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHTEit4avXKGhETGMQxNNf5Xf8Q3Pl+kR2e31ZmJcHX/ moskas@kashino"
+	"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMvzIDAIwHCX2msDthWWOLHVAPvGJ1PpROZvo47H53Wm moskas@akashi"
       ];
 
       programs.gnupg.agent = {
