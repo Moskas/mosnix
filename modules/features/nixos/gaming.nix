@@ -10,6 +10,7 @@
         home-manager.sharedModules = [
           self.homeModules.gaming
           self.homeModules.prism
+          self.homeModules.etterna
         ];
 
         programs.steam = {
@@ -78,8 +79,6 @@
           heroic
           bottles-unwrapped
           osu-lazer-bin
-          # TODO Add once https://github.com/NixOS/nixpkgs/pull/572936 gets merged
-          # etterna
         ];
       };
     };

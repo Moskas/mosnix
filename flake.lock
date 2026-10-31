@@ -783,11 +783,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1792140658,
-        "narHash": "sha256-JSyjs0SqnXUt/7Xq1Yt17a7TqcoTIpxO0i9AVHrQg10=",
+        "lastModified": 1793469513,
+        "narHash": "sha256-YNz3/BZX+ZvwJhuoJqx9m0FbmFaKJXMYbmPihLUmhkA=",
         "owner": "Moskas",
         "repo": "mospkgs",
-        "rev": "8d9d28a56fcd8c24893e81a78447bcde1e847cb8",
+        "rev": "5196a7d2967213d2edb891742be599eec501489e",
         "type": "github"
       },
       "original": {
