@@ -271,11 +271,6 @@
             tags = [ "Odysee" ];
           }
           {
-            link = "https://odysee.com/$/rss/@SomeOrdinaryGamers:a";
-            name = "Mutahar";
-            tags = [ "Odysee" ];
-          }
-          {
             link = "https://odysee.com/$/rss/@thelinuxcast:4";
             name = "TheLinuxCast";
             tags = [ "Odysee" ];

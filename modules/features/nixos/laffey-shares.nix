@@ -1,4 +1,8 @@
+{ self, ... }:
 {
+  # Every workstation gets the shares; servers don't import commonWorkstation.
+  flake.nixosModules.commonWorkstation.imports = [ self.nixosModules.laffeyShares ];
+
   # laffey's home directory and shared data disk over sshfs. Mounted by root
   # with this host's own key (~/.ssh/<hostname>, authorized on laffey via the
   # common ssh module), so it works on any host that has that key.
