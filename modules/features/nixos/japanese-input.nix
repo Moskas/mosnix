@@ -1,16 +1,6 @@
 {
   flake.nixosModules.japanese-input =
     { pkgs, ... }:
-    let
-      # Qt >= 6.12 uic rejects class names with a leading "::"
-      mozc-ut = pkgs.mozc-ut.overrideAttrs (old: {
-        postPatch = old.postPatch + ''
-          substituteInPlace src/gui/dictionary_tool/dictionary_tool.ui \
-            --replace-fail '"::mozc::' '"mozc::' \
-            --replace-fail "<class>::mozc::" "<class>mozc::"
-        '';
-      });
-    in
     {
       services.xserver.xkb = {
         layout = "jp";
@@ -23,7 +13,7 @@
         type = "fcitx5";
         fcitx5 = {
           waylandFrontend = true;
-          addons = [ (pkgs.fcitx5-mozc.override { mozc = mozc-ut; }) ];
+          addons = [ (pkgs.fcitx5-mozc.override { mozc = pkgs.mozc-ut; }) ];
           settings.inputMethod = {
             GroupOrder."0" = "Default";
             "Groups/0" = {
