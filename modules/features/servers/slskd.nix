@@ -19,6 +19,12 @@
         # The share dir must exist, systemd refuses to start the unit when a
         # ReadOnlyPaths target is missing
         systemd.tmpfiles.rules = [ "d /media/music - - - -" ];
+        # .NET 10.0.14 keeps named mutexes under $XDG_RUNTIME_DIR, falling back to
+        # $HOME (/var/empty, read-only), so slskd exits on the singleton mutex
+        systemd.services.slskd = {
+          environment.XDG_RUNTIME_DIR = "/run/slskd";
+          serviceConfig.RuntimeDirectory = "slskd";
+        };
       };
     };
 }
