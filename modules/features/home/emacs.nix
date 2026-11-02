@@ -73,6 +73,15 @@
       '';
 
       emacs = config.programs.doom-emacs.finalEmacsPackage;
+
+      # Terminal frame when attached to a tty or without a display, GUI frame otherwise
+      editor = pkgs.writeShellScript "editor" ''
+        client=${lib.getBin config.services.emacs.package}/bin/emacsclient
+        if [ -t 0 ] && [ -t 1 ] || [ -z "$WAYLAND_DISPLAY$DISPLAY" ]; then
+          exec "$client" --tty "$@"
+        fi
+        exec "$client" --create-frame "$@"
+      '';
     in
     {
       imports = [ inputs.nix-doom-emacs-unstraightened.homeModule ];
@@ -109,12 +118,19 @@
         };
 
         services.emacs = {
+          enable = true;
+          # EDITOR wrapper has no fallback, start the daemon on first connect
+          socketActivation.enable = true;
           client.enable = true;
-          defaultEditor = true;
           startWithUserSession = "graphical";
         };
 
         home = {
+          sessionVariables = {
+            EDITOR = editor;
+            VISUAL = editor;
+          };
+
           # Doom profile dirs aren't created up front, packages like spell-fu
           # fail on make-directory without parents
           activation.doomProfileDirs =
@@ -129,8 +145,10 @@
             '';
 
           packages = with pkgs; [
-            ispell
-            aspell
+            (aspellWithDicts (dicts: [
+              dicts.en
+              dicts.pl
+            ]))
             (pkgs.writeScriptBin "eww" ''
               if [ -z "$1" ]; then
                   echo "Usage: eww <URL>"
