@@ -32,6 +32,12 @@
       };
     };
 
+    # Render games below native and upscale on the iGPU (pair with -w/-h per game)
+    programs.gamescope.args = [
+      "-F"
+      "fsr"
+    ];
+
     services.fingerprint06cb009a = {
       enable = true;
       backend = "python-validity";

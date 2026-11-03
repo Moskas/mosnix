@@ -1,9 +1,33 @@
 { self, ... }:
 {
   flake.nixosModules.gaming =
-    { pkgs, ... }:
+    {
+      config,
+      pkgs,
+      ...
+    }:
+    let
+      gamescopeCfg = config.programs.gamescope;
+      # The capSysNice wrapper can't run inside Steam's bwrap sandbox, so launch
+      # options like `gamescope -- %command%` use this copy, carrying the same args.
+      steamGamescope =
+        if gamescopeCfg.args == [ ] then
+          gamescopeCfg.package
+        else
+          pkgs.symlinkJoin {
+            name = "gamescope";
+            paths = [ gamescopeCfg.package ];
+            nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
+            postBuild = ''
+              wrapProgram $out/bin/gamescope --add-flags "${toString gamescopeCfg.args}"
+            '';
+          };
+    in
     {
       config = {
+        # SteamOS value; some Proton titles exhaust the NixOS default
+        boot.kernel.sysctl."vm.max_map_count" = 2147483642;
+
         # Pull the matching home-manager config in automatically so hosts only
         # need `self.nixosModules.gaming` and don't have to wire the homeModule
         # into their home profile separately.
@@ -13,24 +37,49 @@
           self.homeModules.etterna
         ];
 
-        programs.steam = {
-          enable = true;
-          package = pkgs.steam.override {
-            extraEnv = {
-              MANGOHUD = true;
-              OBS_VKCAPTURE = true;
+        # gamemoded's polkit rule only lets the gamemode group switch governors
+        users.users.moskas.extraGroups = [ "gamemode" ];
+
+        programs = {
+          gamemode = {
+            enable = true;
+            settings = {
+              general.renice = 10;
+              custom = {
+                start = "${pkgs.libnotify}/bin/notify-send 'GameMode started'";
+                end = "${pkgs.libnotify}/bin/notify-send 'GameMode ended'";
+              };
             };
-            extraLibraries =
-              p: with p; [
-                atk
-              ];
           };
-          extraCompatPackages = with pkgs; [
-            proton-ge-bin
-            dwproton
-          ];
-          localNetworkGameTransfers.openFirewall = true;
-          remotePlay.openFirewall = true;
+
+          gamescope = {
+            enable = true;
+            capSysNice = true;
+          };
+
+          steam = {
+            enable = true;
+            extraPackages = [ steamGamescope ];
+            # Translate X11 input to uinput so Steam Input works under Wayland
+            extest.enable = true;
+            protontricks.enable = true;
+            package = pkgs.steam.override {
+              extraEnv = {
+                MANGOHUD = true;
+                OBS_VKCAPTURE = true;
+              };
+              extraLibraries =
+                p: with p; [
+                  atk
+                ];
+            };
+            extraCompatPackages = with pkgs; [
+              proton-ge-bin
+              dwproton
+            ];
+            localNetworkGameTransfers.openFirewall = true;
+            remotePlay.openFirewall = true;
+          };
         };
       };
     };
