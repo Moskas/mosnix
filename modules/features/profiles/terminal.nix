@@ -15,6 +15,7 @@
       claude
       concord
       direnv
+      diskwatch
       emacs
       email
       eza
