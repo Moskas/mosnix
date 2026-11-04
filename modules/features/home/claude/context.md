@@ -2,30 +2,42 @@
 
 ## System & Tools
 - OS: NixOS
-
-## Nix Shells
-- Always use `nix-shell` or `nix develop` for project dependencies
-- Check for `shell.nix` or `flake.nix` in project root before installing packages
-- Run commands inside the nix-shell environment, not the host system
-- Example: `nix-shell -p nodejs python3 --run "npm install"`
+- Package management: Nix flakes
+- Prefer declarative configuration over imperative system changes
+- Never use system package managers (apt, pacman, etc.)
 
 ## Code Style
-- 2-space indentation (no tabs)
-- Line length: 100 characters max or use language formatter default
-- Don't style code comments, they should be short and explain feature
+- Follow existing project conventions before applying global preferences
+- Use 2-space indentation (no tabs), unless the language or formatter specifies otherwise
+- Prefer a maximum line length of 100 characters
+- Respect existing formatter and linter configurations
+- If no formatter exists, prefer language-standard formatting tools
+- Keep comments concise and focused on explaining non-obvious behavior
 
 ## Markdown Documentation Style
 - Never use emojis
-- Try to be conceise and technical
-- Use headings `#` and separators `---` only when sections aren't fully connected directly
+- Keep documentation concise, technical, and factual
+- Prefer clear headings and short paragraphs
+- Avoid unnecessary introductory or concluding sections
 
 ## Naming Conventions
-- Files: kebab-case (my-component.ts)
+- Follow existing project conventions where established
+- Files: kebab-case (`my-component.ts`)
 - Classes: PascalCase
-- Functions/variables: camelCase
+- Functions and variables: camelCase
 - Constants: UPPER_SNAKE_CASE
 
 ## Workflows
-- Always run tests and formatters before committing
-- Use feature branches: `feature/description`
-- Commit messages: use conventional commits 
+- Inspect the project structure and existing conventions before making changes
+- Prefer minimal, focused changes over unnecessary refactoring
+- Run relevant tests, linters, and formatters before committing
+- Do not commit unless explicitly requested
+- Use Conventional Commits for commit messages
+- Never overwrite or discard existing user changes
+
+## Agent Behavior
+- Understand the existing implementation before proposing changes
+- Ask for clarification when requirements are ambiguous
+- Explain non-obvious decisions and trade-offs
+- Do not introduce abstractions or dependencies without a clear benefit
+- Prefer straightforward solutions over premature optimization
