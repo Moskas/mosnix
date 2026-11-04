@@ -108,7 +108,7 @@
             set -g window-status-format ' #I #W#{?window_zoomed_flag, 󰁌,}#{?window_bell_flag, 󰂞,} '
             set -g window-status-current-format ' #I #W#{?window_zoomed_flag, 󰁌,} '
 
-            set -g status-right '#{?pane_synchronized,#[fg=red]SYNC  #[default],}#[fg=blue]󰒋 #h  #[fg=cyan]#(bat-stat)#[fg=magenta]%a %d %b  #[fg=white,bold]%H:%M '
+            set -g status-right '#{?pane_synchronized,#[fg=red]SYNC  #[default],}#[fg=blue]󰒋 #h  #[fg=cyan]#(bat-stat)#[fg=magenta]  %a %d %b #[fg=yellow]  %H:%M '
 
             bind c new-window -c '#{pane_current_path}'
             bind V split-window -h -c '#{pane_current_path}'
