@@ -32,6 +32,7 @@
                     passwordFile = "/var/secret.key"; # Interactive
                     settings = {
                       allowDiscards = true;
+                      bypassWorkqueues = true;
                       #keyFile = "/tmp/secret.key";
                     };
                     #additionalKeyFiles = [ "/tmp/additionalSecret.key" ];
