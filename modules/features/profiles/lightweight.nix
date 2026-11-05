@@ -6,6 +6,7 @@
 
     imports = with self.homeModules; [
       terminal
+      emacs
       sway
       foot
       fuzzel

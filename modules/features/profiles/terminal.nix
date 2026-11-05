@@ -16,7 +16,6 @@
       concord
       direnv
       diskwatch
-      emacs
       email
       eza
       git

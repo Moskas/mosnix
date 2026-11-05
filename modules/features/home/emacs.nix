@@ -117,6 +117,8 @@
           ];
         };
 
+        programs.zsh.shellAliases.mg = "emacs -nw --eval '(magit)'";
+
         services.emacs = {
           enable = true;
           # EDITOR wrapper has no fallback, start the daemon on first connect

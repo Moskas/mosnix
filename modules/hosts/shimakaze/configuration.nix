@@ -31,6 +31,8 @@
         wslConf.network.generateResolvConf = false;
       };
 
+      home-manager.users.moskas.imports = [ self.homeModules.emacs ];
+
       boot.loader.systemd-boot.enable = lib.mkForce false;
 
       networking = {

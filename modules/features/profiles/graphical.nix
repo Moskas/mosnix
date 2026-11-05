@@ -8,6 +8,7 @@
       terminal
       carapace
       easyeffects
+      emacs
       qtColors
       firefox
       fuzzel

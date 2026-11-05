@@ -12,7 +12,6 @@
           tx = "tmux new -As0";
           lld = "ll --no-permissions --no-user --no-time --no-git --no-filesize --tree -D";
           duf = "duf -theme ansi";
-          mg = "emacs -nw --eval '(magit)'";
           lg = "lazygit";
         };
         history = {
