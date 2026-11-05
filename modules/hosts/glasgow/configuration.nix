@@ -96,5 +96,41 @@
       CPU_SCALING_MAX_FREQ_ON_AC = 2400000;
     };
 
+    # analog and DP audio share one ALSA card and the default profiles only offer one output at
+    # a time, so expose both as sinks; mappings are copied from the default profile set
+    services.pipewire.wireplumber.extraConfig."99-analog-hdmi-profile" = {
+      "monitor.alsa.rules" = [
+        {
+          matches = [ { "device.name" = "alsa_card.pci-0000_00_1b.0"; } ];
+          actions.update-props."device.profile-set" = "${pkgs.writeText "analog-hdmi.conf" ''
+            [General]
+            auto-profiles = no
+
+            [Mapping analog-stereo]
+            device-strings = front:%f
+            channel-map = left,right
+            paths-output = analog-output analog-output-lineout analog-output-speaker analog-output-headphones analog-output-headphones-2
+            paths-input = analog-input-front-mic analog-input-rear-mic analog-input-internal-mic analog-input-dock-mic analog-input analog-input-mic analog-input-linein analog-input-aux analog-input-video analog-input-tvtuner analog-input-fm analog-input-mic-line analog-input-headphone-mic analog-input-headset-mic
+            priority = 15
+
+            [Mapping hdmi-stereo]
+            description = Digital Stereo (HDMI)
+            device-strings = hdmi:%f
+            paths-output = hdmi-output-0
+            channel-map = left,right
+            priority = 9
+            direction = output
+
+            [Profile output:analog-stereo+output:hdmi-stereo+input:analog-stereo]
+            description = Analog Stereo Duplex + Digital Stereo (HDMI) Output
+            output-mappings = analog-stereo hdmi-stereo
+            input-mappings = analog-stereo
+            priority = 100
+            skip-probe = yes
+          ''}";
+        }
+      ];
+    };
+
   };
 }
