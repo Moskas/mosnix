@@ -9,6 +9,7 @@
       inputs.stylix.nixosModules.stylix
       self.nixosModules.cheshire
       self.nixosModules.commonWorkstation
+      self.nixosModules.ddcutil
       self.nixosModules.gaming
       self.nixosModules.graphical
       self.nixosModules.nvidia

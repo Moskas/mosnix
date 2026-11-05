@@ -13,6 +13,7 @@
       inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480
       inputs.nixos-hardware.nixosModules.common-gpu-intel
       self.nixosModules.commonWorkstation
+      self.nixosModules.ddcutil
       self.nixosModules.gaming
       self.nixosModules.moonlight
       self.nixosModules.laptop

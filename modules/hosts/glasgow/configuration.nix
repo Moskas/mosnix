@@ -7,6 +7,7 @@
 
     imports = [
       self.nixosModules.commonWorkstation
+      self.nixosModules.ddcutil
       self.nixosModules.laptop
       self.nixosModules.vm-test
       inputs.stylix.nixosModules.stylix
