@@ -1,0 +1,18 @@
+#+title: Readme
+
+My Doom-Emacs config with added packages and minor eyecandy changes.
+
+* Changes
+** Added packages:
+- elcord
+  Discord rich presence status
+- blamer
+  For showing git blame
+- nov - Major-mode for opening epub files
+- beacon - visual indicator for cursor after jumps
+- olivetti - text centering, I'm only using it for writing prose
+- mastodon - mastodon client for emacs
+- ement
+- el-fetch
+- direnv
+- ellama

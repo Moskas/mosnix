@@ -94,7 +94,7 @@
           doomDir = pkgs.symlinkJoin {
             name = "doom-dir";
             paths = [
-              inputs.doom-config
+              ./emacs/doom
               nixPaths
               nixStyle
             ]

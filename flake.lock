@@ -157,22 +157,6 @@
         "type": "github"
       }
     },
-    "doom-config": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1792531314,
-        "narHash": "sha256-ZVKEm2nC51ZZhzvuc5MmiYIA6UJxG6SX+5YJ3LQq+tU=",
-        "owner": "Moskas",
-        "repo": "emacs-config",
-        "rev": "3222e43af687c2391ba58bb3231b7c9f53397747",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Moskas",
-        "repo": "emacs-config",
-        "type": "github"
-      }
-    },
     "doomdir": {
       "flake": false,
       "locked": {
@@ -1413,7 +1397,6 @@
       "inputs": {
         "devshell": "devshell",
         "disko": "disko",
-        "doom-config": "doom-config",
         "emacs-overlay": "emacs-overlay",
         "flake-parts": "flake-parts",
         "himalaya-tui": "himalaya-tui",
