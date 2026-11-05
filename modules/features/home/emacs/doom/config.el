@@ -116,6 +116,11 @@
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/Documents/Org/")
+(setq org-agenda-files
+      '("~/Documents/Org/Me/habits.org"
+        "~/Documents/Org/Agenda/todo.org"
+        "~/Documents/Org/Agenda/tasks.org"
+        "~/Documents/Org/README.org"))
 
 (use-package org
   :config
@@ -228,21 +233,20 @@
 (defun with-face (str &rest face-plist)
   (propertize str 'face face-plist))
 (defun shk-eshell-prompt ()
-  (let ((header-bg "#282828"))
-    (concat
-     (with-face (concat (eshell/pwd) " ") :background header-bg)
-     (with-face (format-time-string "(%Y-%m-%d %H:%M) " (current-time)) :background header-bg :foreground "#ebdbb2")
-     (with-face
-      (or (ignore-errors (format "(%s)" (vc-responsible-backend default-directory))) "")
-      :background header-bg)
-     (with-face "\n" :background header-bg)
-     (with-face user-login-name :foreground "#458588")
-     "@"
-     (with-face (system-name) :foreground "#689d6a")
-     (if (= (user-uid) 0)
-         (with-face " #" :foreground "#cc241d")
-       " $")
-     " ")))
+  (concat
+   (with-face (concat (eshell/pwd) " ") :inherit 'mode-line)
+   (with-face (format-time-string "(%Y-%m-%d %H:%M) " (current-time)) :inherit 'mode-line)
+   (with-face
+    (or (ignore-errors (format "(%s)" (vc-responsible-backend default-directory))) "")
+    :inherit 'mode-line)
+   (with-face "\n" :inherit 'mode-line)
+   (with-face user-login-name :inherit 'font-lock-function-name-face)
+   "@"
+   (with-face (system-name) :inherit 'font-lock-type-face)
+   (if (= (user-uid) 0)
+       (with-face " #" :inherit 'error)
+     " $")
+   " "))
 (setq eshell-prompt-function 'shk-eshell-prompt)
 (setq eshell-highlight-prompt nil)
 
@@ -310,7 +314,8 @@
          :right-divider-width 2
          :scroll-bar-width 8
          :right-fringe-width 4
-         :left-fringe-width 4))
+         ;; Doom's +pretty vc-gutter draws bars (w/2 - 1)px wide, so 4px leaves only 1px
+         :left-fringe-width 8))
 ;;(use-package centaur-tabs
 ;;  :config
 ;;  (setq centaur-tabs-height 32)
