@@ -442,8 +442,20 @@
               "Mod+Shift+V"."switch-focus-between-floating-and-tiling" = { };
               "Mod+W"."toggle-column-tabbed-display" = { };
 
-              "Print"."screenshot-screen" = { };
-              "Ctrl+Print".screenshot = { };
+              "Print" = {
+                _props.hotkey-overlay-title = "Screenshot monitor: noctalia";
+                spawn-sh = "noctalia msg screenshot-fullscreen";
+              };
+              "Ctrl+Print" = {
+                _props.hotkey-overlay-title = "Screenshot region: noctalia";
+                spawn-sh = "noctalia msg screenshot-region";
+              };
+              "Ctrl+Shift+Print" = {
+                _props.hotkey-overlay-title = "Launch noctalia annotate screenshot";
+                spawn-sh = "noctalia msg screenshot-annotate";
+              };
+
+              # noctalia's screenshot-window needs ext-image-copy-capture, which niri lacks.
               "Alt+Print"."screenshot-window" = { };
 
               "Mod+Escape" = {

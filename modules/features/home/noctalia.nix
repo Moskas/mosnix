@@ -40,8 +40,6 @@
               address = "Wrocław, Poland";
             };
 
-            #lockscreen.enabled = false;
-
             nightlight.enabled = true;
 
             plugins.enabled = [ "noctalia/bongocat" ];
@@ -57,12 +55,19 @@
               launcher = {
                 show_app_origin_indicator = false;
                 sort_by_usage = false;
+                layout = "simple";
+                category_icons_only = true;
               };
 
               panel = {
                 control_center_placement = "floating";
                 open_near_click_control_center = true;
                 shadow = false;
+              };
+
+              screenshot = {
+                directory = "/home/moskas/Pictures/Screenshots";
+                filename_pattern = "Screenshot from %Y-%m-%d %H-%M-%S";
               };
             };
 
@@ -140,7 +145,7 @@
                   match = "mpd";
                   show_toast = true;
                   save_history = false;
-                  play_audio = false;
+                  play_sound = false;
                 };
               };
             };

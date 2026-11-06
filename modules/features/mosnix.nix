@@ -85,7 +85,7 @@ let
             );
             default = {
               notify = {
-                fill = "surface_variant";
+                fill = "surface_container";
                 members = [
                   "notifications"
                   "clipboard"
