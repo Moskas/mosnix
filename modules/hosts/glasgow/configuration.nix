@@ -98,6 +98,8 @@
 
     # analog and DP audio share one ALSA card and the default profiles only offer one output at
     # a time, so expose both as sinks; mappings are copied from the default profile set
+    # the profile must be probed: skip-probe leaves it without mixer paths, so mute and volume
+    # never reach the ALSA Master control that drives the keyboard mute LEDs
     services.pipewire.wireplumber.extraConfig."99-analog-hdmi-profile" = {
       "monitor.alsa.rules" = [
         {
@@ -126,7 +128,6 @@
             output-mappings = analog-stereo hdmi-stereo
             input-mappings = analog-stereo
             priority = 100
-            skip-probe = yes
           ''}";
         }
       ];
