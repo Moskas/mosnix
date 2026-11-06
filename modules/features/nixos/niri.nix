@@ -19,8 +19,11 @@
           wdisplays
           ddcutil
           wl-clipboard
+          playerctl
           inputs.niri-scratchpad.packages.${pkgs.stdenv.hostPlatform.system}.default
         ];
+        services.playerctld.enable = true;
+
         wayland.windowManager.niri = {
           enable = true;
 
@@ -307,6 +310,8 @@
                   "10%-"
                 ];
               };
+              "XF86Display"."power-off-monitors" = { };
+              "XF86ScreenSaver".spawn-sh = "noctalia msg session lock";
 
               "Mod+O" = {
                 _props.repeat = false;
